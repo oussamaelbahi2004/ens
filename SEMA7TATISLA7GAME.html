@@ -541,6 +541,7 @@
     }
 
     function startQCMPhase() {
+        currentPhase = 3; // Set phase to 3 for QCM
         showScreen('screen-qcm');
         document.getElementById('section-title').innerText = "المرحلة 3: اختبار QCM";
         loadQCMRound();
@@ -558,6 +559,13 @@
         feedbackEl.innerText = "";
         nextBtn.style.display = "none";
         optionsDiv.innerHTML = "";
+
+        // Update button text based on whether it's the last question
+        if (qcmIndex === qcmData.length - 1) {
+            nextBtn.innerText = "عرض النتيجة";
+        } else {
+            nextBtn.innerText = "السؤال التالي";
+        }
 
         let progressPercent = 60 + ((qcmIndex / qcmData.length) * 40);
         progressBar.style.width = `${progressPercent}%`;
@@ -591,8 +599,8 @@
         const allBtns = container.querySelectorAll('.option-btn');
         allBtns.forEach(b => b.disabled = true);
 
-        const feedbackEl = currentPhase <= 2 ? document.getElementById('g-feedback') : document.getElementById('qcm-feedback');
-        const nextBtn = currentPhase <= 2 ? document.getElementById('g-next-btn') : document.getElementById('qcm-next-btn');
+        const feedbackEl = currentPhase === 3 ? document.getElementById('qcm-feedback') : document.getElementById('g-feedback');
+        const nextBtn = currentPhase === 3 ? document.getElementById('qcm-next-btn') : document.getElementById('g-next-btn');
 
         if (selected === correct) {
             btn.classList.add('correct');
