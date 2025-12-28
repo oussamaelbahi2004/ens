@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game - MTU Chapitre 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #27ae60;
+            --wrong: #e74c3c;
+            --bg: #f0f2f5;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .game-container {
+            background: var(--card);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header { margin-bottom: 20px; }
+        h1 { color: var(--primary); margin: 0; font-size: 1.8rem; }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #777;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        .question-box { margin: 30px 0; }
+        
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: #e9ecef;
+            border-color: #dbe4eb;
+        }
+
+        .correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+        }
+
+        .incorrect {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .result-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.4);
+        }
+
+        .btn-action {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .badge-type {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .badge-qcm { background-color: #3498db; }
+        .badge-vf { background-color: #9b59b6; }
+        .badge-sit { background-color: #e67e22; }
+
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    
+    <div id="game-interface">
+        <header>
+            <h1>Quiz : Styles & Gestion du Temps</h1>
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            <div class="stats">
+                <span id="q-counter">Question 1/45</span>
+                <span id="score-display">Score: 0</span>
+            </div>
+        </header>
+
+        <div class="question-box">
+            <span id="q-type-badge" class="badge-type badge-qcm">QCM</span>
+            <div class="question-text" id="question">Chargement...</div>
+            <div class="options-grid" id="options">
+                </div>
+        </div>
+    </div>
+
+    <div id="result-interface" class="result-screen">
+        <h2>Quiz Terminé ! (ساليتي)</h2>
+        <div class="score-circle" id="final-score">0/45</div>
+        <p id="feedback-text">Analyse en cours...</p>
+        
+        <a href="MTU CHAP 2.html" class="btn-action">GO BACK TO LESSON</a>
+        <button onclick="location.reload()" class="btn-action" style="background-color: #7f8c8d; margin-top: 10px;">REJOUER</button>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // --- DATABASE DES QUESTIONS (45 Questions) ---
+    const quizData = [
+        // --- 30 QCM ---
+        // Styles d'apprentissage (VAKOG)
+        { t: 'QCM', q: "Le style d'apprentissage est défini comme :", o: ["Une mesure de l'intelligence", "La manière de traiter et retenir l'information", "La vitesse de lecture", "La capacité à réussir un examen"], a: 1 },
+        { t: 'QCM', q: "Que signifie l'acronyme VAKOG ?", o: ["Visuel, Auditif, Kinesthésique, Olfactif, Gustatif", "Visuel, Abstrait, Kinesthésique, Oral, Global", "Vitesse, Action, Kinesthésique, Oreille, Geste", "Visuel, Auditif, Kinesthésique, Oral, Graphique"], a: 0 },
+        { t: 'QCM', q: "Quel est le style dominant d'un étudiant qui préfère les graphiques et les images ?", o: ["Auditif", "Kinesthésique", "Visuel", "Olfactif"], a: 2 },
+        { t: 'QCM', q: "Un apprenant auditif apprend mieux en :", o: ["Dessinant des schémas", "Écoutant des podcasts et discutant", "Faisant des expériences manuelles", "Regardant des vidéos muettes"], a: 1 },
+        { t: 'QCM', q: "Pour un apprenant kinesthésique, il est recommandé de :", o: ["Rester immobile", "Lire silencieusement", "Bouger et manipuler des objets", "Écouter sans prendre de notes"], a: 2 },
+        { t: 'QCM', q: "Est-ce qu'un étudiant se limite à un seul style d'apprentissage ?", o: ["Oui, c'est génétique", "Non, il peut combiner plusieurs styles", "Oui, sauf s'il est malade", "Non, il n'a aucun style"], a: 1 },
+        { t: 'QCM', q: "La découverte de votre style d'apprentissage permet de :", o: ["Augmenter votre implication et chances de succès", "Réduire le temps de sommeil", "Changer de personnalité", "Ignorer les cours magistraux"], a: 0 },
+        
+        // Gestion du temps
+        { t: 'QCM', q: "La perception du temps est :", o: ["Objective et la même pour tous", "Subjective selon les individus", "Déterminée par l'horloge uniquement", "Fixe et immuable"], a: 1 },
+        { t: 'QCM', q: "Qu'est-ce que la procrastination ?", o: ["Travailler en avance", "Remettre une tâche à plus tard", "Une méthode de lecture rapide", "Un type de mémoire"], a: 1 },
+        { t: 'QCM', q: "La procrastination face au 'Devoir' est souvent causée par :", o: ["L'envie de s'amuser", "La peur de l'échec ou la difficulté", "L'excès de confiance", "La faim"], a: 1 },
+        { t: 'QCM', q: "La procrastination face au 'Vouloir' privilégie :", o: ["Les tâches importantes", "Les activités agréables (distractions)", "Le sommeil", "Les révisions"], a: 1 },
+        { t: 'QCM', q: "Le 'Temps Créateur' est celui qui :", o: ["Est perdu par négligence", "Permet de générer de la valeur ajoutée", "Sert à répondre aux obligations", "Est passé à dormir"], a: 1 },
+        { t: 'QCM', q: "Le 'Temps Inutile' doit être :", o: ["Augmenté", "Conservé", "Éliminé", "Planifié"], a: 2 },
+        { t: 'QCM', q: "Pour bien gérer son temps, il faut d'abord évaluer :", o: ["Son argent", "Les attentes de l'environnement universitaire", "La météo", "Ses amis"], a: 1 }, // Corrected index here
+
+        // Méthodes (Eisenhower, Pomodoro)
+        { t: 'QCM', q: "La grille d'Eisenhower classe les tâches selon :", o: ["Le plaisir et la douleur", "L'urgence et l'importance", "La durée et le coût", "Le jour et la nuit"], a: 1 },
+        { t: 'QCM', q: "Dans la grille d'Eisenhower, le Quadrant 1 correspond aux tâches :", o: ["Urgentes et Importantes", "Ni urgentes ni importantes", "Importantes mais peu urgentes", "Urgentes mais pas importantes"], a: 0 },
+        { t: 'QCM', q: "Le Quadrant 3 (Urgent mais pas important) concerne souvent :", o: ["Les crises", "La planification stratégique", "Les interruptions et distractions", "Les pertes de temps totales"], a: 2 },
+        { t: 'QCM', q: "La méthode Pomodoro a été développée par :", o: ["Eisenhower", "Francesco Cirillo", "Tony Buzan", "Einstein"], a: 1 },
+        { t: 'QCM', q: "Une session de travail Pomodoro standard dure :", o: ["1 heure", "10 minutes", "25 minutes", "45 minutes"], a: 2 },
+        { t: 'QCM', q: "Après chaque session Pomodoro, il faut prendre une pause de :", o: ["5 minutes", "20 minutes", "1 heure", "Pas de pause"], a: 0 },
+        { t: 'QCM', q: "Après combien de sessions Pomodoro prend-on une longue pause ?", o: ["2 sessions", "4 sessions", "6 sessions", "8 sessions"], a: 1 },
+        { t: 'QCM', q: "La longue pause Pomodoro dure entre :", o: ["5 et 10 min", "15 et 30 min", "45 et 60 min", "1 et 2 heures"], a: 1 },
+        
+        // Stress
+        { t: 'QCM', q: "Le stress est une réponse de l'organisme face à :", o: ["Une situation apaisante", "Une situation perçue comme menaçante", "Un moment de sommeil", "Un repas copieux"], a: 1 },
+        { t: 'QCM', q: "Quel type de stress améliore la productivité ?", o: ["Stress paralysant", "Stress improductif", "Stress productif", "Stress chronique"], a: 2 },
+        { t: 'QCM', q: "Le stress productif aide à :", o: ["Dormir", "Rester concentré et décider vite", "Tomber malade", "Procrastiner"], a: 1 },
+        { t: 'QCM', q: "Le stress improductif peut causer :", o: ["De la joie", "Une meilleure santé", "De l'anxiété et une baisse de motivation", "Une augmentation de la créativité"], a: 2 },
+        { t: 'QCM', q: "Le stress paralysant entraîne :", o: ["Une action rapide", "Une incapacité à agir", "Une relaxation totale", "Une planification efficace"], a: 1 },
+        { t: 'QCM', q: "Pour gérer le temps, il faut augmenter le temps :", o: ["Nécessaire", "Inutile", "Créateur", "De sommeil"], a: 2 },
+        { t: 'QCM', q: "Un Mind Map est particulièrement utile pour le profil :", o: ["Auditif", "Visuel", "Kinesthésique", "Gustatif"], a: 1 },
+        { t: 'QCM', q: "La procrastination est-elle héréditaire (génétique) ?", o: ["Oui, c'est dans l'ADN", "Non, c'est une habitude qui se change", "Oui, on ne peut rien y faire", "Seulement chez les étudiants"], a: 1 },
+
+        // --- 10 Vrai/Faux ---
+        { t: 'V/F', q: "Vrai ou Faux : Un étudiant Kinesthésique apprend mieux en restant assis sans bouger.", o: ["Vrai", "Faux"], a: 1 },
+        { t: 'V/F', q: "Vrai ou Faux : La méthode Pomodoro divise le travail en plages de 25 minutes.", o: ["Vrai", "Faux"], a: 0 },
+        { t: 'V/F', q: "Vrai ou Faux : Le stress est toujours mauvais pour la santé et la productivité.", o: ["Vrai", "Faux"], a: 1 },
+        { t: 'V/F', q: "Vrai ou Faux : La grille d'Eisenhower sert à classer les tâches par couleur.", o: ["Vrai", "Faux"], a: 1 },
+        { t: 'V/F', q: "Vrai ou Faux : La procrastination face au 'Vouloir' est liée aux distractions comme les réseaux sociaux.", o: ["Vrai", "Faux"], a: 0 },
+        { t: 'V/F', q: "Vrai ou Faux : On peut être à la fois Visuel et Auditif selon la situation.", o: ["Vrai", "Faux"], a: 0 },
+        { t: 'V/F', q: "Vrai ou Faux : Le 'Temps Nécessaire' est celui qu'on gaspille par négligence.", o: ["Vrai", "Faux"], a: 1 },
+        { t: 'V/F', q: "Vrai ou Faux : Le stress paralysant aide à prendre des décisions rapides.", o: ["Vrai", "Faux"], a: 1 },
+        { t: 'V/F', q: "Vrai ou Faux : Les podcasts sont recommandés pour les apprenants Auditifs.", o: ["Vrai", "Faux"], a: 0 },
+        { t: 'V/F', q: "Vrai ou Faux : Il faut éliminer le 'Temps Créateur'.", o: ["Vrai", "Faux"], a: 1 },
+
+        // --- 5 Situations ---
+        { t: 'SITUATION', q: "Mise en situation : Karim révise mieux en marchant dans sa chambre et en mimant les concepts. Quel est son style ?", o: ["Visuel", "Auditif", "Kinesthésique", "Olfactif"], a: 2 },
+        { t: 'SITUATION', q: "Mise en situation : Nawal a un examen demain (Urgent) et c'est crucial pour son année (Important). Dans quel quadrant d'Eisenhower est-ce ?", o: ["Q1 (Urgent/Important)", "Q2 (Peu Urgent/Important)", "Q3 (Urgent/Peu Important)", "Q4 (Ni l'un ni l'autre)"], a: 0 },
+        { t: 'SITUATION', q: "Mise en situation : Ahmed doit rendre un devoir, mais il passe 3 heures sur TikTok car c'est plus agréable. C'est de la procrastination face au :", o: ["Devoir", "Vouloir", "Pouvoir", "Savoir"], a: 1 },
+        { t: 'SITUATION', q: "Mise en situation : Sara se sent tendue avant l'examen, mais cela la rend plus concentrée et rapide. C'est du stress :", o: ["Paralysant", "Improductif", "Productif", "Destructeur"], a: 2 },
+        { t: 'SITUATION', q: "Mise en situation : Vous avez beaucoup de choses à faire. La première étape selon la MTU est de :", o: ["Dormir", "Évaluer les attentes", "Jouer", "Manger"], a: 1 }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const ui = {
+        question: document.getElementById('question'),
+        options: document.getElementById('options'),
+        progress: document.getElementById('progress'),
+        counter: document.getElementById('q-counter'),
+        score: document.getElementById('score-display'),
+        gameInterface: document.getElementById('game-interface'),
+        resultInterface: document.getElementById('result-interface'),
+        finalScore: document.getElementById('final-score'),
+        feedbackText: document.getElementById('feedback-text'),
+        badge: document.getElementById('q-type-badge')
+    };
+
+    function loadQuestion() {
+        if(currentQuestionIndex >= quizData.length) {
+            endGame();
+            return;
+        }
+
+        const data = quizData[currentQuestionIndex];
+        
+        // Mise à jour de l'affichage
+        ui.question.innerText = data.q;
+        ui.counter.innerText = `Question ${currentQuestionIndex + 1}/${quizData.length}`;
+        ui.score.innerText = `Score: ${score}`;
+        
+        // Badge Type
+        ui.badge.innerText = data.t;
+        ui.badge.className = 'badge-type'; 
+        if(data.t === 'QCM') ui.badge.classList.add('badge-qcm');
+        else if(data.t === 'V/F') ui.badge.classList.add('badge-vf');
+        else ui.badge.classList.add('badge-sit');
+
+        // Barre de progression
+        const progressPercent = ((currentQuestionIndex) / quizData.length) * 100;
+        ui.progress.style.width = `${progressPercent}%`;
+
+        // Générer les boutons
+        ui.options.innerHTML = '';
+        data.o.forEach((option, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = option;
+            btn.onclick = () => checkAnswer(index, btn);
+            ui.options.appendChild(btn);
+        });
+    }
+
+    window.checkAnswer = function(selectedIndex, btnElement) {
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(btn => btn.disabled = true);
+
+        const correctIndex = quizData[currentQuestionIndex].a;
+
+        if (selectedIndex === correctIndex) {
+            btnElement.classList.add('correct');
+            score++;
+            ui.score.innerText = `Score: ${score}`;
+        } else {
+            btnElement.classList.add('incorrect');
+            if(allBtns[correctIndex]) {
+                allBtns[correctIndex].classList.add('correct');
+            }
+        }
+
+        setTimeout(() => {
+            currentQuestionIndex++;
+            loadQuestion();
+        }, 1000);
+    };
+
+    function endGame() {
+        ui.gameInterface.style.display = 'none';
+        ui.resultInterface.style.display = 'flex';
+        ui.finalScore.innerText = `${score}/${quizData.length}`;
+
+        const percentage = (score / quizData.length) * 100;
+        let msg = "";
+        if (percentage === 100) msg = "Bravo ! Tu es un expert MTU ! (تبارك الله عليك)";
+        else if (percentage >= 70) msg = "Très bien ! Tu as bien compris le chapitre.";
+        else if (percentage >= 50) msg = "Pas mal, mais tu peux encore réviser un peu.";
+        else msg = "Il faut relire le chapitre 2. (خاصك تراجع الدرس مزيان)";
+        
+        ui.feedbackText.innerText = msg;
+    }
+
+    // Lancement du jeu
+    loadQuestion();
+
+});
+</script>
+
+</body>
+</html>
