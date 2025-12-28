@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTU Chapitre 1 - Version Intégrale 100%</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --white: #ffffff;
+            --darija: #7e22ce;
+            --sidebar-width: 280px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--white);
+            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
+            border-right: 1px solid #e2e8f0;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar h2 { color: var(--primary); text-align: center; font-size: 1.2rem; margin-bottom: 25px; border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        .nav-links { list-style: none; }
+        .nav-links a { text-decoration: none; color: #64748b; display: flex; align-items: center; padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 5px; transition: 0.2s; }
+        .nav-links a:hover, .nav-links a.active { background: #eff6ff; color: var(--primary); font-weight: bold; }
+        .nav-links i { margin-right: 12px; width: 20px; text-align: center; }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 10px;
+            z-index: 900;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action { text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; font-size: 0.9rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-back { background: #334155; color: white; }
+        .btn-tab { background: #e2e8f0; color: #334155; }
+        .btn-tab.active { background: var(--primary); color: white; }
+
+        /* --- CONTENT CARDS --- */
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.4s; }
+
+        .card { background: var(--white); border-radius: 15px; padding: 35px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border-left: 6px solid var(--primary); }
+        h2 { color: var(--primary); font-size: 1.6rem; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        h3 { color: var(--secondary); margin-top: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 15px; }
+        h4 { margin-top: 20px; color: #475569; font-weight: bold; }
+        p, li { margin-bottom: 12px; font-size: 1.05rem; }
+        ul { margin-left: 25px; }
+
+        /* --- SWAP SYSTEM --- */
+        .trans { cursor: pointer; border-bottom: 1px dashed #94a3b8; }
+        .trans:hover { background: #f5f3ff; color: var(--darija); }
+        .is-darija {
+            color: var(--darija) !important; font-weight: 700; background: #f3e8ff; display: block;
+            padding: 15px; border-radius: 10px; margin: 10px 0; direction: rtl; text-align: right; line-height: 1.8;
+            border: none;
+        }
+
+        .box-info { background: #eff6ff; border-left: 4px solid var(--secondary); padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .box-warn { background: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; border-radius: 8px; margin: 20px 0; color: #991b1b; }
+
+        /* --- QUIZ --- */
+        .quiz-wrapper { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; max-width: 800px; margin: 0 auto; }
+        .quiz-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 10px; }
+        .progress { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 30px; }
+        .progress-bar { height: 100%; background: var(--secondary); width: 0%; transition: 0.3s; }
+        .q-text { font-size: 1.3rem; font-weight: bold; margin-bottom: 30px; color: var(--text); }
+        .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .opt-btn { padding: 15px; border: 1px solid #e2e8f0; border-radius: 10px; background: white; cursor: pointer; transition: 0.2s; text-align: left; }
+        .correct { background: #dcfce7 !important; border-color: #22c55e !important; }
+        .wrong { background: #fee2e2 !important; border-color: #ef4444 !important; }
+
+        /* --- MOBILE TOGGLE --- */
+        .menu-btn { display: none; position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; padding: 12px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); width: 280px; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 15px; padding-top: 75px; }
+            .menu-btn { display: block; }
+            .top-bar { flex-direction: column-reverse; align-items: stretch; }
+            .opts { grid-template-columns: 1fr; }
+            h2 { font-size: 1.3rem; }
+            .card { padding: 20px; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')"><i class="fas fa-bars"></i></div>
+
+    <nav class="sidebar">
+        <h2>MTU - Chapitre 1</h2>
+        <ul class="nav-links">
+            <li><a href="#intro" onclick="navTo('intro')"><i class="fas fa-play"></i> Introduction</a></li>
+            <li><a href="#systeme" onclick="navTo('systeme')"><i class="fas fa-sitemap"></i> Système & Accès</a></li>
+            <li><a href="#organisation" onclick="navTo('organisation')"><i class="fas fa-users-cog"></i> Organisation Admin</a></li>
+            <li><a href="#lmd" onclick="navTo('lmd')"><i class="fas fa-layer-group"></i> Architecture LMD</a></li>
+            <li><a href="#licence" onclick="navTo('licence')"><i class="fas fa-graduation-cap"></i> Parcours Licence</a></li>
+            <li><a href="#evaluation" onclick="navTo('evaluation')"><i class="fas fa-check-double"></i> Évaluation & Notes</a></li>
+            <li><a href="#enseignement" onclick="navTo('enseignement')"><i class="fas fa-chalkboard-teacher"></i> Enseignement</a></li>
+            <li><a href="#reglement" onclick="navTo('reglement')"><i class="fas fa-gavel"></i> Plagiat & Discipline</a></li>
+            <li><a href="#onousc" onclick="navTo('onousc')"><i class="fas fa-hand-holding-heart"></i> Bourses & Services</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <a href="index.html" class="btn-action btn-back"><i class="fas fa-arrow-left"></i> Retour</a>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-action btn-tab active" id="tab-cours" onclick="showView('cours')">📖 Leçon</button>
+                <button class="btn-action btn-tab" id="tab-quiz" onclick="showView('quiz')">🎮 Quiz</button>
+            </div>
+        </div>
+
+        <div id="view-cours" class="view-section active">
+            
+            <div class="card" id="intro">
+                <h2>Introduction</h2>
+                <p class="trans" data-dar="مرحبا بيك فالحرم الجامعي. الجامعة غادي تكون ليك بلاصة للتعلم وتطوير مهاراتك، ولكن حتى فضاء للحياة، التفتح، واللقاءات مع طلبة من ثقافات وجنسيات مختلفة.">Bienvenue au sein de l'université. Elle sera pour vous un lieu d'apprentissage et de développement d'un ensemble de compétences, mais également votre espace de vie, d'épanouissement, de rencontres et d'échanges avec des étudiants de différentes cultures et nationalités.</p>
+                <p class="trans" data-dar="هاد الموديل مخصص للطلبة الجداد اللي يالاه تسجلو فشي مؤسسة ديال التعليم العالي فالمغرب باش يحضرو لسلك الإجازة.">Ce module de formation en Méthodologie de Travail Universitaire est consacré aux nouveaux inscrits dans un établissement de l'enseignement supérieur au Maroc pour préparer un cycle de licence.</p>
+                
+                <h3 class="trans" data-dar="أهداف هاد الشابتر">Objectifs du Chapitre</h3>
+                <ul>
+                    <li class="trans" data-dar="تفهم كيفاش خدام نظام التعليم العالي والبحث العلمي والابتكار فالمغرب.">Comprendre le fonctionnement du système national de l'enseignement supérieur, de la recherche scientifique et de l'innovation.</li>
+                    <li class="trans" data-dar="تأقلم مع قوانين وطرق القراية والتقييم والأنظمة ديال الجامعة.">S'adapter aux modes d'enseignement, d'évaluation et au cadre réglementaire de l'université.</li>
+                    <li class="trans" data-dar="تعرف الخدمات الإدارية والاجتماعية اللي موفرة للطلبة.">Prendre connaissance des services administratifs et sociaux offerts aux étudiants.</li>
+                </ul>
+            </div>
+
+            <div class="card" id="systeme">
+                <h2>1. Le Système d'Enseignement Supérieur</h2>
+                <p class="trans" data-dar="النظام كلو تحت وصاية وزارة التعليم العالي والبحث العلمي والابتكار.">Le système est placé sous la tutelle du Ministère de l'Enseignement Supérieur, de la Recherche Scientifique et de l'Innovation.</p>
+                
+                <h3 class="trans" data-dar="مكونات النظام">Les Trois Composantes</h3>
+                <ul>
+                    <li class="trans" data-dar="1. التعليم العمومي: كيشمل الجامعات والمؤسسات ديال الدولة."><strong>L'enseignement supérieur public :</strong> composé des universités et des établissements d'enseignement supérieur ne relevant pas des universités.</li>
+                    <li class="trans" data-dar="2. التعليم الخصوصي: الجامعات والمدارس اللي تنشأت بمبادرات خاصة."><strong>L'enseignement supérieur privé :</strong> composé des universités et des établissements créés par des initiatives privées.</li>
+                    <li class="trans" data-dar="3. مؤسسات الشراكة (PPP): مؤسسات غير ربحية (Fondations) كتهدف للتميز والتدويل بحال الجامعة الدولية للرباط."><strong>Les établissements dans le cadre du partenariat :</strong> sont des fondations à but non lucratif qui visent l'internationalisation et l'excellence.</li>
+                </ul>
+
+                <h3 class="trans" data-dar="طرق الولوج للمؤسسات">Modes d'accès aux établissements</h3>
+                <div class="box-info">
+                    <strong class="trans" data-dar="أ. مؤسسات الولوج المفتوح (Esticbab Maftouh):">A. Les établissements à accès ouvert :</strong>
+                    <p class="trans" data-dar="هاد المؤسسات كيقبلو كاع الحاصلين على البكالوريا بلا انتقاء أولي وبلا كونكور.">Ils accueillent tous les titulaires du baccalauréat. L'accès est garanti sans sélection préalable.</p>
+                    <p class="trans" data-dar="أمثلة: كليات الآداب والعلوم الإنسانية، كليات العلوم، كليات العلوم القانونية والاقتصادية والاجتماعية (FSJES)."><em>Exemples : Facultés des Lettres et Sciences Humaines, Facultés des Sciences, Facultés des Sciences Juridiques, Économiques et Sociales.</em></p>
+                </div>
+                <div class="box-warn">
+                    <strong class="trans" data-dar="ب. مؤسسات الولوج المحدود (Esticbab Mahdoud):">B. Les établissements à accès régulé :</strong>
+                    <p class="trans" data-dar="الولوج هنا محدود بعدد المقاعد. كيحتاج انتقاء على حساب النقط (Présélection) و/أو مباراة (Concours كتابي أو شفوي).">L'accès est limité par le nombre de places. L'admission se fait par sélection sur dossier et/ou par voie de concours national ou local.</p>
+                    <p class="trans" data-dar="أمثلة: ENCG, ENSA, FMP (الطب), EST, BTS."><em>Exemples : ENCG, ENSA, FMP, FMD, ENSAM, ISCAE, EST, BTS.</em></p>
+                </div>
+            </div>
+
+            <div class="card" id="organisation">
+                <h2>2. Organisation Administrative</h2>
+                <h3 class="trans" data-dar="الهيكلة">La Structure</h3>
+                <ul>
+                    <li class="trans" data-dar="الجامعة كيسيرها رئيس (Président) بمساعدة نواب وكتاب عامين.">Chaque université est dirigée par un Président, assisté par des vices-présidents et un Secrétaire Général.</li>
+                    <li class="trans" data-dar="مجلس الجامعة: هو اللي كيقرر فكل ما كيهمش الجامعة. فيه ممثلين د الأساتذة والإداريين والطلبة."><strong>Le Conseil de l'Université :</strong> C'est l'organe qui délibère sur toutes les questions relatives à l'université.</li>
+                    <li class="trans" data-dar="المؤسسة (الكلية/المدرسة) كيسيرها عميد (Doyen) أو مدير (Directeur).">L'Établissement est dirigé par un Doyen (Faculté) ou un Directeur (École/Institut).</li>
+                </ul>
+
+                <h3 class="trans" data-dar="تمثيلية الطلبة">La Représentation Étudiante</h3>
+                <p class="trans" data-dar="الطلبة عندهم الحق يشاركوا فتدبير الجامعة. كينتخبوا 3 ديال الممثلين فمجلس الجامعة، و 3 فمجلس المؤسسة.">Les étudiants participent à la gestion via des représentants élus : 3 élus au Conseil de l'Université et 3 élus au Conseil de l'Établissement.</p>
+
+                <h3 class="trans" data-dar="مهام الجامعة">Les Missions de l'Université</h3>
+                <ul>
+                    <li class="trans" data-dar="نشر المعرفة، الثقافة، وتطوير البحث العلمي.">La diffusion du savoir, de la connaissance et de la culture.</li>
+                    <li class="trans" data-dar="تقوية الهوية الإسلامية والوطنية.">Contribution au renforcement de l'identité islamique et nationale.</li>
+                    <li class="trans" data-dar="إعداد الشباب لسوق الشغل والحياة المهنية.">La formation initiale et continue, et la préparation des jeunes à l'insertion professionnelle.</li>
+                </ul>
+            </div>
+
+            <div class="card" id="lmd">
+                <h2>3. L'Architecture Pédagogique (LMD)</h2>
+                <p class="trans" data-dar="نظام LMD كيعتمد على 3 د الأسلاك:">L'enseignement est structuré selon les trois cycles suivants :</p>
+                <ul>
+                    <li class="trans" data-dar="1. سلك الإجازة: 3 سنين مورا الباك (6 فصول)."><strong>Cycle Licence :</strong> dure 3 années (6 semestres).</li>
+                    <li class="trans" data-dar="2. سلك الماستر: عامين مورا الإجازة (4 فصول)."><strong>Cycle Master :</strong> dure 2 années (4 semestres) après la licence.</li>
+                    <li class="trans" data-dar="3. سلك الدكتوراه: 3 سنين مورا الماستر."><strong>Cycle Doctorat :</strong> dure 3 années après le master.</li>
+                </ul>
+
+                <h3 class="trans" data-dar="المصطلحات البيداغوجية">Concepts Fondamentaux</h3>
+                <ul>
+                    <li class="trans" data-dar="الفيلير (Filière): هي التخصص الدراسي، بحال القانون أو الاقتصاد."><strong>La Filière :</strong> Un cursus de formation comprenant un ensemble cohérent de modules.</li>
+                    <li class="trans" data-dar="السيمستر (Semestre): العام مقسوم لـ 2. كل سيمستر فيه تقريبا 16 سيمانة ديال القراية والامتحانات."><strong>Le Semestre :</strong> Période de formation d'environ 16 semaines (enseignement + évaluation).</li>
+                    <li class="trans" data-dar="الموديل (Module): هو الوحدة الأساسية. كل موديل فيه بين 40 و 50 ساعة ديال القراية."><strong>Le Module :</strong> L'unité fondamentale. Il a un volume horaire de 40 à 50 heures (enseignement + évaluation).</li>
+                </ul>
+            </div>
+
+            <div class="card" id="licence">
+                <h2>4. Le Cycle Licence (Nouvelle Génération)</h2>
+                <p class="trans" data-dar="هاد السلك فيه 180 كريدي موزعة على 3 سنين. كل سيمستر فيه 7 موديلات.">Le cycle licence totalise 180 crédits. Chaque semestre est composé de 7 modules.</p>
+                
+                <h4 class="trans" data-dar="السنة الأولى (S1 & S2): التأسيس">Année 1 : Fondations</h4>
+                <ul>
+                    <li class="trans" data-dar="10 موديلات ديال التخصص (La Majeure).">10 modules disciplinaires (la majeure).</li>
+                    <li class="trans" data-dar="2 موديلات ديال اللغات الأجنبية.">2 modules de langues étrangères.</li>
+                    <li class="trans" data-dar="موديل المهارات الرقمية (Digital Skills).">1 module Digital Skills.</li>
+                    <li class="trans" data-dar="موديل المهارات الناعمة (Soft Skills) بحال MTU.">1 module Soft Skills (ex: Méthodologie du travail universitaire).</li>
+                </ul>
+
+                <h4 class="trans" data-dar="السنة الثانية (S3 & S4): الجذع المشترك">Année 2 : Tronc Commun</h4>
+                <p class="trans" data-dar="فاللخر د هاد العام كتاخد ديبلوم DEUG. كاين موديل جديد ديال الثقافة والفنون.">Elle comprend 10 modules disciplinaires, des langues, des Soft Skills et le module <strong>Culture & Art Skills</strong> (histoire et patrimoine du Maroc). Elle est sanctionnée par le <strong>DEUG</strong>.</p>
+
+                <h4 class="trans" data-dar="السنة الثالثة (S5 & S6): التخصص والتمهين">Année 3 : Spécialisation</h4>
+                <p class="trans" data-dar="كتعمق فالتخصص وكتقرا Professional Skills باش توجد للخدمة.">Focus sur la spécialisation et la professionnalisation via le module <strong>Professional Skills</strong> pour préparer l'étudiant au marché du travail.</p>
+            </div>
+
+            <div class="card" id="evaluation">
+                <h2>5. Évaluation, Validation & Crédits</h2>
+                <h3 class="trans" data-dar="نقطة الموديل">Note du Module</h3>
+                <p class="trans" data-dar="النقطة هي معدل بين المراقبة المستمرة والامتحان النهائي.">La note finale d'un module résulte de la moyenne pondérée de la note des Contrôles Continus (CC) et de la note de l'Examen Final.</p>
+                <p class="trans" data-dar="المراقبة المستمرة تقدر تكون: فروض، عروض، مشاركة، أعمال تطبيقية (TP).">Le contrôle continu peut prendre plusieurs formes : tests, devoirs, exposés, rapports de stage, participation, travaux pratiques...</p>
+
+                <h3 class="trans" data-dar="شروط النجاح">Validation et Capitalisation</h3>
+                <div class="box-info">
+                    <ul>
+                        <li class="trans" data-dar="باش تفاليدي موديل: خاص تجيب 10/20 للفوق."><strong>Validation du module :</strong> Un module est acquis si sa note est supérieure ou égale à 10/20.</li>
+                        <li class="trans" data-dar="باش تفاليدي سيمستر: خاص المعدل العام يكون 10، وبلا ما تكون عندك نقطة قل من 5."><strong>Validation du semestre :</strong> Moyenne générale ≥ 10/20 et aucune note inférieure à 5/20.</li>
+                    </ul>
+                </div>
+
+                <div class="box-warn">
+                    <h4 class="trans" data-dar="النقطة الموجبة للرسوب (Note Éliminatoire)">🚫 Note Éliminatoire (< 5/20)</h4>
+                    <p class="trans" data-dar="أي نقطة قل من 5/20 كتعتبر موجبة للرسوب. يعني واخا تجيب معدل عام 14، إلا عندك 3 فشي مادة، ماغتنجحش فالسيمستر حتى تعاود ديك المادة.">Une note inférieure à 5/20 est éliminatoire. Elle empêche la compensation. L'étudiant doit repasser ce module lors de la session de rattrapage.</p>
+                </div>
+
+                <h3 class="trans" data-dar="نظام الكريدي">Système de Crédits (ECTS)</h3>
+                <p class="trans" data-dar="الكريدي هو القيمة د المادة. إلا نجحتي فالمادة كتربح الكريديات ديالها ديما (Capitalisation).">Les crédits sont capitalisables (acquis définitivement une fois le module validé). Le diplôme nécessite 180 crédits.</p>
+                <ul>
+                    <li class="trans" data-dar="سيمستر واحد = 30 كريدي.">1 Semestre = 30 Crédits.</li>
+                    <li class="trans" data-dar="موديل التخصص = 4 حتى 5 كريدي.">Module Disciplinaire = 4 à 5 Crédits.</li>
+                    <li class="trans" data-dar="موديل المهارات/اللغات = 3 كريدي.">Module Langues / Skills = 3 Crédits.</li>
+                </ul>
+            </div>
+
+            <div class="card" id="enseignement">
+                <h2>6. Modes d'Enseignement</h2>
+                <ul>
+                    <li class="trans" data-dar="حضوري (Présentiel): القراية فالقسم مع الأستاذ."><strong>Présentiel :</strong> Se déroule en temps réel avec présence physique ou virtuelle simultanée.</li>
+                    <li class="trans" data-dar="عن بعد (À distance): قراية فمنصة إلكترونية (Capsules, PDF). كيحتاج الاستقلالية."><strong>À distance :</strong> Formation en différé via une plateforme numérique. Demande de l'autonomie.</li>
+                    <li class="trans" data-dar="هجين (Hybride): مخلط بيناتهم."><strong>Hybride :</strong> Combinaison du présentiel et du distanciel.</li>
+                </ul>
+                <p class="trans" data-dar="كاين حتى التدريس بالتناوب (Alternance) بين الجامعة والمقاولة.">L'enseignement peut aussi être en <strong>Alternance</strong> (université et secteur socio-économique).</p>
+            </div>
+
+            <div class="card" id="reglement">
+                <h2>7. Règlement, Discipline & Plagiat</h2>
+                <h3 class="trans" data-dar="السرقة الأدبية (Plagiat)">Propriété Intellectuelle et Plagiat</h3>
+                <p class="trans" data-dar="نقل النصوص بلا ما تذكر المصدر سرقة وغش كيتعاقب عليه.">Le plagiat consiste à copier une ressource sans mentionner sa référence. C'est une fraude grave sanctionnée par le règlement disciplinaire.</p>
+                <p class="trans" data-dar="الجامعات عندها براسيجيات (Logiciels) كيكشفو الغش فالبحوث.">Les établissements disposent de logiciels anti-plagiat pour vérifier les travaux des étudiants.</p>
+                
+                <h3 class="trans" data-dar="إعادة التوجيه (Passerelles)">Les Passerelles</h3>
+                <p class="trans" data-dar="ممكن تبدل الشعبة أو الكلية وتحتفظ بالمواد لي نجحتي فيهم.">Elles permettent à l'étudiant de se réorienter vers une autre filière tout en capitalisant les modules déjà acquis.</p>
+                
+                <h3 class="trans" data-dar="مراكز التميز">Centres d'Excellence</h3>
+                <p class="trans" data-dar="فيليرات خاصة كيدخلو ليها المتفوقين مورا ما كيشدو DEUG (بعد عامين).">Filières sélectives accessibles après validation du DEUG (S4) sur critères d'excellence.</p>
+            </div>
+
+            <div class="card" id="onousc">
+                <h2>8. Services Sociaux (ONOUSC)</h2>
+                <p class="trans" data-dar="المكتب الوطني (ONOUSC) هو اللي كيهتم بالجانب الاجتماعي للطالب:">L'Office National des Œuvres Universitaires, Sociales et Culturelles (ONOUSC) offre :</p>
+                <ul>
+                    <li class="trans" data-dar="🏠 السكن فالحي الجامعي."><strong>L'hébergement :</strong> Cités universitaires.</li>
+                    <li class="trans" data-dar="🍽️ المطعم الجامعي."><strong>La restauration :</strong> Restaurants universitaires subventionnés.</li>
+                    <li class="trans" data-dar="💰 المنحة الدراسية (Minha)."><strong>Les bourses :</strong> Aides financières selon critères.</li>
+                    <li class="trans" data-dar="🏥 التغطية الصحية (AMO)."><strong>La couverture sanitaire :</strong> Assurance Maladie Obligatoire (AMO) pour étudiants.</li>
+                    <li class="trans" data-dar="🎨 الأنشطة الثقافية والرياضية."><strong>Activités :</strong> Culturelles et sportives.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="view-quiz" class="view-section">
+            <div class="quiz-wrapper">
+                <div class="quiz-header">
+                    <span>Question : <span id="q-num">1</span> / 50</span>
+                    <span>Score : <span id="q-score">0</span></span>
+                </div>
+                <div class="progress"><div class="progress-bar" id="prog-bar"></div></div>
+                <div id="q-area">
+                    <div class="q-text" id="q-txt">Chargement...</div>
+                    <div class="opts" id="q-opts"></div>
+                    <div class="feedback" id="q-fb" style="margin-top:20px; padding:15px; border-radius:8px; text-align:left; display:none;"></div>
+                    <div style="text-align:right; margin-top:20px;">
+                        <button class="btn-action btn-tab active" id="btn-next" onclick="nextQ()" disabled>Suivant ➜</button>
+                    </div>
+                </div>
+                <div id="q-result" style="display:none; padding:20px;">
+                    <h2>Quiz Terminé !</h2>
+                    <p style="font-size:3.5rem; color:var(--primary); font-weight:bold; margin:20px 0;"><span id="f-score">0</span>%</p>
+                    <button class="btn-action btn-tab active" onclick="startQuiz()" style="margin:0 auto;">Rejouer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- UI CORE ---
+        function showView(view) {
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + view).classList.add('active');
+            document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + view).classList.add('active');
+            if(view === 'quiz') startQuiz();
+        }
+
+        function navTo(id) {
+            showView('cours');
+            setTimeout(() => {
+                document.getElementById(id).scrollIntoView({behavior:'smooth'});
+                document.querySelector('.sidebar').classList.remove('open');
+            }, 100);
+        }
+
+        // --- SWAP LOGIC ---
+        document.querySelectorAll('.trans').forEach(el => {
+            el.setAttribute('data-fr', el.innerHTML);
+            el.onclick = function(e) {
+                e.stopPropagation();
+                if(this.classList.contains('is-darija')) {
+                    this.innerHTML = this.getAttribute('data-fr');
+                    this.classList.remove('is-darija');
+                } else {
+                    this.innerHTML = this.getAttribute('data-dar');
+                    this.classList.add('is-darija');
+                }
+            }
+        });
+
+        // --- QUIZ LOGIC (50 Q) ---
+        const questions = [
+            {q:"Quel ministère assure la tutelle de l'enseignement supérieur ?", o:["Éducation Nationale", "Enseignement Supérieur", "Culture", "Intérieur"], c:1, i:"Ministère de l'Enseignement Supérieur, Recherche Scientifique et Innovation."},
+            {q:"Les 3 composantes du système sont :", o:["Public, Privé, PPP", "Public, Privé, Missions", "Lycée, Fac, École", "Marocain, Mixte, Étranger"], c:0, i:"Public, Privé, et Partenariat Public-Privé."},
+            {q:"Un établissement à accès ouvert est pour :", o:["Les bacheliers avec mention", "Tous les bacheliers", "Ceوس الذين يدفعون", "الأجانب"], c:1, i:"Ouvert à tous les titulaires du Bac."},
+            {q:"Accès régulé signifie :", o:["Accès pour tous", "Sélection/Concours", "Pas de diplôme", "Rien"], c:1, i:"Admission limitée par dossier ou concours."},
+            {q:"Qui dirige l'Université ?", o:["Le Doyen", "Le Président", "Le Directeur", "Le Secrétaire"], c:1, i:"Le Président dirige l'Université."},
+            {q:"Qui dirige une Faculté ?", o:["Président", "Doyen", "Directeur", "Recteur"], c:1, i:"C'est le Doyen."},
+            {q:"Combien d'étudiants élus au Conseil d'Université ?", o:["1", "2", "3", "5"], c:2, i:"3 représentants."},
+            {q:"LMD signifie :", o:["Licence, Master, Doctorat", "Lycée, Moyen, Diplôme", "Lecture, Musique, Danse", "Libre, Moyen, Dur"], c:0, i:"Licence (3 ans), Master (5 ans), Doctorat (8 ans)."},
+            {q:"Une filière est :", o:["Une salle", "Un cursus de formation", "Un examen", "Un bureau"], c:1, i:"Un ensemble de modules."},
+            {q:"Un module dure :", o:["10h", "20h", "40-50h", "100h"], c:2, i:"40 à 50 heures."},
+            {q:"La Licence dure :", o:["2 ans", "3 ans (6 semestres)", "4 ans", "5 ans"], c:1, i:"6 semestres."},
+            {q:"Modules par semestre :", o:["5", "6", "7", "8"], c:2, i:"7 modules."},
+            {q:"Le Tronc Commun correspond à :", o:["S1-S2", "S1 à S4", "S5-S6", "S6"], c:1, i:"Les 2 premières années."},
+            {q:"Module 'Culture & Art Skills' en :", o:["S1", "Tronc Commun (S3/S4)", "S6", "Master"], c:1, i:"En 2ème année."},
+            {q:"Année de spécialisation :", o:["1ère", "2ème", "3ème (S5/S6)", "4ème"], c:2, i:"La 3ème année."},
+            {q:"Validation module :", o:["05/20", "10/20", "12/20", "08/20"], c:1, i:"Note ≥ 10/20."},
+            {q:"Note éliminatoire :", o:["<10", "<7", "<5", "<12"], c:2, i:"Moins de 5/20."},
+            {q:"Compensation nécessite :", o:["Moyenne 10", "Moyenne 10 + Pas de note <5", "12 partout", "Rien"], c:1, i:"Moyenne 10 sans note éliminatoire."},
+            {q:"Crédits Licence :", o:["100", "180", "200", "300"], c:1, i:"180 ECTS."},
+            {q:"Crédits Semestre :", o:["20", "30", "40", "60"], c:1, i:"30 crédits."},
+            {q:"Enseignement à distance :", o:["Classe", "Plateforme numérique", "Téléphone", "Papier"], correct: 1, info: "Via plateforme (E-learning)." },
+            {q: "Enseignement hybride :", options: ["Mixte", "Arabe", "Sport", "Nuit"], correct: 0, info: "Présentiel + Distance." },
+            {q: "Le plagiat est :", options: ["Bien", "Interdit/Sanctionné", "Conseillé", "Obligatoire"], correct: 1, info: "Faute grave." },
+            {q: "Tutorat sert à :", options: ["Surveiller", "Aider/Intéجر", "Punir", "Payer"], correct: 1, info: "Accompagner l'étudiant." },
+            {q: "Passerelle permet de :", options: ["Changer de filière", "Arrêter", "Redoubler", "Voyager"], correct: 0, info: "Réorientation." },
+            {q: "Scolarité gère :", options: ["Bourse", "Inscriptions/Diplômes", "Resto", "Cours"], correct: 1, info: "Administratif." },
+            {q: "ONOUSC gère :", options: ["Examens", "Social (Bourse, Logement)", "Profs", "Notes"], correct: 1, info: "Vie étudiante." },
+            {q: "AMO c'est :", options: ["Aide", "Assurance Maladie", "Association", "Ami"], correct: 1, info: "Couverture santé." },
+            {q: "Avis d'examen affichés :", options: ["Café", "Département/Site Web", "Maison", "Rue"], correct: 1, info: "Canaux officiels." },
+            {q: "Diplôme après S4 :", options: ["Bac", "DEUG", "Licence", "Master"], correct: 1, info: "Bac + 2." },
+            {q: "Soft Skills S1 :", options: ["Sport", "MTU", "Théâtre", "Cuisine"], correct: 1, info: "Méthodologie." },
+            {q: "Nb élus Conseil Établissement :", options: ["1", "3", "5", "10"], correct: 1, info: "3 représentants." },
+            {q: "Crédits module disciplinaire :", options: ["1-2", "3", "4-5", "10"], correct: 2, info: "4 à 5 crédits." },
+            {q: "Crédits module Langue :", options: ["2", "3", "4", "5"], correct: 1, info: "3 crédits." },
+            {q: "PPP signifie :", options: ["Partenariat Public-Privé", "Petit Pain", "Pour Pas Payer", "Privé Pur"], correct: 0, info: "Fondation non lucrative." },
+            {q: "Note finale module :", options: ["Exam seul", "Moyenne (Exam + CC)", "Note TD", "Hasard"], correct: 1, info: "Pondération." },
+            {q: "Fraude examen :", options: ["Rien", "Sanctions", "Prix", "Pause"], correct: 1, info: "Conseil disciplinaire." },
+            {q: "Professional Skills en :", options: ["S1", "S3", "S5/S6", "Jamais"], correct: 2, info: "3ème année." },
+            {q: "Durée semestre (semaines) :", options: ["5", "10", "16", "30"], correct: 2, info: "Env. 16 semaines." },
+            {q: "Digital Skills c'est :", options: ["Numérique", "Langues", "Droit", "Histoire"], correct: 0, info: "Compétences digitales." },
+            {q: "Centre d'Excellence accès :", options: ["Bac", "Après S4", "Licence", "Jamais"], correct: 1, info: "Après DEUG." },
+            {q: "Travail personnel :", options: ["Interdit", "Autonomie requise", "Inutile", "Optionnel"], correct: 1, info: "Indispensable." },
+            {q: "Participation étudiante :", options: ["Non", "Oui (Conseils)", "Parfois", "Jamais"], correct: 1, info: "Démocratie universitaire." },
+            {q: "Système marocain :", options: ["Public", "Privé", "Public, Privé, PPP", "Étranger"], correct: 2, info: "3 composantes." },
+            {q: "Module validé est :", options: ["Perdu", "Acquis (Capitalisable)", "A refaire", "Provisoire"], correct: 1, info: "Définitif." },
+            {q: "Rattrapage sert à :", options: ["Dormir", "Valider modules échoués", "Jouer", "Manger"], correct: 1, info: "2ème session." },
+            {q: "Carte étudiant délivrée par :", options: ["Scolاريتي", "Profs", "Police", "Commune"], correct: 0, info: "Service scolarité." },
+            {q: "Mission université :", options: ["Argent", "Savoir/Recherche", "Politique", "Sport"], correct: 1, info: "Identité et Savoir." },
+            {q: "S3/S4 c'est :", options: ["Fin", "Tronc Commun", "Début", "Master"], correct: 1, info: "2ème année." },
+            {q: "MTU aide à :", options: ["Rien", "Réussir/S'intégrer", "Perdre temps", "Dormir"], correct: 1, info: "Succès universitaire." }
+        ];
+
+        let qIdx = 0, score = 0, shuffledQ = [];
+
+        function startQuiz() {
+            shuffledQ = [...questions].sort(() => 0.5 - Math.random());
+            qIdx = 0; score = 0;
+            document.getElementById('q-score').innerText = '0';
+            document.getElementById('q-area').style.display = 'block';
+            document.getElementById('q-result').style.display = 'none';
+            loadQ();
+        }
+
+        function loadQ() {
+            if(qIdx >= shuffledQ.length) {
+                document.getElementById('q-area').style.display = 'none';
+                document.getElementById('q-result').style.display = 'block';
+                document.getElementById('f-score').innerText = Math.round((score/shuffledQ.length)*100);
+                return;
+            }
+            const q = shuffledQ[qIdx];
+            document.getElementById('q-num').innerText = qIdx + 1;
+            document.getElementById('q-txt').innerText = q.q;
+            document.getElementById('prog-bar').style.width = (qIdx/shuffledQ.length*100) + '%';
+            
+            const o = document.getElementById('q-opts'); o.innerHTML = '';
+            q.o.forEach((opt, i) => {
+                const b = document.createElement('button');
+                b.className = 'opt-btn'; b.innerText = opt;
+                b.onclick = () => check(i, b, q);
+                o.appendChild(b);
+            });
+            document.getElementById('q-fb').style.display = 'none';
+            document.getElementById('btn-next').disabled = true;
+        }
+
+        function check(idx, btn, q) {
+            document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+            const fb = document.getElementById('q-fb');
+            fb.style.display = 'block';
+            if(idx === q.c) {
+                btn.classList.add('correct'); score++;
+                fb.innerHTML = "✅ <b>Correct !</b> " + q.i;
+                fb.style.background = "#dcfce7";
+            } else {
+                btn.classList.add('wrong');
+                document.querySelectorAll('.opt-btn')[q.c].classList.add('correct');
+                fb.innerHTML = "❌ <b>Faux.</b> " + q.i;
+                fb.style.background = "#fee2e2";
+            }
+            document.getElementById('q-score').innerText = score;
+            document.getElementById('btn-next').disabled = false;
+        }
+
+        function nextQ() { qIdx++; loadQ(); }
+    </script>
+</body>
+</html>
