@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Skills - Partie 1</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Dark Blue */
+            --accent-color: #3498db;  /* Tech Blue */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #ecf0f1;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.5em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.2em; }
+
+        .hint {
+            background-color: #d6eaf8;
+            color: #154360;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a9cce3;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--accent-color);
+            margin-top: 25px;
+            font-size: 1.2em;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #eee;
+        }
+
+        .swap-block:hover {
+            background-color: #eaf2f8;
+            border-color: var(--accent-color);
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+
+        ul { padding-left: 20px; list-style: none; }
+        li { margin-bottom: 8px; }
+        li::before { content: "🔹"; margin-right: 10px; color: var(--accent-color); }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+        .process-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .process-box {
+            padding: 10px 20px;
+            background: #34495e;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .arrow { font-size: 1.5em; color: var(--accent-color); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Partie 1 : Vocabulaire de base & Hardware</h1>
+        <p>Introduction complète au système informatique</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur les blocs de texte pour voir la traduction en Arabe !
+        <br> اضغط على النصوص لترجمتها
+    </div>
+
+    <div class="card">
+        <h2>1. Vocabulaire de base</h2>
+        
+        <h3>A. Donnée vs Information</h3>
+        <p class="swap-block" 
+           data-fr="Donnée (Data) : Élément brut, non interprété (ex: 27, un pixel rouge). C'est la matière première."
+           data-ar="البيانات (Donnée): عنصر خام غير مفسر (مثال: الرقم 27، بكسل أحمر). هي المادة الأولية.">
+           Donnée (Data) : Élément brut, non interprété (ex: 27, un pixel rouge).
+        </p>
+        <p class="swap-block" 
+           data-fr="Information : Donnée mise en contexte et interprétée qui a du sens (ex: 'Il fait 27°C dans la salle')."
+           data-ar="المعلومة (Information): بيانات وضعت في سياق وتم تفسيرها لتعطي معنى (مثال: 'درجة الحرارة 27 مئوية في القاعة').">
+           Information : Donnée mise en contexte et interprétée qui a du sens.
+        </p>
+
+        <h3>B. Les formes de l'information</h3>
+        <p>L'information peut se présenter sous plusieurs formes :</p>
+        <ul>
+            <li class="swap-block" data-fr="Texte (Documents, emails)" data-ar="نصوص (مستندات، رسائل إلكترونية)">Texte (Documents, emails)</li>
+            <li class="swap-block" data-fr="Nombre (Mesures, notes, prix)" data-ar="أرقام (قياسات، نقط، أسعار)">Nombre (Mesures, notes, prix)</li>
+            <li class="swap-block" data-fr="Image (Photos, schémas)" data-ar="صور (فوتوغرافيا، رسوم بيانية)">Image (Photos, schémas)</li>
+            <li class="swap-block" data-fr="Audio & Vidéo (Musique, films)" data-ar="صوت وفيديو (موسيقى، أفلام)">Audio & Vidéo</li>
+            <li class="swap-block" data-fr="Signal de capteur (Température, GPS)" data-ar="إشارات المستشعرات (حرارة، GPS)">Signal de capteur</li>
+        </ul>
+
+        <h3>C. Traitement de l'information</h3>
+        <p class="swap-block" 
+           data-fr="C'est l'ensemble des opérations effectuées sur les données pour produire un résultat utile (Calculer, Trier, Modifier...)."
+           data-ar="هي مجموعة العمليات التي تجرى على البيانات لإنتاج نتيجة مفيدة (حساب، فرز، تعديل...).">
+           C'est l'ensemble des opérations effectuées sur les données pour produire un résultat utile.
+        </p>
+        
+        <div class="process-flow">
+            <div class="process-box">Entrée (Données)</div>
+            <div class="arrow">➡</div>
+            <div class="process-box" style="background:#e67e22;">Traitement</div>
+            <div class="arrow">➡</div>
+            <div class="process-box">Sortie (Résultat)</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>2. Système Informatique & Codage</h2>
+
+        <h3>A. Définition</h3>
+        <p class="swap-block" 
+           data-fr="Un système informatique est un ensemble de MATÉRIEL (Hardware) et de LOGICIELS (Software) pour traiter l'information."
+           data-ar="النظام المعلوماتي هو مجموعة من العتاد (Hardware) والبرمجيات (Software) لمعالجة المعلومات.">
+           Un système informatique est un ensemble de MATÉRIEL (Hardware) et de LOGICIELS (Software).
+        </p>
+
+        <h3>B. Codage Binaire (Le langage machine)</h3>
+        <p class="swap-block" 
+           data-fr="L'ordinateur ne comprend que des 0 et des 1. C'est l'information binaire."
+           data-ar="الكمبيوتر لا يفهم سوى 0 و 1. هذه هي المعلومة الثنائية.">
+           L'ordinateur ne comprend que des 0 et des 1. C'est l'information binaire.
+        </p>
+        <ul>
+            <li class="swap-block" data-fr="Bit : La plus petite unité (0 ou 1)." data-ar="البت (Bit): أصغر وحدة (0 أو 1).">Bit : La plus petite unité (0 ou 1).</li>
+            <li class="swap-block" data-fr="Octet (Byte) : Groupe de 8 bits. C'est l'unité de base de mesure." data-ar="الأوكتي (Octet): مجموعة من 8 بتات. هي وحدة القياس الأساسية.">Octet (Byte) : Groupe de 8 bits.</li>
+        </ul>
+
+        <h3>C. Unités de mesure (Conversions)</h3>
+        <table>
+            <tr><th>Unité</th><th>Équivalent</th></tr>
+            <tr><td><strong>1 Ko</strong> (Kilo-octet)</td><td>1024 octets</td></tr>
+            <tr><td><strong>1 Mo</strong> (Méga-octet)</td><td>1024 Ko</td></tr>
+            <tr><td><strong>1 Go</strong> (Giga-octet)</td><td>1024 Mo</td></tr>
+            <tr><td><strong>1 To</strong> (Téra-octet)</td><td>1024 Go</td></tr>
+        </table>
+
+        <h3>D. Taille approximative des fichiers</h3>
+        <table>
+            <tr><th>Type de fichier</th><th>Taille Moyenne</th></tr>
+            <tr><td>Page de texte</td><td>~30 Ko</td></tr>
+            <tr><td>Photo / Chanson MP3</td><td>3 à 5 Mo</td></tr>
+            <tr><td>Film HD (2 heures)</td><td>4 à 6 Go</td></tr>
+            <tr><td>Capacité Clé USB</td><td>16 à 128 Go</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>3. L'Unité Centrale (Le Boîtier)</h2>
+        <p>C'est le boîtier qui protège les composants internes. Voici ce qu'il contient :</p>
+
+        <h3>A. La Carte Mère (Motherboard)</h3>
+        <p class="swap-block" 
+           data-fr="C'est le circuit principal qui connecte tous les composants (CPU, RAM, Disque...) entre eux."
+           data-ar="هي الدارة الرئيسية التي تربط جميع المكونات (المعالج، الرام، القرص...) فيما بينها.">
+           C'est le circuit principal qui connecte tous les composants entre eux.
+        </p>
+
+        <h3>B. Le Processeur (CPU)</h3>
+        <p class="swap-block" 
+           data-fr="C'est le CERVEAU de l'ordinateur. Il traite les instructions et fait les calculs."
+           data-ar="هو عقل الكمبيوتر (Cerveau). يعالج التعليمات ويقوم بالعمليات الحسابية.">
+           C'est le CERVEAU de l'ordinateur. Il traite les instructions.
+        </p>
+        <p class="swap-block" 
+           data-fr="Fabricants principaux : INTEL (Core i3, i5, i7...) et AMD (Ryzen)."
+           data-ar="أهم المصنعين: INTEL و AMD.">
+           Fabricants principaux : INTEL et AMD.
+        </p>
+
+        <h3>C. La Mémoire Vive (RAM)</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="Mémoire temporaire et très rapide."
+                data-ar="ذاكرة مؤقتة وسريعة جداً.">
+                Mémoire temporaire et très rapide.
+            </li>
+            <li class="swap-block" 
+                data-fr="Stocke les programmes en cours d'exécution. Elle se vide quand on éteint le PC (Volatile)."
+                data-ar="تخزن البرامج قيد التشغيل. تفرغ عند إطفاء الحاسوب (متطايرة).">
+                Stocke les programmes en cours. Elle se vide quand on éteint le PC (Volatile).
+            </li>
+        </ul>
+
+        <h3>D. Alimentation & Ventilation</h3>
+        <ul>
+            <li class="swap-block" data-fr="Bloc d'alimentation (PSU) : Convertit le courant (220V) pour les composants." data-ar="مزوّد الطاقة: يحول التيار الكهربائي للمكونات.">Bloc d'alimentation (PSU).</li>
+            <li class="swap-block" data-fr="Ventilateurs : Refroidissent le CPU et le boîtier (Air chaud vers l'extérieur)." data-ar="المراوح: تبرد المعالج والعلبة.">Ventilateurs : Refroidissement.</li>
+        </ul>
+
+        <h3>E. Carte Graphique (GPU)</h3>
+        <p class="swap-block" 
+           data-fr="Transforme les données en images affichées sur l'écran (Indispensable pour les jeux et la 3D)."
+           data-ar="تحول البيانات إلى صور تعرض على الشاشة (ضرورية للألعاب والـ 3D).">
+           Transforme les données en images affichées sur l'écran.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>4. Le Stockage (Mémoire de Masse)</h2>
+        <p class="swap-block" 
+           data-fr="Sert à conserver les données de manière permanente (OS, fichiers) même PC éteint."
+           data-ar="يستخدم لحفظ البيانات بشكل دائم (النظام، الملفات) حتى عند إطفاء الجهاز.">
+           Sert à conserver les données de manière permanente.
+        </p>
+
+        <h3>Comparaison HDD vs SSD (Important !)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Critère</th>
+                    <th>HDD (Disque Dur Classique)</th>
+                    <th>SSD (Disque Électronique)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Technologie</strong></td>
+                    <td class="swap-block" data-fr="Mécanique (Plateaux)" data-ar="ميكانيكي (أقراص)">Mécanique</td>
+                    <td class="swap-block" data-fr="Électronique (Puces)" data-ar="إلكتروني (شرائح)">Électronique</td>
+                </tr>
+                <tr>
+                    <td><strong>Vitesse</strong></td>
+                    <td class="swap-block" data-fr="Lente" data-ar="بطيئة">Lente</td>
+                    <td class="swap-block" data-fr="Très Rapide" data-ar="سريعة جداً">Très Rapide 🚀</td>
+                </tr>
+                <tr>
+                    <td><strong>Résistance</strong></td>
+                    <td class="swap-block" data-fr="Fragile (chocs)" data-ar="هش (للصدمات)">Fragile</td>
+                    <td class="swap-block" data-fr="Solide (Résistant)" data-ar="صلب (مقاوم)">Solide 💪</td>
+                </tr>
+                <tr>
+                    <td><strong>Prix</strong></td>
+                    <td class="swap-block" data-fr="Moins cher" data-ar="أرخص">Moins cher</td>
+                    <td class="swap-block" data-fr="Plus cher" data-ar="أغلى">Plus cher</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>5. Les Périphériques</h2>
+        <p>Matériel externe connecté à l'unité centrale.</p>
+
+        <h3>A. Types de périphériques</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="Périphériques d'ENTRÉE : Envoient l'info vers le PC (Clavier, Souris, Micro, Webcam, Scanner)."
+                data-ar="أجهزة الإدخال: ترسل المعلومات إلى الحاسوب (لوحة المفاتيح، الفأرة، الميكروفون، الكاميرا، الماسح).">
+                <strong>Entrée</strong> : Clavier, Souris, Webcam, Scanner.
+            </li>
+            <li class="swap-block" 
+                data-fr="Périphériques de SORTIE : Reçoivent l'info du PC (Écran, Imprimante, Haut-parleurs, Projecteur)."
+                data-ar="أجهزة الإخراج: تستقبل المعلومات من الحاسوب (الشاشة، الطابعة، مكبرات الصوت، المسلط الضوئي).">
+                <strong>Sortie</strong> : Écran, Imprimante, Haut-parleurs.
+            </li>
+            <li class="swap-block" 
+                data-fr="Entrée/Sortie (Mixte) : Les deux sens (Écran tactile, Casque avec micro, Imprimante multifonction)."
+                data-ar="إدخال/إخراج: الاتجاهين (شاشة اللمس، سماعة بميكروفون، طابعة متعددة الوظائف).">
+                <strong>Mixte</strong> : Écran tactile, Casque micro.
+            </li>
+            <li class="swap-block" 
+                data-fr="Stockage externe : Clé USB, Disque dur externe, Carte SD."
+                data-ar="تخزين خارجي: فلاش ميموري، قرص صلب خارجي، بطاقة SD.">
+                <strong>Stockage</strong> : Clé USB, Disque dur externe.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>6. Les Connecteurs (Ports)</h2>
+        <p>Permettent de brancher les périphériques à la carte mère.</p>
+
+        <table>
+            <tr>
+                <th>Port</th>
+                <th>Usage / Périphérique</th>
+            </tr>
+            <tr>
+                <td><strong>USB</strong> (Type A, C...)</td>
+                <td class="swap-block" data-fr="Universel : Clé USB, Souris, Clavier, Imprimante..." data-ar="عالمي: فلاشة، فأرة، لوحة مفاتيح، طابعة...">Clé USB, Souris, Clavier...</td>
+            </tr>
+            <tr>
+                <td><strong>HDMI / VGA / DisplayPort</strong></td>
+                <td class="swap-block" data-fr="Affichage : Écran, Vidéoprojecteur" data-ar="العرض: الشاشة، البروجيكتور">Écran, Vidéoprojecteur</td>
+            </tr>
+            <tr>
+                <td><strong>Ethernet (RJ45)</strong></td>
+                <td class="swap-block" data-fr="Réseau : Câble Internet (Modem/Routeur)" data-ar="الشبكة: كابل الإنترنت">Câble Internet (Réseau)</td>
+            </tr>
+            <tr>
+                <td><strong>Jack (Audio)</strong></td>
+                <td class="swap-block" data-fr="Son : Casque, Micro, Haut-parleurs" data-ar="الصوت: سماعات، ميكروفون">Casque, Micro</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

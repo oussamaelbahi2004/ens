@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 0002-B : Le Pistil</title>
+    <style>
+        :root {
+            --primary-color: #e91e63; /* Rose pour Femelle/Pistil */
+            --secondary-color: #8e44ad; /* Violet */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #fdfefe;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.2em; }
+
+        .hint {
+            background-color: #fce4ec;
+            color: #ad1457;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #f8bbd0;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #c2185b;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #4a235a;
+            margin-top: 25px;
+            background: #f4ecf7;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #f0f0f0;
+        }
+
+        .swap-block:hover {
+            background-color: #fce4ec;
+            border-color: var(--primary-color);
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            color: #c2185b;
+        }
+
+        /* Image Container */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 2px dashed #e91e63;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        ul { padding-left: 20px; list-style: none; }
+        li { margin-bottom: 10px; }
+        li::before { content: "🌺"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 0002-B : Le Pistil</h1>
+        <p>L'organe reproducteur femelle (Gynécée)</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur les textes pour afficher la traduction arabe.
+    </div>
+
+    <div class="card">
+        <h2>1. Morphologie du Pistil (Gynécée)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Le pistil est l'organe reproducteur femelle. Il est formé d'un ou plusieurs carpelles (feuilles modifiées)."
+           data-ar="المدقة هي العضو التناسلي الأنثوي. تتكون من كربلة واحدة أو أكثر (أوراق محورة).">
+           Le pistil est l'organe femelle, formé de carpelles.
+        </p>
+
+        <div class="diagram-container">
+            
+
+
+
+            <img src="https://as2.ftcdn.net/jpg/07/39/47/17/1000_F_739471777_WJ2iiHFnI95aJKBVarienKX6JK8hZwCC.jpg" alt="Schéma Pistil">
+            <div class="caption">Figure 1 : Coupe longitudinale du Pistil (Stigmate, Style, Ovaire).</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Il est composé de trois parties principales :"
+           data-ar="تتكون من ثلاثة أجزاء رئيسية:">
+           Il est composé de trois parties principales :
+        </p>
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Le Stigmate : Extrémité supérieure, souvent collante, qui reçoit les grains de pollen."
+                data-ar="1. الميسم (Stigmate): الطرف العلوي، غالباً لزج، يستقبل حبوب اللقاح.">
+                1. Le Stigmate (Réception du pollen).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Le Style : Une colonne qui relie le stigmate à l'ovaire (lieu de passage du tube pollinique)."
+                data-ar="2. القلم (Style): عمود يربط الميسم بالمبيض (ممر أنبوب اللقاح).">
+                2. Le Style (Conduction).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. L'Ovaire : La partie renflée à la base qui contient et protège les ovules."
+                data-ar="3. المبيض (Ovaire): الجزء المنتفخ في القاعدة الذي يحتوي ويحمي البويضات.">
+                3. L'Ovaire (Protection des ovules).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Organisation de l'Ovaire</h2>
+        
+        <p class="swap-block" 
+           data-fr="L'ovaire est formé de feuilles repliées appelées Carpelles. Les ovules sont fixés sur une zone appelée Placenta."
+           data-ar="يتكون المبيض من أوراق ملتفة تسمى الكرابل (Carpelles). تثبت البويضات على منطقة تسمى المشيمة (Placenta).">
+           Ovaire formé de carpelles. Ovules fixés sur le placenta.
+        </p>
+
+        <p class="swap-block" 
+           data-fr="Selon les espèces, l'ovaire peut être uni-ovulé (1 ovule) ou pluri-ovulé (plusieurs ovules)."
+           data-ar="حسب الأنواع، قد يكون المبيض وحيد البويضة (بويضة واحدة) أو متعدد البويضات (عدة بويضات).">
+           Ovaire uni-ovulé ou pluri-ovulé.
+        </p>
+
+        <p class="swap-block" style="background-color: #fce4ec; border-left: 4px solid #e91e63;"
+           data-fr="Après fécondation, l'ovaire deviendra le FRUIT et les ovules deviendront les GRAINES."
+           data-ar="بعد الإخصاب، يتحول المبيض إلى ثمرة وتتحول البويضات إلى بذور.">
+           👉 Futur : Ovaire = Fruit / Ovules = Graines.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>3. Structure détaillée de l'Ovule</h2>
+        
+        <p class="swap-block" 
+           data-fr="L'ovule est un petit organe ovoïde rattaché au placenta par un cordon appelé Funicule."
+           data-ar="البويضة عضو بيضوي صغير يرتبط بالمشيمة بواسطة حبل يسمى الحبل السري (Funicule).">
+           L'ovule est rattaché au placenta par le <strong>Funicule</strong>.
+        </p>
+
+        <div class="diagram-container">
+            
+
+
+
+            <img src="https://www.aquaportail.com/pictures2110/phones/ovule-funicule-nucelle-micropyle-integument.jpg" alt="Structure Ovule">
+            <div class="caption">Figure 2 : Structure d'un ovule anatrope (Téguments, Nucelle, Sac embryonnaire).</div>
+        </div>
+
+        <h3>Les constituants de l'ovule (De l'extérieur vers l'intérieur) :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Les Téguments : Une ou deux enveloppes protectrices qui entourent l'ovule."
+                data-ar="1. الأغشية (Téguments): غشاء أو غشاءان واقيان يحيطان بالبويضة.">
+                1. Les Téguments (Enveloppes).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Le Micropyle : Une petite ouverture laissée par les téguments (porte d'entrée pour la fécondation)."
+                data-ar="2. النقير (Micropyle): فتحة صغيرة تتركها الأغشية (بوابة الإخصاب).">
+                2. Le Micropyle (Ouverture).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. La Nucelle : Un tissu massif diploïde (2n) qui remplit l'ovule et nourrit le sac embryonnaire."
+                data-ar="3. الجويزة (Nucelle): نسيج كتلي ثنائي الصيغة الصبغية (2n) يملأ البويضة ويغذي الكيس الجنيني.">
+                3. La Nucelle (Tissu nourricier 2n).
+            </li>
+            <li class="swap-block" 
+                data-fr="4. Le Sac Embryonnaire : C'est le gamétophyte femelle (haploïde n). Il est situé au cœur de la nucelle."
+                data-ar="4. الكيس الجنيني (Sac embryonnaire): هو النبت المشيجي الأنثوي (n). يقع في قلب الجويزة.">
+                4. Le Sac Embryonnaire (Gamétophyte n).
+            </li>
+        </ul>
+
+        <p class="swap-block" style="font-weight:bold; color:#880e4f;"
+           data-fr="C'est le Sac Embryonnaire qui contient le gamète femelle (Oosphère) prêt à être fécondé."
+           data-ar="الكيس الجنيني هو الذي يحتوي على المشيج الأنثوي (البييضة) الجاهز للإخصاب.">
+           Le Sac Embryonnaire contient l'Oosphère (gamète femelle).
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

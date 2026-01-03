@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 0002-A : L'Étamine</title>
+    <style>
+        :root {
+            --primary-color: #e67e22; /* Orange pour le Mâle/Pollen */
+            --secondary-color: #27ae60; /* Vert plante */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #fdfefe;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #d35400, #f39c12);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.2em; }
+
+        .hint {
+            background-color: #fff3e0;
+            color: #e65100;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #ffe0b2;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #d35400;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            background: #fdf2e9;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #f0f0f0;
+        }
+
+        .swap-block:hover {
+            background-color: #fef9e7;
+            border-color: var(--primary-color);
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            color: #d35400;
+        }
+
+        /* Image Container */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 2px dashed #f39c12;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        ul { padding-left: 20px; list-style: none; }
+        li { margin-bottom: 10px; }
+        li::before { content: "🟠"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 0002-A : L'Étamine</h1>
+        <p>L'organe reproducteur mâle (Androcée)</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur les textes pour afficher la traduction arabe.
+    </div>
+
+    <div class="card">
+        <h2>1. Morphologie de l'étamine</h2>
+        
+        <p class="swap-block" 
+           data-fr="L'ensemble des étamines d'une fleur constitue l'Androcée (appareil reproducteur mâle)."
+           data-ar="مجموع الأسدية في الزهرة يشكل الكاشف (Androcée) أي الجهاز التناسلي الذكري.">
+           L'ensemble des étamines d'une fleur constitue l'Androcée.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://media.kartable.fr/uploads/finalImages/final_606ef9b85140b0.41202703.png" alt="Schéma Étamine">
+            <div class="caption">Figure 1 : Morphologie d'une étamine (Filet + Anthère).</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Chaque étamine est constituée de deux parties :"
+           data-ar="تتكون كل سداة من جزأين:">
+           Chaque étamine est constituée de deux parties :
+        </p>
+        <ul>
+            <li class="swap-block" 
+                data-fr="Le Filet : Une tige mince qui rattache l'étamine au réceptacle floral."
+                data-ar="الخيط (Filet): ساق رقيقة تربط السداة بالتخت الزهري.">
+                Le Filet (Tige de fixation).
+            </li>
+            <li class="swap-block" 
+                data-fr="L'Anthère : La partie fertile renflée située au sommet du filet."
+                data-ar="المئبر (Anthère): الجزء الخصب المنتفخ الموجود في قمة الخيط.">
+                L'Anthère (Partie fertile).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Structure interne de l'Anthère</h2>
+        
+        <p class="swap-block" 
+           data-fr="L'anthère est généralement constituée de deux loges symétriques reliées par le connectif."
+           data-ar="يتكون المئبر عادة من فصين (Loges) متناظرين يربطهما الموصل (Connectif).">
+           L'anthère est constituée de deux loges reliées par le connectif.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://th.bing.com/th/id/R.0845d48caebedf8c94e9ef5cbceb9427?rik=rehyye%2bpWuFnCg&riu=http%3a%2f%2fwww.nirgal.net%2fmicroscopie%2fAnnotation%2fanthere_lys_annoted.jpg&ehk=X5DiMsim83fnQzkrtuxCPmpmSpCRIUYg2IuZfioedhk%3d&risl=&pid=ImgRaw&r=0" alt="Coupe Anthère">
+            <div class="caption">Figure 2 : Coupe transversale d'une anthère jeune montrant les 4 sacs polliniques.</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Chaque loge contient deux sacs polliniques (soit 4 sacs au total par anthère)."
+           data-ar="يحتوي كل فص على كيسين لقاحيين (أي 4 أكياس في المجموع لكل مئبر).">
+           Chaque loge contient deux sacs polliniques (Total = 4).
+        </p>
+
+        <h3>Les couches de la paroi (De l'extérieur vers l'intérieur) :</h3>
+        <p class="swap-block" 
+           data-fr="Une coupe transversale d'une anthère jeune montre plusieurs assises cellulaires :"
+           data-ar="مقطع عرضي لمئبر فتي يظهر عدة طبقات خلوية:">
+           Une coupe transversale montre plusieurs assises cellulaires :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. L'épiderme (ou Exothécium) : Couche protectrice externe."
+                data-ar="1. البشرة (Épiderme): طبقة واقية خارجية.">
+                1. L'épiderme (Protection).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. L'assise mécanique (ou Endothécium) : Ses cellules se lignifient à maturité pour permettre l'ouverture de l'anthère."
+                data-ar="2. الطبقة الميكانيكية / الالية: خلاياها تتخشب عند النضج لتسمح بفتح المئبر.">
+                2. L'assise mécanique (Ouverture/Déhiscence).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Les assises transitoires : Couches intermédiaires qui disparaissent au cours du développement."
+                data-ar="3. الطبقات المؤقتة: طبقات وسيطة تختفي خلال النمو.">
+                3. Les assises transitoires (Disparaissent).
+            </li>
+            <li class="swap-block" 
+                data-fr="4. Le Tapis (Assise nourricière) : Couche interne qui entoure les sacs et nourrit les grains de pollen en formation."
+                data-ar="4. البساط (الطبقة المغذية): طبقة داخلية تحيط بالأكياس وتغذي حبوب اللقاح أثناء تشكلها.">
+                4. Le Tapis (Rôle nourricier).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. Le cœur de l'Anthère</h2>
+        
+        <p class="swap-block" 
+           data-fr="Au centre de chaque sac pollinique se trouve le tissu sporogène."
+           data-ar="في مركز كل كيس لقاحي يوجد النسيج المولد للأبواغ (Tissu sporogène).">
+           Au centre se trouve le <strong>Tissu Sporogène</strong>.
+        </p>
+
+        <p class="swap-block" 
+           data-fr="Ce tissu est constitué de cellules mères (diploïdes, 2n) qui donneront naissance aux grains de pollen."
+           data-ar="يتكون هذا النسيج من خلايا أم (ثنائية الصيغة الصبغية 2n) التي ستعطي حبوب اللقاح.">
+           Constitué de cellules mères (2n) -> Futurs pollens.
+        </p>
+
+        <p class="swap-block" style="background-color: #fff3e0; border-left: 4px solid #e67e22;"
+           data-fr="À maturité, les cloisons entre les sacs disparaissent, et les fentes de déhiscence s'ouvrent pour libérer le pollen."
+           data-ar="عند النضج، تختفي الحواجز بين الأكياس، وتنفتح شقوق التفتح (Fentes de déhiscence) لتحرير اللقاح.">
+           👉 À maturité : Ouverture des fentes de déhiscence.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

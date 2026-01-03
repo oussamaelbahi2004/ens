@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Reproduction des Angiospermes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* ================= GENERAL STYLES ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* IMAGE D'ARRIÈRE-PLAN NATURE */
+            background-image: url("https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Assombrir le fond */
+            z-index: 0;
+        }
+
+        /* ================= MUSIC PLAYER STYLES ================= */
+        #player-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            height: 80px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            #player-container {
+                width: 300px;
+                right: 50%;
+                transform: translateX(50%);
+                bottom: 15px;
+            }
+            .glass-container { margin-bottom: 120px; }
+        }
+
+        #player { position: relative; height: 100%; z-index: 3; }
+
+        #player-track {
+            position: absolute;
+            top: 0; right: 15px; left: 15px;
+            padding: 10px 10px 10px 110px;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px 15px 0 0;
+            transition: 0.3s ease top;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-bottom: none;
+        }
+
+        #player-track.active { top: -75px; }
+
+        #track-name {
+            color: white; font-size: 14px; font-weight: bold;
+            margin: 2px 0 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        #track-time { height: 12px; margin-bottom: 3px; overflow: hidden; display: flex; justify-content: space-between; }
+        #current-time, #track-length { color: rgba(255,255,255,0.7); font-size: 10px; }
+
+        #seek-bar-container {
+            position: relative; height: 4px; background-color: rgba(255,255,255,0.2);
+            cursor: pointer; border-radius: 4px; margin-top: 5px;
+        }
+
+        #seek-bar {
+            position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+            background-color: #27ae60; /* Vert Bio */
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+            transition: 0.2s ease width; border-radius: 4px; z-index: 1;
+        }
+
+        #player-content {
+            position: relative; height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2; display: flex; align-items: center;
+        }
+
+        #album-art {
+            position: absolute; top: -20px; left: 20px;
+            width: 80px; height: 80px;
+            transform: rotateZ(0); transition: 0.3s ease all;
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.1);
+            border-radius: 50%; overflow: hidden; background: #000;
+        }
+
+        #album-art.active {
+            top: -40px;
+            box-shadow: 0 0 0 5px rgba(39, 174, 96, 0.3), 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        #album-art img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        #album-art.active img { opacity: 1; animation: rotateAlbumArt 6s linear infinite; }
+
+        @keyframes rotateAlbumArt { 0% { transform: rotateZ(0); } 100% { transform: rotateZ(360deg); } }
+
+        #player-controls {
+            width: 200px; height: 100%; margin-left: 110px;
+            display: flex; justify-content: space-around; align-items: center;
+        }
+
+        .button {
+            width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center;
+            background-color: rgba(255,255,255,0.1); border-radius: 50%;
+            cursor: pointer; transition: 0.2s ease all; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .button i { color: white; font-size: 18px; }
+        .button:hover { background-color: #27ae60; transform: scale(1.1); border-color: #27ae60; }
+
+        /* ================= QUIZ STYLES ================= */
+        .glass-container {
+            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px; padding: 30px;
+            width: 100%; max-width: 600px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex; flex-direction: column; min-height: 500px;
+        }
+
+        .quiz-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-count {
+            font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);
+            background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;
+        }
+
+        .score-display { font-weight: bold; color: #2ecc71; }
+
+        #question-text {
+            font-size: 1.3rem; font-weight: 600; margin-bottom: 30px;
+            line-height: 1.5; min-height: 60px;
+        }
+
+        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px; border-radius: 15px; color: rgba(255, 255, 255, 0.9);
+            text-align: left; cursor: pointer; transition: all 0.2s ease;
+            font-size: 1rem; display: flex; align-items: center; gap: 15px; position: relative;
+        }
+
+        .option-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .option-btn.selected {
+            background: rgba(39, 174, 96, 0.2); border-color: #27ae60;
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .circle-check {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4); flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .option-btn.selected .circle-check { background: #27ae60; border-color: #27ae60; }
+        .option-btn.correct { background: rgba(46, 204, 113, 0.3) !important; border-color: #2ecc71 !important; }
+        .option-btn.wrong { background: rgba(231, 76, 60, 0.3) !important; border-color: #e74c3c !important; }
+
+        .controls { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+
+        .btn-action {
+            padding: 12px 30px; border-radius: 20px; border: none;
+            font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s;
+        }
+
+        .btn-action:active { transform: scale(0.95); }
+        .btn-validate { background: #3498db; color: white; width: 100%; }
+        .btn-next { background: #2ecc71; color: white; display: none; width: 100%; }
+
+        .exit-btn {
+            position: absolute; top: 20px; left: 20px; text-decoration: none; color: white;
+            background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 15px;
+            font-size: 0.8rem; backdrop-filter: blur(5px); z-index: 20;
+        }
+
+        .result-screen {
+            display: none; text-align: center; flex-direction: column;
+            align-items: center; justify-content: center; height: 100%;
+        }
+
+        .final-score {
+            font-size: 4rem; font-weight: 800;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="exit-btn">← Quitter</a>
+
+    <div id="player-container">
+        <div id="player">
+            <div id="player-track">
+                <div id="track-name">Loading...</div>
+                <div id="track-time">
+                    <div id="current-time">00:00</div>
+                    <div id="track-length">00:00</div>
+                </div>
+                <div id="seek-bar-container">
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+                    <img src="https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600" class="active" id="album-art-img">
+                </div>
+                <div id="player-controls">
+                    <div class="button" id="play-previous"><i class="fas fa-backward"></i></div>
+                    <div class="button" id="play-pause-button"><i class="fas fa-play"></i></div>
+                    <div class="button" id="play-next"><i class="fas fa-forward"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-container">
+        <div id="quiz-ui">
+            <div class="quiz-header">
+                <span class="question-count">Question <span id="current-q">1</span>/20</span>
+                <span class="score-display">Score: <span id="score">0</span></span>
+            </div>
+            <div id="question-text">Chargement de la question...</div>
+            <div class="options-grid" id="options-container"></div>
+            <div class="controls">
+                <button class="btn-action btn-validate" onclick="checkAnswer()">Valider</button>
+                <button class="btn-action btn-next" onclick="nextQuestion()">Suivant</button>
+            </div>
+            <p style="text-align: center; font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">
+                ⚠️ Sélectionnez TOUTES les bonnes réponses.
+            </p>
+        </div>
+
+        <div id="result-ui" class="result-screen">
+            <h2>Quiz Terminé !</h2>
+            <p>Votre expertise en Biologie Végétale :</p>
+            <div class="final-score" id="final-score-display">0/20</div>
+            <p id="feedback-text" style="margin-bottom: 30px; opacity: 0.8;"></p>
+            <button class="btn-action btn-validate" onclick="location.reload()">Recommencer</button>
+            <br>
+            <a href="menu_angiospermes.html" style="color:white; opacity: 0.7; margin-top: 15px; display:inline-block;">Retour au Menu</a>
+        </div>
+    </div>
+
+    <script>
+        /* ================= MUSIC PLAYER LOGIC ================= */
+        const tracks = [
+            { name: "Home - Edward Sharpe", url: "https://github.com/oussamaelbahi2004/sher/raw/main/Edward_Sharpe_%26_The_Magnetic_Zeros_-_Home_(Official_Video)_DHEOF_rcND8.mp3.mp3" },
+            { name: "Ambient Video Track 1", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.59.04%20PM.mp4" },
+            { name: "Ambient Video Track 2", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.46.49%20PM.mp4" },
+            { name: "Ambient Video Track 3", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.44.56%20PM.mp4" }
+        ];
+
+        const audio = new Audio();
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        const playPauseBtn = document.getElementById('play-pause-button');
+        const playPauseIcon = playPauseBtn.querySelector('i');
+        const nextBtn = document.getElementById('play-next');
+        const prevBtn = document.getElementById('play-previous');
+        const trackNameEl = document.getElementById('track-name');
+        const albumArt = document.getElementById('album-art');
+        const playerTrack = document.getElementById('player-track');
+        const seekBar = document.getElementById('seek-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const trackLengthEl = document.getElementById('track-length');
+
+        function initPlayer() {
+            audio.src = tracks[currentTrackIndex].url;
+            trackNameEl.textContent = tracks[currentTrackIndex].name;
+            audio.loop = false;
+        }
+
+        function playTrack() {
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseIcon.className = 'fas fa-pause';
+                albumArt.classList.add('active');
+                playerTrack.classList.add('active');
+            }).catch(e => console.log("Autoplay blocked"));
+        }
+
+        function pauseTrack() {
+            audio.pause();
+            isPlaying = false;
+            playPauseIcon.className = 'fas fa-play';
+            albumArt.classList.remove('active');
+            playerTrack.classList.remove('active');
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function formatTime(s) {
+            let min = Math.floor(s / 60);
+            let sec = Math.floor(s % 60);
+            if (min < 10) min = "0" + min;
+            if (sec < 10) sec = "0" + sec;
+            return min + ":" + sec;
+        }
+
+        playPauseBtn.addEventListener('click', () => { if (isPlaying) pauseTrack(); else playTrack(); });
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+        audio.addEventListener('timeupdate', () => {
+            if(audio.duration) {
+                seekBar.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+                trackLengthEl.textContent = formatTime(audio.duration);
+            }
+        });
+        audio.addEventListener('ended', nextTrack);
+
+        initPlayer();
+        window.addEventListener('load', () => { playTrack(); });
+
+        /* ================= QUIZ LOGIC (50 Questions) ================= */
+        const fullQuestionPool = [
+            // LA FLEUR & ORGANES
+            { q: "L'ensemble des sépales constitue :", o: ["La corolle", "Le calice", "L'androcée", "Le gynécée"], a: [1] },
+            { q: "L'organe reproducteur mâle de la fleur est :", o: ["Le pistil", "L'étamine", "Le pétale", "Le sépale"], a: [1] },
+            { q: "L'organe reproducteur femelle est :", o: ["L'étamine", "L'anthère", "Le pistil (Gynécée)", "Le filet"], a: [2] },
+            { q: "L'étamine est composée de :", o: ["Stigmate et Style", "Filet et Anthère", "Ovaire et Ovule", "Pétale et Sépale"], a: [1] },
+            { q: "Le pistil est composé de :", o: ["Stigmate, Style, Ovaire", "Anthère, Filet", "Calice, Corolle", "Tégument, Nucelle"], a: [0] },
+            { q: "L'ensemble des pétales forme :", o: ["Le calice", "La corolle", "Le périanthe", "L'androcée"], a: [1] },
+            
+            // POLLEN & ANTHERE
+            { q: "Les grains de pollen se forment dans :", o: ["L'ovaire", "Le stigmate", "Les sacs polliniques de l'anthère", "Le style"], a: [2] },
+            { q: "Un grain de pollen mature contient :", o: ["1 cellule", "2 cellules (Végétative et Reproductrice)", "4 cellules", "8 noyaux"], a: [1] },
+            { q: "L'exine est :", o: ["La paroi interne du pollen", "La paroi externe épaisse du pollen", "La paroi de l'ovaire", "Une cellule du sac embryonnaire"], a: [1] },
+            { q: "La méiose permet de passer de :", o: ["2n à 2n", "n à n", "2n à n (diploïde à haploïde)", "n à 2n"], a: [2] },
+            { q: "La microsporogenèse aboutit à la formation de :", o: ["L'ovule", "Grain de pollen", "La graine", "Le fruit"], a: [1] },
+
+            // OVULE & SAC EMBRYONNAIRE
+            { q: "Le sac embryonnaire se trouve dans :", o: ["L'anthère", "Le grain de pollen", "L'ovule (Nucelle)", "Le stigmate"], a: [2] },
+            { q: "Un sac embryonnaire mature contient :", o: ["2 noyaux", "4 cellules", "7 cellules et 8 noyaux", "Uniquement l'oosphère"], a: [2] },
+            { q: "L'oosphère est :", o: ["Le gamète mâle", "Le gamète femelle", "Une cellule nourricière", "Une paroi protectrice"], a: [1] },
+            { q: "Les cellules qui accompagnent l'oosphère s'appellent :", o: ["Antipodes", "Synergides", "Noyaux polaires", "Téguments"], a: [1] },
+            { q: "La macrosporogenèse concerne la formation de :", o: ["Pollen", "Sac embryonnaire", "Fruit", "Filet"], a: [1] },
+
+            // POLLINISATION & GERMINATION
+            { q: "La pollinisation est le transport du pollen de :", o: ["L'anthère vers le stigmate", "Le stigmate vers l'anthère", "L'ovaire vers le style", "La racine vers la fleur"], a: [0] },
+            { q: "L'autopollinisation signifie que :", o: ["Le pollen vient d'une autre fleur", "Le pollen vient de la même fleur", "Le pollen est transporté par le vent", "La fleur ne produit pas de pollen"], a: [1] },
+            { q: "Une plante anémophile est pollinisée par :", o: ["Les insectes", "Le vent", "L'eau", "L'homme"], a: [1] },
+            { q: "Une plante entomophile est pollinisée par :", o: ["Le vent", "Les oiseaux", "Les insectes", "La pluie"], a: [2] },
+            { q: "Lors de la germination du pollen, le tube pollinique traverse :", o: ["Le filet", "Le style", "L'anthère", "Le pédoncule"], a: [1] },
+            { q: "Le rôle du tube pollinique est de :", o: ["Nourrir le pollen", "Conduire les gamètes mâles vers l'ovule", "Protéger le stigmate", "Former le fruit"], a: [1] },
+
+            // FÉCONDATION
+            { q: "La double fécondation est caractéristique des :", o: ["Gymnospermes", "Angiospermes", "Fougères", "Mousses"], a: [1] },
+            { q: "Lors de la double fécondation, le 1er anthérozoïde féconde :", o: ["Les noyaux polaires", "L'oosphère", "Les synergides", "Les antipodes"], a: [1] },
+            { q: "La fécondation de l'oosphère donne :", o: ["L'albumen (3n)", "L'embryon (Zygote principal 2n)", "Le tégument", "Le fruit"], a: [1] },
+            { q: "La fécondation des noyaux polaires donne :", o: ["L'embryon", "L'albumen (Zygote accessoire 3n)", "La radicule", "Le cotylédon"], a: [1] },
+            { q: "Le zygote accessoire (3n) servira à :", o: ["Former la future plante", "Former les réserves nutritives (Albumen)", "Former la coque de la graine", "Rien"], a: [1] },
+
+            // GRAINE & FRUIT
+            { q: "Après la fécondation, l'ovule devient :", o: ["Le fruit", "La graine", "La fleur", "La feuille"], a: [1] },
+            { q: "Après la fécondation, l'ovaire devient :", o: ["La graine", "Le fruit", "Le noyau", "Le pollen"], a: [1] },
+            { q: "Les téguments de l'ovule se transforment en :", o: ["Chair du fruit", "Téguments de la graine (protection)", "Racines", "Feuilles"], a: [1] },
+            { q: "La radicule de l'embryon donnera :", o: ["La tige", "Les feuilles", "La racine", "La fleur"], a: [2] },
+            { q: "Les cotylédons sont :", o: ["Des feuilles de réserve", "Des racines", "Des fruits", "Des pétales"], a: [0] },
+
+            // VRAI OU FAUX
+            { q: "La mitose réduit le nombre de chromosomes par deux.", o: ["Vrai", "Faux"], a: [1] }, // Faux, c'est la méiose
+            { q: "Le calice est l'ensemble des pétales.", o: ["Vrai", "Faux"], a: [1] }, // Faux, sépales
+            { q: "L'étamine est l'organe femelle.", o: ["Vrai", "Faux"], a: [1] }, // Faux, mâle
+            { q: "La tomate est botaniquement un fruit.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "L'albumen est un tissu de réserve.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le tube pollinique transporte 3 gamètes mâles.", o: ["Vrai", "Faux"], a: [1] }, // Faux, 2 gamètes
+            { q: "Le micropyle est l'ouverture de l'ovule.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Une fleur hermaphrodite possède à la fois étamines et pistil.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "La dissémination des graines peut se faire par les animaux.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "La germination nécessite de l'eau.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "L'embryon est diploïde (2n).", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Les antipodes participent à la fécondation.", o: ["Vrai", "Faux"], a: [1] }, // Faux, elles dégénèrent
+            { q: "Le nucelle est un tissu haploïde (n).", o: ["Vrai", "Faux"], a: [1] }, // Faux, 2n
+            { q: "La corolle attire les insectes pollinisateurs.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le fruit protège les graines.", o: ["Vrai", "Faux"], a: [0] }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userSelection = [];
+
+        function initQuiz() {
+            currentQuestions = fullQuestionPool.sort(() => 0.5 - Math.random()).slice(0, 20);
+            currentQuestionIndex = 0;
+            score = 0;
+            updateUI();
+            showQuestion();
+        }
+
+        function updateUI() {
+            document.getElementById('current-q').innerText = currentQuestionIndex + 1;
+            document.getElementById('score').innerText = score;
+        }
+
+        function showQuestion() {
+            const qData = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = qData.q;
+            
+            let tempOptions = qData.o.map((opt, index) => ({ text: opt, originalIndex: index }));
+            // Randomize options unless it's True/False (keep order for clarity often, but random is fine too)
+            if(qData.o.length > 2) tempOptions.sort(() => 0.5 - Math.random());
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            userSelection = []; 
+
+            tempOptions.forEach((optObj) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<div class="circle-check"></div><span>${optObj.text}</span>`;
+                btn.dataset.originalIndex = optObj.originalIndex;
+                btn.onclick = () => toggleSelection(btn, optObj.originalIndex);
+                container.appendChild(btn);
+            });
+
+            document.querySelector('.btn-validate').style.display = 'block';
+            document.querySelector('.btn-next').style.display = 'none';
+        }
+
+        function toggleSelection(btnElement, originalIndex) {
+            if(document.querySelector('.btn-next').style.display === 'block') return;
+
+            const qData = currentQuestions[currentQuestionIndex];
+            const isMultiple = qData.a.length > 1;
+
+            if (!isMultiple) {
+                userSelection = [];
+                document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            }
+
+            if (userSelection.includes(originalIndex)) {
+                userSelection = userSelection.filter(i => i !== originalIndex);
+                btnElement.classList.remove('selected');
+            } else {
+                userSelection.push(originalIndex);
+                btnElement.classList.add('selected');
+            }
+        }
+
+        function checkAnswer() {
+            if (userSelection.length === 0) return; 
+
+            const qData = currentQuestions[currentQuestionIndex];
+            const correctIndices = qData.a.sort();
+            const userIndices = userSelection.sort();
+            const isCorrect = JSON.stringify(correctIndices) === JSON.stringify(userIndices);
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                const idx = parseInt(btn.dataset.originalIndex);
+                btn.classList.remove('selected');
+                if (correctIndices.includes(idx)) {
+                    btn.classList.add('correct');
+                    btn.querySelector('.circle-check').innerText = '✓';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                } else if (userIndices.includes(idx) && !correctIndices.includes(idx)) {
+                    btn.classList.add('wrong');
+                    btn.querySelector('.circle-check').innerText = '✕';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                updateUI();
+            }
+            document.querySelector('.btn-validate').style.display = 'none';
+            document.querySelector('.btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 20) {
+                showQuestion();
+                updateUI();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'flex';
+            document.getElementById('final-score-display').innerText = score + "/20";
+            let feedback = score === 20 ? "EXCELLENT ! 🌿" : score >= 15 ? "Très Bien ! 🌸" : "Révisez encore ! 📖";
+            document.getElementById('feedback-text').innerText = feedback;
+        }
+
+        initQuiz();
+    </script>
+</body>
+</html>

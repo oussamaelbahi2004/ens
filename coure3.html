@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Skills - Partie 3</title>
+    <style>
+        :root {
+            --word-color: #2b579a; /* Word Blue */
+            --excel-color: #217346; /* Excel Green */
+            --ppt-color: #d24726;   /* PPT Orange */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f3f2f1;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #2b579a, #d24726);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.5em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.2em; }
+
+        .hint {
+            background-color: #d6eaf8;
+            color: #154360;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a9cce3;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid #333; /* Default border */
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Specific Card Borders */
+        .card-word { border-left-color: var(--word-color); }
+        .card-excel { border-left-color: var(--excel-color); }
+        .card-ppt { border-left-color: var(--ppt-color); }
+
+        h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .card-word h2 { color: var(--word-color); }
+        .card-excel h2 { color: var(--excel-color); }
+        .card-ppt h2 { color: var(--ppt-color); }
+
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            font-size: 1.1em;
+            background: #f9f9f9;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #fcfcfc;
+            border: 1px solid #eee;
+        }
+
+        .swap-block:hover {
+            background-color: #f0f0f0;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        /* List & Tables */
+        ul { padding-left: 20px; list-style: none; }
+        li { margin-bottom: 8px; }
+        
+        .card-word li::before { content: "W"; color: var(--word-color); font-weight: bold; margin-right: 10px; }
+        .card-excel li::before { content: "X"; color: var(--excel-color); font-weight: bold; margin-right: 10px; }
+        .card-ppt li::before { content: "P"; color: var(--ppt-color); font-weight: bold; margin-right: 10px; }
+        
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Partie 3 : Microsoft Office</h1>
+        <p>Word, Excel & PowerPoint (Usages et Fonctionnalités)</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur les blocs de texte pour traduire / اضغط للترجمة
+    </div>
+
+    <div class="card card-word">
+        <h2>1. Microsoft Word (Traitement de Texte)</h2>
+        
+        <h3>A. Définition et Rôle</h3>
+        <p class="swap-block" 
+           data-fr="Logiciel permettant de saisir, modifier, mettre en forme et mettre en page des documents textuels."
+           data-ar="برنامج يسمح بكتابة، تعديل، تنسيق، وإخراج المستندات النصية.">
+           Logiciel permettant de saisir, modifier, mettre en forme et mettre en page des documents textuels.
+        </p>
+        <p class="swap-block" 
+           data-fr="Il permet d'intégrer des images, tableaux et d'exporter le travail (impression ou PDF)."
+           data-ar="يمكن من دمج الصور والجداول وتصدير العمل (للطباعة أو بصيغة PDF).">
+           Il permet d'intégrer des images, tableaux et d'exporter le travail.
+        </p>
+
+        <h3>B. Fonctions Clés</h3>
+        <ul>
+            <li class="swap-block" data-fr="Correction orthographique et grammaticale." data-ar="التصحيح الإملائي والنحوي.">Correction orthographique.</li>
+            <li class="swap-block" data-fr="Gestion des Styles (Titres, Sous-titres) pour structurer le document." data-ar="إدارة الأنماط (العناوين) لهيكلة المستند.">Gestion des Styles.</li>
+            <li class="swap-block" data-fr="Création de Table des matières automatique." data-ar="إنشاء جدول المحتويات (الفهرس) تلقائياً.">Table des matières automatique.</li>
+            <li class="swap-block" data-fr="Gestion des en-têtes et pieds de page." data-ar="إدارة رأس وتذييل الصفحة.">En-têtes et pieds de page.</li>
+        </ul>
+
+        <h3>C. Alternatives & Format</h3>
+        <p class="swap-block" data-fr="Alternatives : LibreOffice Writer, Google Docs, Apple Pages." data-ar="البدائل: ليبر أوفيس رايتر، جوجل دوكس، آبل بيجز.">Alternatives : Google Docs, LibreOffice.</p>
+        <p class="swap-block" style="font-weight:bold;" data-fr="Extension de fichier : .docx (ou .doc pour les anciennes versions)." data-ar="صيغة الملف: .docx (أو .doc للإصدارات القديمة).">Extension : .docx</p>
+    </div>
+
+    <div class="card card-excel">
+        <h2>2. Microsoft Excel (Tableur)</h2>
+        
+        <h3>A. Définition</h3>
+        <p class="swap-block" 
+           data-fr="Logiciel permettant d'organiser des données en tableaux, d'effectuer des calculs automatiques et de créer des graphiques."
+           data-ar="برنامج يسمح بتنظيم البيانات في جداول، القيام بحسابات تلقائية وإنشاء رسوم بيانية.">
+           Logiciel permettant d'organiser des données, calculer et créer des graphiques.
+        </p>
+        <p class="swap-block" 
+           data-fr="Il fonctionne avec des feuilles de calcul composées de cellules (intersection ligne/colonne)."
+           data-ar="يعمل بواسطة أوراق عمل مكونة من خلايا (تقاطع سطر وعمود).">
+           Structure : Feuilles de calcul composées de cellules.
+        </p>
+
+        <h3>B. Usage en Éducation (Pour les profs)</h3>
+        <ul>
+            <li class="swap-block" data-fr="Gérer les notes : Calcul des moyennes, coefficients." data-ar="إدارة النقط: حساب المعدلات والمعاملات.">Gérer les notes (Moyennes).</li>
+            <li class="swap-block" data-fr="Suivre les compétences : Grilles d'évaluation, progression." data-ar="تتبع الكفايات: شبكات التقييم، التطور.">Suivre les compétences.</li>
+            <li class="swap-block" data-fr="Analyser les évaluations : Repérer les difficultés via des graphiques." data-ar="تحليل التقييمات: تحديد الصعوبات عبر الرسوم البيانية.">Analyser les résultats (Graphiques).</li>
+            <li class="swap-block" data-fr="Gestion administrative : Absences, emploi du temps, plannings." data-ar="الإدارة: الغياب، استعمال الزمن، التخطيط.">Gestion : Absences, Planning.</li>
+        </ul>
+
+        <h3>C. Format</h3>
+        <p class="swap-block" style="font-weight:bold;" data-fr="Extension de fichier : .xlsx (ou .xls)." data-ar="صيغة الملف: .xlsx (أو .xls).">Extension : .xlsx</p>
+    </div>
+
+    <div class="card card-ppt">
+        <h2>3. Microsoft PowerPoint (Présentation)</h2>
+        
+        <h3>A. Définition</h3>
+        <p class="swap-block" 
+           data-fr="Logiciel pour concevoir et projeter des diapositives (Slides) lors d'un exposé ou d'un cours."
+           data-ar="برنامج لتصميم وعرض الشرائح (Slides) أثناء عرض أو درس.">
+           Logiciel pour concevoir et projeter des diapositives (Slides).
+        </p>
+        <p class="swap-block" 
+           data-fr="Il permet d'intégrer du texte, des images, des vidéos et des animations."
+           data-ar="يسمح بدمج النصوص، الصور، الفيديوهات والتحريكات (Animations).">
+           Intégration multimédia (Images, Vidéos, Animations).
+        </p>
+
+        <h3>B. Rôle Pédagogique</h3>
+        <ul>
+            <li class="swap-block" data-fr="Structurer le cours : Idées clés par diapositive." data-ar="هيكلة الدرس: الأفكار الرئيسية في كل شريحة.">Structurer le cours.</li>
+            <li class="swap-block" data-fr="Visualiser les notions : Schémas, images pour faciliter la compréhension." data-ar="تجسيد المفاهيم: خطاطات وصور لتسهيل الفهم.">Visualiser les notions.</li>
+            <li class="swap-block" data-fr="Guider l'attention : Animations pour afficher l'info progressivement." data-ar="توجيه الانتباه: تحريكات لإظهار المعلومات تدريجياً.">Guider l'attention (Animations).</li>
+            <li class="swap-block" data-fr="Soutenir l'oral : Aide-mémoire pour l'enseignant." data-ar="دعم الشفوي: مذكرة للمدرس.">Soutenir l'oral.</li>
+        </ul>
+
+        <h3>C. Format</h3>
+        <p class="swap-block" style="font-weight:bold;" data-fr="Extension de fichier : .pptx (ou .ppt)." data-ar="صيغة الملف: .pptx (أو .ppt).">Extension : .pptx</p>
+    </div>
+
+    <div class="card" style="border-left-color: #8e44ad;">
+        <h2 style="color: #8e44ad;">4. L'Écosystème Microsoft 365</h2>
+        <p>Outre les 3 principaux, la suite comprend :</p>
+        
+        <ul>
+            <li class="swap-block" style="border-left: 3px solid #0078d4;" 
+                data-fr="Outlook : Messagerie électronique et Calendrier."
+                data-ar="أوتلوك: البريد الإلكتروني والتقويم.">
+                <strong>Outlook</strong> : Messagerie & Calendrier.
+            </li>
+            <li class="swap-block" style="border-left: 3px solid #7719aa;" 
+                data-fr="OneNote : Prise de notes numérique (Cahier virtuel)."
+                data-ar="وان نوت: تدوين الملاحظات الرقمية (دفتر افتراضي).">
+                <strong>OneNote</strong> : Prise de notes.
+            </li>
+            <li class="swap-block" style="border-left: 3px solid #00a4ef;" 
+                data-fr="OneDrive : Stockage des fichiers dans le Cloud."
+                data-ar="وان درايف: تخزين الملفات في السحابة.">
+                <strong>OneDrive</strong> : Stockage Cloud.
+            </li>
+            <li class="swap-block" style="border-left: 3px solid #464eb8;" 
+                data-fr="Teams : Communication, visioconférence et travail collaboratif."
+                data-ar="تيمز: التواصل، الفيديو الجماعي والعمل التشاركي.">
+                <strong>Teams</strong> : Collaboration & Visioconférence.
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 0002-C : Formation des Gamètes</title>
+    <style>
+        :root {
+            --primary-color: #8e44ad; /* Violet pour la division cellulaire */
+            --male-color: #e67e22;    /* Orange pour le pollen */
+            --female-color: #e91e63;  /* Rose pour l'ovule */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f4f6f7;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.1em; }
+
+        .hint {
+            background-color: #e8daef;
+            color: #4a235a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #d2b4de;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Specific Colors for Sections */
+        .male-section { border-left-color: var(--male-color); }
+        .male-section h2 { color: var(--male-color); }
+        
+        .female-section { border-left-color: var(--female-color); }
+        .female-section h2 { color: var(--female-color); }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #f0f0f0;
+        }
+
+        .swap-block:hover {
+            background-color: #f4ecf7; /* Light purple hover */
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            color: #d35400;
+        }
+
+        /* Image Container */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 2px dashed #8e44ad;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* List Styles */
+        ol { padding-left: 20px; }
+        li { margin-bottom: 10px; font-weight: 500; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 0002-C : La formation des cellules reproductrices</h1>
+        <p>Mitose, Méiose et Gamétogenèse (Pages 11-30)</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur les textes pour afficher la traduction arabe.
+    </div>
+
+    <div class="card">
+        <h2>1. Rappel : La Division Cellulaire</h2>
+        
+        <p class="swap-block" 
+           data-fr="Pour former des gamètes, la plante utilise deux types de divisions : La Mitose et la Méiose."
+           data-ar="لتكوين الأمشاج، يستخدم النبات نوعين من الانقسامات: الانقسام غير المباشر والانقسام الاختزالي.">
+           La plante utilise deux types de divisions : Mitose et Méiose.
+        </p>
+
+        <div class="diagram-container">
+            
+
+
+
+            <img src="https://www.aquaportail.com/pictures1206/meiose.jpg" alt="Schéma Méiose">
+            <div class="caption">Figure 1 : La Méiose permet le passage de la diploïdie (2n) à l'haploïdie (n).</div>
+        </div>
+
+        <h3>A. La Méiose (Division réductionnelle)</h3>
+        <p class="swap-block" 
+           data-fr="C'est le processus clé qui permet de produire des spores haploïdes (n) à partir d'une cellule mère diploïde (2n)."
+           data-ar="هي العملية الرئيسية التي تسمح بإنتاج أبواغ أحادية الصيغة الصبغية (n) انطلاقاً من خلية أم ثنائية الصيغة (2n).">
+           Méiose : Production de cellules haploïdes (2n -> n).
+        </p>
+        <ul>
+            <li class="swap-block" 
+                data-fr="Division 1 (Réductionnelle) : Séparation des chromosomes homologues."
+                data-ar="الانقسام 1 (المنصف): افتراق الصبغيات المتماثلة.">
+                Division 1 : Séparation des homologues.
+            </li>
+            <li class="swap-block" 
+                data-fr="Division 2 (Équationnelle) : Séparation des chromatides (comme une mitose)."
+                data-ar="الانقسام 2 (التعادلي): افتراق الصبغيات (مثل الانقسام غير المباشر).">
+                Division 2 : Séparation des chromatides.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card male-section">
+        <h2>2. Formation du Grain de Pollen (Microsporogenèse)</h2>
+        <p class="swap-block" data-fr="Lieu : Dans les sacs polliniques de l'anthère." data-ar="المكان: داخل الأكياس اللقاحية للمئبر.">Lieu : Sacs polliniques.</p>
+
+        <div class="diagram-container">
+            
+            <img src="https://th.bing.com/th/id/R.f2de15a2dcda31a78ce8183979ffe4f3?rik=VhPvkq7T1Am2Gw&pid=ImgRaw&r=0" alt="Microsporogenèse">
+            <div class="caption">Figure 2 : Étapes de la formation du grain de pollen.</div>
+        </div>
+
+        <h3>Les Étapes :</h3>
+        <ol>
+            <li class="swap-block" 
+                data-fr="1. Méiose : La cellule mère (2n) subit une méiose pour donner 4 microspores (n) groupées en tétrade."
+                data-ar="1. الانقسام الاختزالي: الخلية الأم (2n) تخضع لانقسام اختزالي لتعطي 4 أبواغ دقيقة (n) مجتمعة في رباعية.">
+                1. Méiose -> 4 Microspores (Tétrade).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Libération : Les microspores se séparent et grossissent."
+                data-ar="2. التحرير: تنفصل الأبواغ الدقيقة وتكبر في الحجم.">
+                2. Séparation des microspores.
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Mitose interne : Le noyau de la microspore se divise (Mitose) pour donner 2 cellules : Végétative et Reproductrice."
+                data-ar="3. انقسام داخلي: تنقسم نواة البوغ الدقيق لتعطي خليتين: إنباتية وتوالدية.">
+                3. Mitose -> Pollen bicellulaire.
+            </li>
+        </ol>
+    </div>
+
+    <div class="card female-section">
+        <h2>3. Formation du Sac Embryonnaire (Macrosporogenèse)</h2>
+        <p class="swap-block" data-fr="Lieu : Dans la nucelle de l'ovule." data-ar="المكان: داخل جويزة البويضة.">Lieu : Nucelle de l'ovule.</p>
+
+        <div class="diagram-container">
+            
+            <img src="https://i.ytimg.com/vi/bhLhTufi1q8/hqdefault.jpg" alt="Macrosporogenèse">
+            <div class="caption">Figure 3 : Étapes de la formation du sac embryonnaire.</div>
+        </div>
+
+        <h3>Les Étapes (Complexe) :</h3>
+        <ol>
+            <li class="swap-block" 
+                data-fr="1. Méiose : Une cellule mère (2n) de la nucelle subit la méiose et donne 4 macrospores (n)."
+                data-ar="1. الانقسام الاختزالي: خلية أم (2n) من الجويزة تنقسم لتعطي 4 أبواغ كبيرة (n).">
+                1. Méiose -> 4 Macrospores.
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Dégénérescence : 3 macrospores meurent. Il ne reste que la plus grosse (Mégaspore)."
+                data-ar="2. الاضمحلال: تموت 3 أبواغ. تبقى فقط الأكبر حجماً (البوغ الكبير).">
+                2. Dégénérescence de 3 cellules.
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Trois Mitoses : Le noyau de la mégaspore se divise 3 fois de suite (1 -> 2 -> 4 -> 8 noyaux)."
+                data-ar="3. ثلاثة انقسامات غير مباشرة: تنقسم نواة البوغ الكبير 3 مرات متتالية (1 -> 2 -> 4 -> 8 نوى).">
+                3. Trois Mitoses successives (8 noyaux).
+            </li>
+            <li class="swap-block" 
+                data-fr="4. Organisation : Les noyaux s'entourent de cytoplasme pour former le Sac Embryonnaire à 7 cellules."
+                data-ar="4. التنظيم: تحاط النوى بالسيتوبلازم لتشكل الكيس الجنيني المكون من 7 خلايا.">
+                4. Organisation finale (Sac Embryonnaire).
+            </li>
+        </ol>
+        
+        <p class="swap-block" style="background:#fce4ec; border:1px solid #e91e63; color:#880e4f;"
+           data-fr="Le Sac Embryonnaire contient : 3 Antipodes, 1 Cellule centrale (2 noyaux), 2 Synergides et 1 Oosphère (Gamète femelle)."
+           data-ar="يحتوي الكيس الجنيني على: 3 خلايا معاكسة، خلية مركزية (نواتين)، خليتين مساعدتين، وبييضة واحدة (المشيج الأنثوي).">
+           Composition : 7 Cellules, 8 Noyaux.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

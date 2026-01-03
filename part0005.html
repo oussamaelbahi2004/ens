@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 0005: De la fleur au fruit</title>
+    <style>
+        :root {
+            --primary-color: #d35400; /* Orange/Rouge (Fruit mûr) */
+            --secondary-color: #27ae60; /* Vert (Germination) */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #fdfefe;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #d35400, #e67e22);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.1em; }
+
+        .hint {
+            background-color: #fbeee6;
+            color: #d35400;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #edbb99;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #d35400;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            background: #fdf2e9;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #f0f0f0;
+        }
+
+        .swap-block:hover {
+            background-color: #fef5e7;
+            border-color: var(--primary-color);
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            color: #d35400;
+        }
+
+        /* Image Container */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 2px dashed #d35400;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        ul { padding-left: 20px; list-style: none; }
+        li { margin-bottom: 10px; }
+        li::before { content: "🍎"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+        /* Specific style for Germination section */
+        .germination-section { border-left-color: #27ae60; }
+        .germination-section h2 { color: #27ae60; }
+        .germination-section li::before { content: "🌱"; }
+        .germination-section .diagram-container { border-color: #27ae60; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 0005 : De la fleur au fruit</h1>
+        <p>Transformation post-fécondation & Germination</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur les textes pour afficher la traduction arabe.
+    </div>
+
+    <div class="card">
+        <h2>1. Devenir des pièces florales</h2>
+        
+        <p class="swap-block" 
+           data-fr="Après la fécondation, la fleur fane et subit des transformations profondes."
+           data-ar="بعد الإخصاب، تذبل الزهرة وتخضع لتحولات عميقة.">
+           Après fécondation : Transformation de la fleur.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://i.pinimg.com/736x/55/bf/83/55bf8393986310855ca2591b49054b43.jpg" alt="Transformation Fleur Fruit">
+            <div class="caption">Figure 1 : Comparaison avant/après la fécondation (L'ovaire devient le fruit).</div>
+        </div>
+
+        <h3>A. Ce qui disparaît (tombe) :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="Les pétales, les étamines, le style et le stigmate se dessèchent et tombent."
+                data-ar="البتلات، الأسدية، القلم والميسم تجف وتسقط.">
+                Pétales, Étamines, Style, Stigmate ➡ Tombent.
+            </li>
+        </ul>
+
+        <h3>B. Ce qui reste et se transforme :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="L'OVAIRE grossit et devient le FRUIT."
+                data-ar="المبيض يكبر ويصبح الثمرة (Fruit).">
+                <strong>Ovaire</strong> ➡ Fruit.
+            </li>
+            <li class="swap-block" 
+                data-fr="Les OVULES fécondés deviennent les GRAINES."
+                data-ar="البويضات المخصبة تصبح البذور (Graines).">
+                <strong>Ovules</strong> ➡ Graines.
+            </li>
+            <li class="swap-block" 
+                data-fr="La paroi de l'ovaire devient le PÉRICARPE (la chair et la peau du fruit)."
+                data-ar="جدار المبيض يصبح غلاف الثمرة (Péricarpe - اللب والقشرة).">
+                Paroi Ovaire ➡ Péricarpe.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Structure du Fruit</h2>
+        
+        <p class="swap-block" 
+           data-fr="Le fruit protège les graines et assure leur dissémination (par les animaux, le vent, l'eau)."
+           data-ar="الثمرة تحمي البذور وتضمن انتشارها (بواسطة الحيوانات، الرياح، الماء).">
+           Rôle du fruit : Protection et Dissémination.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://www.aquaportail.com/pictures1611/fruit-pericarpe-endocarpe-mesocarpe-epicarpe.jpg" alt="Structure Fruit">
+            <div class="caption">Figure 2 : Les couches du Péricarpe (Exemple : Pêche ou Tomate).</div>
+        </div>
+
+        <h3>Le Péricarpe est formé de 3 couches :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Épicarpe : La peau extérieure du fruit."
+                data-ar="1. الإبيكاوب (Épicarpe): القشرة الخارجية للثمرة.">
+                1. Épicarpe (Peau).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Mésocarpe : La partie charnue (la chair qu'on mange souvent)."
+                data-ar="2. الميزوكارب (Mésocarpe): الجزء اللحمي (اللب الذي نأكله غالباً).">
+                2. Mésocarpe (Chair).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Endocarpe : La couche interne qui entoure la graine (parfois dur comme un noyau)."
+                data-ar="3. الإندوكارب (Endocarpe): الطبقة الداخلية التي تحيط بالبذرة (أحياناً صلبة كالنواة).">
+                3. Endocarpe (Noyau ou membrane).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card germination-section">
+        <h2>3. La Germination de la Graine</h2>
+        
+        <p class="swap-block" 
+           data-fr="La graine entre en vie ralentie (dormance) en attendant les conditions favorables."
+           data-ar="تدخل البذرة في حياة بطيئة (سكون) في انتظار الظروف الملائمة.">
+           La graine est en vie ralentie (Dormance).
+        </p>
+
+        <h3>Conditions de germination :</h3>
+        <ul>
+            <li class="swap-block" data-fr="Humidité (Eau) : Pour ramollir les téguments et réactiver les cellules." data-ar="الرطوبة (الماء): لتليين الأغلفة وتنشيط الخلايا.">Eau (Indispensable).</li>
+            <li class="swap-block" data-fr="Température : Une chaleur adéquate." data-ar="الحرارة: حرارة ملائمة.">Température.</li>
+            <li class="swap-block" data-fr="Oxygène : Pour la respiration cellulaire." data-ar="الأوكسجين: للتنفس الخلوي.">Oxygène (Air).</li>
+        </ul>
+
+        <div class="diagram-container">
+            <img src="https://www.aquaportail.com/pictures1803/germination-graine-haricot.jpg" alt="Germination">
+            <div class="caption">Figure 3 : Les étapes de la germination (Sortie de la radicule puis de la tigelle).</div>
+        </div>
+
+        <h3>Les étapes :</h3>
+        <ol>
+            <li class="swap-block" 
+                data-fr="1. Absorption d'eau : La graine gonfle et l'enveloppe se déchire."
+                data-ar="1. امتصاص الماء: تنتفخ البذرة ويتمزق الغلاف.">
+                1. Gonflement.
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Sortie de la Radicule : Elle s'enfonce dans le sol pour former la racine."
+                data-ar="2. خروج الجذير (Radicule): يغوص في التربة ليشكل الجذر.">
+                2. Sortie de la Radicule (Racine).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Croissance de la Tigelle : Elle monte vers la lumière pour former la tige et les premières feuilles."
+                data-ar="3. نمو السويقة (Tigelle): تصعد نحو الضوء لتشكل الساق والأوراق الأولى.">
+                3. Croissance de la Tigelle (Tige/Feuilles).
+            </li>
+            <li class="swap-block" 
+                data-fr="4. Utilisation des réserves : L'embryon consomme l'albumen ou les cotylédons jusqu'à ce qu'il puisse faire la photosynthèse."
+                data-ar="4. استهلاك المدخرات: يستهلك الجنين السويداء أو الفلقات حتى يصبح قادراً على القيام بالتركيب الضوئي.">
+                4. Consommation des réserves.
+            </li>
+        </ol>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

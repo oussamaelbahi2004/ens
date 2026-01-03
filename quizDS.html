@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Digital Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* ================= GENERAL STYLES ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* IMAGE D'ARRIÈRE-PLAN TECH / DIGITAL */
+            background-image: url("https://images.pexels.com/photos/1933900/pexels-photo-1933900.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Tonalité sombre pour le tech */
+            z-index: 0;
+        }
+
+        /* ================= MUSIC PLAYER STYLES ================= */
+        #player-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            height: 80px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            #player-container {
+                width: 300px;
+                right: 50%;
+                transform: translateX(50%);
+                bottom: 15px;
+            }
+            .glass-container { margin-bottom: 120px; }
+        }
+
+        #player { position: relative; height: 100%; z-index: 3; }
+
+        #player-track {
+            position: absolute;
+            top: 0; right: 15px; left: 15px;
+            padding: 10px 10px 10px 110px;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px 15px 0 0;
+            transition: 0.3s ease top;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-bottom: none;
+        }
+
+        #player-track.active { top: -75px; }
+
+        #track-name {
+            color: white; font-size: 14px; font-weight: bold;
+            margin: 2px 0 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        #track-time { height: 12px; margin-bottom: 3px; overflow: hidden; display: flex; justify-content: space-between; }
+        #current-time, #track-length { color: rgba(255,255,255,0.7); font-size: 10px; }
+
+        #seek-bar-container {
+            position: relative; height: 4px; background-color: rgba(255,255,255,0.2);
+            cursor: pointer; border-radius: 4px; margin-top: 5px;
+        }
+
+        #seek-bar {
+            position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+            background-color: #3498db; /* Bleu Tech */
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+            transition: 0.2s ease width; border-radius: 4px; z-index: 1;
+        }
+
+        #player-content {
+            position: relative; height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2; display: flex; align-items: center;
+        }
+
+        #album-art {
+            position: absolute; top: -20px; left: 20px;
+            width: 80px; height: 80px;
+            transform: rotateZ(0); transition: 0.3s ease all;
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.1);
+            border-radius: 50%; overflow: hidden; background: #000;
+        }
+
+        #album-art.active {
+            top: -40px;
+            box-shadow: 0 0 0 5px rgba(52, 152, 219, 0.3), 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        #album-art img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        #album-art.active img { opacity: 1; animation: rotateAlbumArt 6s linear infinite; }
+
+        @keyframes rotateAlbumArt { 0% { transform: rotateZ(0); } 100% { transform: rotateZ(360deg); } }
+
+        #player-controls {
+            width: 200px; height: 100%; margin-left: 110px;
+            display: flex; justify-content: space-around; align-items: center;
+        }
+
+        .button {
+            width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center;
+            background-color: rgba(255,255,255,0.1); border-radius: 50%;
+            cursor: pointer; transition: 0.2s ease all; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .button i { color: white; font-size: 18px; }
+        .button:hover { background-color: #3498db; transform: scale(1.1); border-color: #3498db; }
+
+        /* ================= QUIZ STYLES ================= */
+        .glass-container {
+            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px; padding: 30px;
+            width: 100%; max-width: 600px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex; flex-direction: column; min-height: 500px;
+        }
+
+        .quiz-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-count {
+            font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);
+            background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;
+        }
+
+        .score-display { font-weight: bold; color: #3498db; }
+
+        #question-text {
+            font-size: 1.3rem; font-weight: 600; margin-bottom: 30px;
+            line-height: 1.5; min-height: 60px;
+        }
+
+        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px; border-radius: 15px; color: rgba(255, 255, 255, 0.9);
+            text-align: left; cursor: pointer; transition: all 0.2s ease;
+            font-size: 1rem; display: flex; align-items: center; gap: 15px; position: relative;
+        }
+
+        .option-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .option-btn.selected {
+            background: rgba(52, 152, 219, 0.2); border-color: #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .circle-check {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4); flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .option-btn.selected .circle-check { background: #3498db; border-color: #3498db; }
+        .option-btn.correct { background: rgba(46, 204, 113, 0.3) !important; border-color: #2ecc71 !important; }
+        .option-btn.wrong { background: rgba(231, 76, 60, 0.3) !important; border-color: #e74c3c !important; }
+
+        .controls { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+
+        .btn-action {
+            padding: 12px 30px; border-radius: 20px; border: none;
+            font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s;
+        }
+
+        .btn-action:active { transform: scale(0.95); }
+        .btn-validate { background: #3498db; color: white; width: 100%; }
+        .btn-next { background: #2ecc71; color: white; display: none; width: 100%; }
+
+        .exit-btn {
+            position: absolute; top: 20px; left: 20px; text-decoration: none; color: white;
+            background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 15px;
+            font-size: 0.8rem; backdrop-filter: blur(5px); z-index: 20;
+        }
+
+        .result-screen {
+            display: none; text-align: center; flex-direction: column;
+            align-items: center; justify-content: center; height: 100%;
+        }
+
+        .final-score {
+            font-size: 4rem; font-weight: 800;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="exit-btn">← Quitter</a>
+
+    <div id="player-container">
+        <div id="player">
+            <div id="player-track">
+                <div id="track-name">Loading...</div>
+                <div id="track-time">
+                    <div id="current-time">00:00</div>
+                    <div id="track-length">00:00</div>
+                </div>
+                <div id="seek-bar-container">
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+                    <img src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=600" class="active" id="album-art-img">
+                </div>
+                <div id="player-controls">
+                    <div class="button" id="play-previous"><i class="fas fa-backward"></i></div>
+                    <div class="button" id="play-pause-button"><i class="fas fa-play"></i></div>
+                    <div class="button" id="play-next"><i class="fas fa-forward"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-container">
+        <div id="quiz-ui">
+            <div class="quiz-header">
+                <span class="question-count">Question <span id="current-q">1</span>/20</span>
+                <span class="score-display">Score: <span id="score">0</span></span>
+            </div>
+            <div id="question-text">Chargement de la question...</div>
+            <div class="options-grid" id="options-container"></div>
+            <div class="controls">
+                <button class="btn-action btn-validate" onclick="checkAnswer()">Valider</button>
+                <button class="btn-action btn-next" onclick="nextQuestion()">Suivant</button>
+            </div>
+            <p style="text-align: center; font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">
+                ⚠️ Sélectionnez TOUTES les bonnes réponses.
+            </p>
+        </div>
+
+        <div id="result-ui" class="result-screen">
+            <h2>Quiz Terminé !</h2>
+            <p>Votre maîtrise du Digital Skills :</p>
+            <div class="final-score" id="final-score-display">0/20</div>
+            <p id="feedback-text" style="margin-bottom: 30px; opacity: 0.8;"></p>
+            <button class="btn-action btn-validate" onclick="location.reload()">Recommencer</button>
+            <br>
+            <a href="menu_cours.html" style="color:white; opacity: 0.7; margin-top: 15px; display:inline-block;">Retour au Menu</a>
+        </div>
+    </div>
+
+    <script>
+        /* ================= MUSIC PLAYER LOGIC ================= */
+        const tracks = [
+            { name: "Home - Edward Sharpe", url: "https://github.com/oussamaelbahi2004/sher/raw/main/Edward_Sharpe_%26_The_Magnetic_Zeros_-_Home_(Official_Video)_DHEOF_rcND8.mp3.mp3" },
+            { name: "Ambient Video Track 1", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.59.04%20PM.mp4" },
+            { name: "Ambient Video Track 2", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.46.49%20PM.mp4" },
+            { name: "Ambient Video Track 3", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.44.56%20PM.mp4" }
+        ];
+
+        const audio = new Audio();
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        const playPauseBtn = document.getElementById('play-pause-button');
+        const playPauseIcon = playPauseBtn.querySelector('i');
+        const nextBtn = document.getElementById('play-next');
+        const prevBtn = document.getElementById('play-previous');
+        const trackNameEl = document.getElementById('track-name');
+        const albumArt = document.getElementById('album-art');
+        const playerTrack = document.getElementById('player-track');
+        const seekBar = document.getElementById('seek-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const trackLengthEl = document.getElementById('track-length');
+
+        function initPlayer() {
+            audio.src = tracks[currentTrackIndex].url;
+            trackNameEl.textContent = tracks[currentTrackIndex].name;
+            audio.loop = false;
+        }
+
+        function playTrack() {
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseIcon.className = 'fas fa-pause';
+                albumArt.classList.add('active');
+                playerTrack.classList.add('active');
+            }).catch(e => console.log("Autoplay blocked"));
+        }
+
+        function pauseTrack() {
+            audio.pause();
+            isPlaying = false;
+            playPauseIcon.className = 'fas fa-play';
+            albumArt.classList.remove('active');
+            playerTrack.classList.remove('active');
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function formatTime(s) {
+            let min = Math.floor(s / 60);
+            let sec = Math.floor(s % 60);
+            if (min < 10) min = "0" + min;
+            if (sec < 10) sec = "0" + sec;
+            return min + ":" + sec;
+        }
+
+        playPauseBtn.addEventListener('click', () => { if (isPlaying) pauseTrack(); else playTrack(); });
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+        audio.addEventListener('timeupdate', () => {
+            if(audio.duration) {
+                seekBar.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+                trackLengthEl.textContent = formatTime(audio.duration);
+            }
+        });
+        audio.addEventListener('ended', nextTrack);
+
+        initPlayer();
+        window.addEventListener('load', () => { playTrack(); });
+
+        /* ================= DIGITAL SKILLS QUIZ (100 QUESTIONS) ================= */
+        const fullQuestionPool = [
+            // --- PARTIE 1: VOCABULAIRE & CONCEPTS ---
+            { q: "Qu'est-ce qu'une donnée (data) ?", o: ["Un élément brut, non interprété", "Une information contextuelle", "Un fichier traité", "Un résultat d'analyse"], a: [0] },
+            { q: "Quelle est la plus petite unité d'information ?", o: ["L'octet", "Le bit", "Le Ko", "Le pixel"], a: [1] },
+            { q: "Combien de bits y a-t-il dans un octet ?", o: ["8", "16", "1024", "2"], a: [0] },
+            { q: "1 Ko (Kilo-octet) est égal à :", o: ["1000 octets", "1024 octets", "8 octets", "1024 bits"], a: [1] },
+            { q: "Quelle est la taille approximative d'une photo standard ?", o: ["30 Ko", "2 à 6 Mo", "1 Go", "10 Ko"], a: [1] },
+            { q: "L'information binaire est composée de :", o: ["Chiffres de 0 à 9", "0 et 1 uniquement", "Lettres et chiffres", "Signaux analogiques"], a: [1] },
+            { q: "Le schéma fonctionnel d'un ordinateur comprend :", o: ["Unités d'entrée, Sortie, Stockage, Unité Centrale", "Écran, Clavier, Souris uniquement", "Internet et Web", "Logiciels et Applications"], a: [0] },
+            { q: "Le codage informatique sert à :", o: ["Crypter les données", "Représenter l'information pour l'ordinateur", "Protéger contre les virus", "Accélérer Internet"], a: [1] },
+            { q: "Une information est :", o: ["Une donnée brute", "Une donnée interprétée avec du sens", "Un fichier vide", "Un signal électrique"], a: [1] },
+            { q: "Lequel est une unité de mesure de stockage ?", o: ["Hertz (Hz)", "Octet (o)", "Watt (W)", "Volt (V)"], a: [1] },
+
+            // --- PARTIE 2: HARDWARE (MATÉRIEL) ---
+            { q: "Quel composant est considéré comme le cerveau de l'ordinateur ?", o: ["Le Disque Dur", "La RAM", "Le Processeur (CPU)", "La Carte Graphique"], a: [2] },
+            { q: "La RAM est une mémoire :", o: ["Permanente", "Volatile (s'efface à l'extinction)", "De stockage de masse", "Lente"], a: [1] },
+            { q: "Quel composant stocke les données de manière permanente ?", o: ["La RAM", "Le Disque Dur (HDD/SSD)", "Le CPU", "Le Ventilateur"], a: [1] },
+            { q: "La carte mère sert à :", o: ["Connecter tous les composants", "Afficher l'image", "Refroidir le PC", "Stocker les fichiers"], a: [0] },
+            { q: "Quel est l'avantage du SSD par rapport au HDD ?", o: ["Moins cher", "Plus rapide et résistant", "Plus bruyant", "Capacité infinie"], a: [1] },
+            { q: "Un périphérique d'entrée permet :", o: ["D'envoyer des infos vers l'unité centrale", "De recevoir des infos de l'unité centrale", "De stocker des données", "De refroidir le système"], a: [0] },
+            { q: "Lequel est un périphérique de SORTIE ?", o: ["Clavier", "Souris", "Écran", "Scanner"], a: [2] },
+            { q: "Lequel est un périphérique d'ENTRÉE ?", o: ["Imprimante", "Haut-parleur", "Microphone", "Projecteur"], a: [2] },
+            { q: "Le port HDMI sert à connecter :", o: ["Une souris", "Un écran ou projecteur", "Un câble réseau", "Une imprimante"], a: [1] },
+            { q: "Le port RJ-45 (Ethernet) sert à :", o: ["Connecter le réseau/Internet", "Connecter un écran", "Connecter un casque audio", "Alimenter le PC"], a: [0] },
+            { q: "Le GPU désigne :", o: ["Le processeur central", "La carte graphique", "L'alimentation", "La mémoire vive"], a: [1] },
+            { q: "Le rôle du bloc d'alimentation est de :", o: ["Convertir le courant secteur pour le PC", "Stocker l'électricité", "Refroidir le CPU", "Calculer les données"], a: [0] },
+            { q: "La coque qui protège les composants s'appelle :", o: ["L'écran", "L'unité centrale (Boîtier)", "La carte mère", "Le rack"], a: [1] },
+            { q: "Un écran tactile est un périphérique :", o: ["D'entrée uniquement", "De sortie uniquement", "D'entrée et de sortie", "De stockage"], a: [2] },
+            { q: "La capacité de la RAM se mesure généralement en :", o: ["Ko", "Go (Gigaoctets)", "Hz", "Pixels"], a: [1] },
+
+            // --- PARTIE 3: SOFTWARE (LOGICIEL) ---
+            { q: "Un système d'exploitation (OS) est un logiciel :", o: ["D'application", "De base (système)", "De jeu", "Malveillant"], a: [1] },
+            { q: "Lequel est un Système d'Exploitation ?", o: ["Microsoft Word", "Windows 11", "Fortnite", "Google Chrome"], a: [1] },
+            { q: "Android est un OS pour :", o: ["Ordinateurs de bureau uniquement", "Smartphones et tablettes", "Serveurs uniquement", "Imprimantes"], a: [1] },
+            { q: "Un logiciel d'application sert à :", o: ["Gérer le matériel", "Effectuer des tâches spécifiques pour l'utilisateur", "Démarrer l'ordinateur", "Refroidir le système"], a: [1] },
+            { q: "Lequel est un logiciel de traitement de texte ?", o: ["Excel", "PowerPoint", "Word", "Photoshop"], a: [2] },
+            { q: "Lequel est un tableur ?", o: ["Word", "Excel", "VLC", "Chrome"], a: [1] },
+            { q: "VLC est un logiciel pour :", o: ["Lire des vidéos", "Écrire du texte", "Naviguer sur le web", "Protéger contre les virus"], a: [0] },
+            { q: "WinZip et WinRar servent à :", o: ["Lire des vidéos", "Compresser des fichiers", "Naviguer sur internet", "Dessiner"], a: [1] },
+            { q: "Quel est le rôle d'un navigateur web ?", o: ["Créer des sites web", "Consulter des pages web", "Envoyer des emails sans internet", "Gérer les fichiers du disque"], a: [1] },
+            { q: "L'extension .pptx correspond à :", o: ["Word", "Excel", "PowerPoint", "PDF"], a: [2] },
+
+            // --- PARTIE 4: RÉSEAUX, SÉCURITÉ & ORGANISATION ---
+            { q: "La règle de sauvegarde 3-2-1 signifie :", o: ["3 fichiers, 2 dossiers, 1 disque", "3 copies, 2 supports différents, 1 hors site", "3 mots de passe, 2 comptes, 1 utilisateur", "3 sauvegardes par jour"], a: [1] },
+            { q: "Le Phishing (hameçonnage) est :", o: ["Une panne matérielle", "Une technique pour voler des identifiants via de faux messages", "Un logiciel de dessin", "Un type de câble"], a: [1] },
+            { q: "Pour sécuriser un compte, il est recommandé d'utiliser :", o: ["Un mot de passe court", "La double authentification (2FA)", "Le même mot de passe partout", "Aucun mot de passe"], a: [1] },
+            { q: "Le protocole HTTPS indique :", o: ["Un site non sécurisé", "Un site sécurisé (chiffré)", "Un site très rapide", "Un site hors ligne"], a: [1] },
+            { q: "Le Cloud (ex: OneDrive) permet de :", o: ["Stocker des fichiers sur des serveurs distants", "Refroidir l'ordinateur", "Augmenter la RAM", "Imprimer à distance"], a: [0] },
+            { q: "Une partition de disque dur (ex: C: ou D:) sert à :", o: ["Diviser logiquement le disque pour organiser les données", "Augmenter la vitesse du processeur", "Connecter une souris", "Créer un réseau"], a: [0] },
+            { q: "Pour se protéger des virus, il faut :", o: ["Désactiver l'antivirus", "Ouvrir toutes les pièces jointes", "Avoir un antivirus à jour et être prudent", "Ne jamais utiliser internet"], a: [2] },
+            { q: "Qu'est-ce qu'une arborescence de dossiers ?", o: ["Une image de forêt", "Une structure organisée de dossiers et sous-dossiers", "Un type de virus", "Un composant matériel"], a: [1] },
+            { q: "Le Wi-Fi public est :", o: ["Toujours sûr", "Risqué pour les données sensibles", "Plus rapide que le câble", "Privé"], a: [1] },
+            { q: "Un LMS (Learning Management System) est :", o: ["Un logiciel de musique", "Une plateforme de gestion de l'apprentissage (ex: Moodle)", "Un type d'écran", "Un câble réseau"], a: [1] },
+
+            // --- PARTIE 5: SUITE OFFICE & OUTILS ---
+            { q: "Dans Excel, une formule commence toujours par :", o: ["$", "#", "=", "!"], a: [2] },
+            { q: "PowerPoint est utilisé pour :", o: ["Les calculs complexes", "Le traitement de texte long", "Les présentations visuelles", "La gestion de base de données"], a: [2] },
+            { q: "Dans Word, pour générer automatiquement un sommaire, on utilise :", o: ["Les styles de titres", "Le gras et l'italique", "La couleur de police", "Les puces"], a: [0] },
+            { q: "Zoom et Teams sont des outils de :", o: ["Montage vidéo", "Visioconférence", "Dessin 3D", "Programmation"], a: [1] },
+            { q: "L'enseignement asynchrone signifie :", o: ["En direct (temps réel)", "En différé (chacun son rythme)", "En présentiel uniquement", "Sans ordinateur"], a: [1] },
+
+            // --- VRAI OU FAUX (50 Questions) ---
+            { q: "La RAM conserve les données quand l'ordinateur est éteint.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Un SSD est plus rapide qu'un disque dur classique (HDD).", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le CPU est le composant qui stocke vos photos de vacances.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Windows 10 est un logiciel d'application.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Linux est un système d'exploitation.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "1 Go est égal à 1024 Mo.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un clavier est un périphérique de sortie.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "L'écran est un périphérique de sortie.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le port RJ45 est utilisé pour le réseau.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le bit peut prendre la valeur 0, 1 ou 2.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Word est un tableur.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Excel permet de créer des graphiques.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "PowerPoint sert à faire des présentations.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Google Chrome est un moteur de recherche.", o: ["Vrai", "Faux"], a: [1] }, // C'est un navigateur, Google Search est le moteur
+            { q: "Le Phishing est une technique de piratage par email.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Il est recommandé d'utiliser le même mot de passe partout.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "HTTPS signifie que le site est sécurisé.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Moodle est un LMS.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Zoom est un outil de traitement de texte.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Le Cloud computing permet de stocker des données en ligne.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Une sauvegarde sur le même disque dur est suffisante.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Un octet est composé de 10 bits.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "La carte mère connecte tous les composants de l'ordinateur.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le ventilateur sert à refroidir l'ordinateur.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Photoshop est un logiciel de traitement de texte.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Android est un système d'exploitation mobile.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un fichier .exe est un fichier exécutable (programme).", o: ["Vrai", "Faux"], a: [0] },
+            { q: "La touche 'Entrée' sert à valider une action.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le raccourci Ctrl+C sert à coller.", o: ["Vrai", "Faux"], a: [1] }, // Copier
+            { q: "Le raccourci Ctrl+V sert à coller.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un malware est un logiciel bénéfique.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "La corbeille permet de récupérer des fichiers supprimés (avant vidage).", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le format PDF est modifiable facilement par tout le monde.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Gmail est un service de messagerie électronique.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un MOOC est un cours en ligne ouvert à tous.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "L'enseignement hybride mélange présentiel et distanciel.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un webcam est un périphérique de sortie.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Le GPU gère l'affichage graphique.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "1 To (Téraoctet) = 1000 Go.", o: ["Vrai", "Faux"], a: [1] }, // 1024 Go
+            { q: "Le BIOS est un logiciel stocké sur la carte mère.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un dossier peut contenir des fichiers et d'autres dossiers.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "L'extension d'un fichier indique son type (ex: .jpg, .docx).", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Le 'Cloud' est situé dans les nuages physiques.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "Il faut éteindre l'ordinateur en débranchant la prise directement.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "La barre des tâches se trouve généralement en bas de l'écran Windows.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Alt+F4 ferme la fenêtre active.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Un navigateur web est indispensable pour aller sur Internet.", o: ["Vrai", "Faux"], a: [0] },
+            { q: "Les cookies sont des petits gâteaux numériques.", o: ["Vrai", "Faux"], a: [1] }, // Fichiers de traçage
+            { q: "Le 'Dark Web' est accessible via Chrome standard.", o: ["Vrai", "Faux"], a: [1] },
+            { q: "La touche 'Echap' permet souvent d'annuler ou sortir.", o: ["Vrai", "Faux"], a: [0] }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userSelection = [];
+
+        function initQuiz() {
+            currentQuestions = fullQuestionPool.sort(() => 0.5 - Math.random()).slice(0, 20);
+            currentQuestionIndex = 0;
+            score = 0;
+            updateUI();
+            showQuestion();
+        }
+
+        function updateUI() {
+            document.getElementById('current-q').innerText = currentQuestionIndex + 1;
+            document.getElementById('score').innerText = score;
+        }
+
+        function showQuestion() {
+            const qData = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = qData.q;
+            
+            let tempOptions = qData.o.map((opt, index) => ({ text: opt, originalIndex: index }));
+            // Don't shuffle True/False options (keep Vrai first then Faux for consistency)
+            if(qData.o.length > 2) {
+                tempOptions.sort(() => 0.5 - Math.random());
+            }
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            userSelection = []; 
+
+            tempOptions.forEach((optObj) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<div class="circle-check"></div><span>${optObj.text}</span>`;
+                btn.dataset.originalIndex = optObj.originalIndex;
+                btn.onclick = () => toggleSelection(btn, optObj.originalIndex);
+                container.appendChild(btn);
+            });
+
+            document.querySelector('.btn-validate').style.display = 'block';
+            document.querySelector('.btn-next').style.display = 'none';
+        }
+
+        function toggleSelection(btnElement, originalIndex) {
+            if(document.querySelector('.btn-next').style.display === 'block') return;
+            
+            // For single choice (True/False or classic), clear previous selection
+            // If question has multiple answers, allow multiple. 
+            // In this specific pool, V/F are single, but some QCM might be multiple. 
+            // Let's check logic: V/F always single. 
+            
+            const qData = currentQuestions[currentQuestionIndex];
+            const isMultiple = qData.a.length > 1;
+
+            if (!isMultiple) {
+                // Clear all others
+                userSelection = [];
+                document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            }
+
+            if (userSelection.includes(originalIndex)) {
+                userSelection = userSelection.filter(i => i !== originalIndex);
+                btnElement.classList.remove('selected');
+            } else {
+                userSelection.push(originalIndex);
+                btnElement.classList.add('selected');
+            }
+        }
+
+        function checkAnswer() {
+            if (userSelection.length === 0) return; 
+
+            const qData = currentQuestions[currentQuestionIndex];
+            const correctIndices = qData.a.sort();
+            const userIndices = userSelection.sort();
+            const isCorrect = JSON.stringify(correctIndices) === JSON.stringify(userIndices);
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                const idx = parseInt(btn.dataset.originalIndex);
+                btn.classList.remove('selected');
+                if (correctIndices.includes(idx)) {
+                    btn.classList.add('correct');
+                    btn.querySelector('.circle-check').innerText = '✓';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                } else if (userIndices.includes(idx) && !correctIndices.includes(idx)) {
+                    btn.classList.add('wrong');
+                    btn.querySelector('.circle-check').innerText = '✕';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                updateUI();
+            }
+            document.querySelector('.btn-validate').style.display = 'none';
+            document.querySelector('.btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 20) {
+                showQuestion();
+                updateUI();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'flex';
+            document.getElementById('final-score-display').innerText = score + "/20";
+            let feedback = score === 20 ? "EXPERT DIGITAL ! 💻" : score >= 15 ? "Très Bien ! 🚀" : "Encore un effort ! 📚";
+            document.getElementById('feedback-text').innerText = feedback;
+        }
+
+        initQuiz();
+    </script>
+</body>
+</html>
