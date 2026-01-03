@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قواعد الإملاء العربي - الملخص الشامل</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #006064; /* أزرق بترولي غامق */
+            --accent-color: #c0ca33;  /* أخضر ليموني/ذهبي للإضاءة */
+            --bg-gradient: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+            --card-bg: rgba(255, 255, 255, 0.90); /* خلفية شبه شفافة */
+            --text-color: #263238;
+            --highlight: #e0f2f1;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-gradient);
+            background-image: url("https://www.transparenttextures.com/patterns/arabesque.png"), var(--bg-gradient); /* نقش عربي خفيف */
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Design */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 96, 100, 0.1);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #546e7a;
+            margin-top: 10px;
+        }
+
+        /* Cards Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-right: 6px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #b2dfdb;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            color: #00838f;
+            background: #e0f7fa;
+            padding: 8px 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 25px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-size: 1.5em;
+            position: absolute;
+            right: 0;
+            top: -5px;
+        }
+
+        /* Examples Box */
+        .example-box {
+            background: #f1f8e9;
+            border: 1px dashed #aed581;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            color: #33691e;
+            font-weight: bold;
+        }
+
+        /* Special Rules Styling */
+        .rule-highlight {
+            background: linear-gradient(to left, #fff9c4, transparent);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #f57f17;
+        }
+
+        /* Power of Vowels Visual */
+        .vowel-power {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            text-align: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .v-step {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        .v-1 { background: #d32f2f; } /* الكسرة */
+        .v-2 { background: #f57c00; } /* الضمة */
+        .v-3 { background: #fbc02d; color: #333;} /* الفتحة */
+        .v-4 { background: #78909c; } /* السكون */
+
+        /* Table Design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #e0f2f1; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>قواعد الإملاء العربي 📝</h1>
+        <p>الدليل الشامل والمبسط للهمزات، التاء، والألف اللينة</p>
+    </header>
+
+    <div class="card">
+        <h2>1. الهمزة (الكابوس رقم 1 👻)</h2>
+        <p>للهمزة ثلاثة مواضع، ولكل موضع قانون خاص به:</p>
+
+        <h3>أ. في أول الكلمة (وصل وقطع)</h3>
+        <ul>
+            <li><strong>همزة القطع (أَ، إِ، أُ):</strong> تُكتب وتُنطق دائماً (مثال: أَكرمَ، إِلى).</li>
+            <li><strong>همزة الوصل (ا):</strong> تُكتب ألفاً دون همزة، وتسقط في النطق عند الوصل (مثال: استغفار، ابن).</li>
+        </ul>
+        <div class="example-box">
+            💡 القاعدة الذهبية: ضع قبل الكلمة (و).<br>
+            نُطقت الهمزة؟ ← قطع (وأَكرمَ).<br>
+            اختفت؟ ← وصل (واسْتغفرَ).
+        </div>
+
+        <h3>ب. الهمزة المتوسطة (قانون القوة 💪)</h3>
+        <p>نتبع قانون <strong>"قوة الحركات"</strong>. الحركة الأقوى تفرض الحرف المناسب لها:</p>
+        
+        <div class="vowel-power">
+            <div class="v-step">1. الكسرة (ئـ) <br>👑 الأقوى</div>
+            <div class="v-step">2. الضمة (ؤ)</div>
+            <div class="v-step">3. الفتحة (أ)</div>
+            <div class="v-step">4. السكون (ء) <br>الأضعف</div>
+        </div>
+
+        <ul>
+            <li><strong>سُئِل:</strong> (كسرة vs ضمة) ← الكسرة تغلب ← على الياء (سُئِل).</li>
+            <li><strong>مُؤْمن:</strong> (ضمة vs سكون) ← الضمة تغلب ← على الواو (مُؤْمِن).</li>
+            <li><strong>سَأَل:</strong> (فتحة vs فتحة) ← تعادل ← على الألف (سَأَل).</li>
+        </ul>
+
+        <h3>ج. الهمزة المتطرفة (آخر الكلمة)</h3>
+        <p>القاعدة بسيطة: <strong>انظر فقط لحركة الحرف الذي قبلها</strong>.</p>
+        <ul>
+            <li>قبلها مكسور ← <strong>شاطِئ</strong></li>
+            <li>قبلها مضموم ← <strong>يجرُؤ</strong></li>
+            <li>قبلها مفتوح ← <strong>قرَأ</strong></li>
+            <li>قبلها ساكن (أو مد) ← <strong>شيْء، سمَاء، هدُوُء</strong> (على السطر).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. التاء المربوطة والمفتوحة (ة / ت)</h2>
+        <p>كيف نميز بينهما؟ قم بنطق الكلمة عند <strong>الوقف (بالسكون)</strong>:</p>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex:1; background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                <strong>التاء المربوطة (ة)</strong><br>
+                تُنطق <strong>(هاءً)</strong> عند الوقف.<br>
+                مثال: مدرسة (نقول: مدرسةْ "هـ").
+            </div>
+            <div style="flex:1; background: #fce4ec; padding: 15px; border-radius: 10px;">
+                <strong>التاء المفتوحة (ت)</strong><br>
+                تُنطق <strong>(تاءً)</strong> دائماً.<br>
+                مثال: بيت (نقول: بيتْ "ت").
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. الألف اللينة (ا / ى)</h2>
+        
+        <h3>في الأفعال الثلاثية</h3>
+        <p>نحول الفعل إلى <strong>المضارع</strong> لنعرف أصله:</p>
+        <ul>
+            <li>انقلبت واواً (و) ← نكتبها طويلة <strong>(ا)</strong>. <span class="rule-highlight">دعا ← يدعو</span></li>
+            <li>انقلبت ياءً (ي) ← نكتبها مقصورة <strong>(ى)</strong>. <span class="rule-highlight">رمى ← يرمي</span></li>
+        </ul>
+
+        <h3>في غير الثلاثي (4 حروف فأكثر)</h3>
+        <ul>
+            <li>تكتب دائماً <strong>مقصورة (ى)</strong>. (مثال: مصطفى، اهتدى).</li>
+            <li><strong>استثناء:</strong> إذا سبقتها ياء ← نكتبها طويلة (ا). (مثال: دنـ<strong>يا</strong>، هدا<strong>يا</strong>).</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. قواعد متفرقة هامة</h2>
+        
+        <h3>تنوين الفتح (ً)</h3>
+        <p>نضيف ألفاً بعد التنوين (كتاباً)، <strong>إلا في 3 حالات</strong> (نضع التنوين مباشرة):</p>
+        <ol style="padding-right: 20px;">
+            <li>التاء المربوطة (قصةً).</li>
+            <li>الهمزة المسبوقة بألف (سماءً). 🚫 خطأ: سماءاً.</li>
+            <li>الألف المقصورة (فتًى).</li>
+        </ol>
+
+        <h3>كلمة (ابن)</h3>
+        <ul>
+            <li><strong>تُحذف الألف:</strong> إذا وقعت بين علمين (محمد بن عبد الله).</li>
+            <li><strong>تثبت الألف:</strong> في أول السطر أو بين غير علمين (ابن خلدون).</li>
+        </ul>
+    </div>
+
+    <div class="card" style="border-right-color: #ffca28;">
+        <h2 style="color: #f57f17;">📋 ملخص سريع للذاكرة</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>القاعدة</th>
+                    <th>المفتاح</th>
+                    <th>مثال</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>الهمزة المتوسطة</strong></td>
+                    <td>الأقوى تربح (كسرة > ضمة > فتحة)</td>
+                    <td>سُئِل (الكسرة فازت)</td>
+                </tr>
+                <tr>
+                    <td><strong>الهمزة المتطرفة</strong></td>
+                    <td>حركة ما قبلها فقط</td>
+                    <td>شاطِئ (قبلها كسر)</td>
+                </tr>
+                <tr>
+                    <td><strong>التاء (ة/ت)</strong></td>
+                    <td>انطقها ساكنة</td>
+                    <td>شجرة (هـ) / بنت (ت)</td>
+                </tr>
+                <tr>
+                    <td><strong>الألف اللينة (3)</strong></td>
+                    <td>المضارع (و=ا / ي=ى)</td>
+                    <td>سما (يسمو) / مشى (يمشي)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
