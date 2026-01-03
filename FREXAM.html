@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Français - Correction Avancée</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ================== STYLE DE BASE ================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background-image: url("https://images.pexels.com/photos/8801154/pexels-photo-8801154.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 80px; /* Espace pour le bouton fixe */
+            color: white;
+        }
+
+        /* ORBS ANIMATION */
+        .bg-orbs { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .orb { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.1); filter: blur(40px); animation: float 8s ease-in-out infinite; }
+        .orb:nth-child(1) { width: 200px; height: 200px; top: 20%; left: 10%; }
+        .orb:nth-child(2) { width: 150px; height: 150px; top: 60%; right: 15%; animation-delay: 2s; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+        /* CONTENEUR PRINCIPAL */
+        .container {
+            position: relative; z-index: 1; padding: 40px 20px;
+            width: 100%; max-width: 800px;
+        }
+
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 2.5rem; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        /* CARDS (GLASSMORPHISM) */
+        .section-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 1.3rem; font-weight: bold; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;
+        }
+
+        .app-icon {
+            width: 35px; height: 35px; background: rgba(255,255,255,0.2);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* INPUTS & QUESTIONS */
+        .question-row {
+            margin-bottom: 15px; padding: 10px;
+            background: rgba(0,0,0,0.15); border-radius: 10px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+
+        .question-text { font-size: 1.1rem; line-height: 1.6; }
+
+        input[type="text"] {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 6px; color: white;
+            padding: 5px 10px; width: 160px; text-align: center;
+            font-size: 1rem; font-weight: bold;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus { outline: none; background: rgba(255,255,255,0.3); border-color: #fff; }
+
+        /* FEEDBACK COLORS */
+        input.correct { background: rgba(46, 204, 113, 0.4); border-color: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
+        input.wrong { background: rgba(231, 76, 60, 0.4); border-color: #e74c3c; box-shadow: 0 0 10px #e74c3c; }
+
+        .correction-msg {
+            font-size: 0.9rem; color: #ffeb3b; font-weight: bold;
+            margin-left: 10px; display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* MCQ STYLES (PHONETIQUE) */
+        .mcq-container { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px; }
+        .mcq-btn {
+            flex: 1; min-width: 80px; padding: 10px; text-align: center;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px; cursor: pointer; transition: 0.3s;
+        }
+        .mcq-btn:hover { background: rgba(255,255,255,0.25); }
+        .mcq-btn.selected { background: rgba(255,255,255,0.4); border-color: #fff; font-weight: bold; }
+        .mcq-btn.correct { background: #27ae60; border-color: #fff; }
+        .mcq-btn.wrong { background: #c0392b; opacity: 0.5; }
+
+        /* BUTTON & SCORE */
+        .btn-check {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            padding: 15px 40px; font-size: 1.2rem; font-weight: bold;
+            color: white; background: linear-gradient(135deg, #2196f3, #21cbf3);
+            border: none; border-radius: 30px; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); z-index: 100;
+            transition: transform 0.2s;
+        }
+        .btn-check:hover { transform: translateX(-50%) scale(1.05); }
+
+        .score-display {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.7); padding: 10px 20px;
+            border-radius: 20px; font-weight: bold; border: 1px solid #fff;
+            z-index: 100;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="bg-orbs"><div class="orb"></div><div class="orb"></div></div>
+<div class="score-display">Score: <span id="current-score">0</span>/55</div>
+
+<div class="container">
+    <div class="header">
+        <h1>Quiz Français Expert</h1>
+        <p>Grammaire, Conjugaison & Phonétique</p>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title"><div class="app-icon"><i class="fas fa-pen"></i></div> I. Déterminants</div>
+        <div id="sec1"></div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title"><div class="app-icon"><i class="fas fa-sync"></i></div> II. Accords (Adjectifs & Composés)</div>
+        <p style="font-size:0.9rem; margin-bottom:15px; opacity:0.8;">Accrodez correctement les mots entre parenthèses.</p>
+        <div id="sec2"></div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title"><div class="app-icon"><i class="fas fa-clock"></i></div> III. Conjugaison</div>
+        <p style="font-size:0.9rem; margin-bottom:15px; opacity:0.8;">Conjuguez le verbe au temps indiqué.</p>
+        <div id="sec3"></div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title"><div class="app-icon"><i class="fas fa-random"></i></div> IV. Syntaxe & Pronoms</div>
+        <div id="sec4"></div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title"><div class="app-icon"><i class="fas fa-music"></i></div> V. Phonétique</div>
+        <div id="sec5"></div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-title"><div class="app-icon"><i class="fas fa-star"></i></div> VI. Prépositions (Bonus)</div>
+        <div id="sec6"></div>
+    </div>
+</div>
+
+<button class="btn-check" onclick="checkAll()">Vérifier les Réponses</button>
+
+<script>
+    // ================= DONNÉES DU QUIZ =================
+
+    const data = {
+        det: [
+            { t: "___ homme qui parle est mon père.", a: "Cet", h: "Démonstratif (voyelle)" },
+            { t: "J'ai acheté ___ pommes et un melon.", a: "des", h: "Indéfini pluriel" },
+            { t: "___ élèves ont réussi, d'autres non.", a: "Plusieurs", h: "Quantité indéfinie" },
+            { t: "___ est ta couleur préférée ?", a: "Quelle", h: "Interrogatif" },
+            { t: "Je n'ai ___ idée de la réponse.", a: "aucune", h: "Négation" },
+            { t: "Il habite au ___ étage.", a: "premier", h: "Ordinal" },
+            { t: "___ femme est très gentille.", a: "Cette", h: "Démonstratif" },
+            { t: "___ matin, je bois du café.", a: "Chaque", h: "Distributif" },
+            { t: "Il mange ___ pain au petit-déjeuner.", a: "du", h: "Partitif" },
+            { t: "___ belles fleurs !", a: "Quelles", h: "Exclamatif" }
+        ],
+        accord: [
+            { t: "Les (chou-fleur) ___ sont chers.", a: "choux-fleurs", h: "Nom+Nom" },
+            { t: "Elle porte des jupes (marron) ___.", a: "marron", h: "Couleur (Nom)" },
+            { t: "Ces roses sont (frais) ___.", a: "fraîches", h: "Féminin Pluriel" },
+            { t: "Ils marchent (lent) ___.", a: "lentement", h: "Adverbe" },
+            { t: "Les (coffre-fort) ___ sont vides.", a: "coffres-forts", h: "Nom+Adj" },
+            { t: "Elles sont (tout) ___ honteuses.", a: "toutes", h: "Tout + H aspiré" },
+            { t: "Elle a des yeux (bleu clair) ___.", a: "bleu clair", h: "Couleur composée" },
+            { t: "J'ai vu des (arc-en-ciel) ___.", a: "arcs-en-ciel", h: "Nom+Prép+Nom" },
+            { t: "Elle marche (nu) ___ pieds.", a: "nu", h: "Nu devant nom" },
+            { t: "Une (demi) ___ heure.", a: "demi", h: "Demi devant nom" }
+        ],
+        conj: [
+            { t: "La lettre qu'elle a (écrire - P. Composé) ___.", a: "écrite", h: "Accord avec COD (que)" },
+            { t: "Ils se sont (laver - P. Composé) ___ les mains.", a: "lavé", h: "COD après = Pas d'accord" },
+            { t: "Nous (peindre - Imparfait) ___ le mur.", a: "peignions", h: "Verbe en -eindre" },
+            { t: "Ils (acquérir - Présent) ___ des savoirs.", a: "acquièrent", h: "Irrégulier" },
+            { t: "La robe est (coudre - P. Passé) ___ main.", a: "cousue", h: "Adjectif verbal" },
+            { t: "Elles sont (aller - P. Composé) ___ au parc.", a: "allées", h: "Être = Accord Sujet" },
+            { t: "Vous (faire - Futur) ___ cela demain.", a: "ferez", h: "Futur simple" },
+            { t: "Il faut que tu (savoir - Subjonctif) ___.", a: "saches", h: "Subjonctif Présent" },
+            { t: "Ils se sont (parler - P. Composé) ___.", a: "parlé", h: "Pas de COD" },
+            { t: "Je (résoudre - Présent) ___ l'énigme.", a: "résous", h: "s/s/t" }
+        ],
+        syntax: [
+            { t: "Je parle à Pierre -> Je ___ parle.", a: "lui", h: "COI Singulier" },
+            { t: "Il mange des fruits -> Il ___ mange.", a: "en", h: "Quantité / de" },
+            { t: "Je vais à Paris -> J'___ vais.", a: "y", h: "Lieu" },
+            { t: "Adverbe de 'Gentil' : ___.", a: "gentiment", h: "Exception" },
+            { t: "Adverbe de 'Bruyant' : ___.", a: "bruyamment", h: "-ant -> -amment" },
+            { t: "Adverbe de 'Précis' : ___.", a: "précisément", h: "Féminin + ment" },
+            { t: "C'est le film ___ j'ai envie.", a: "dont", h: "Envie DE" },
+            { t: "La ville ___ je suis né.", a: "où", h: "Lieu" },
+            { t: "Il pleut, ___ je prends mon parapluie.", a: "donc", h: "Conséquence" },
+            { t: "Je ne bois ___ thé ___ café.", a: "ni", h: "Négation double (ni... ni)" } // Check logic below for double input
+        ],
+        phono: [
+            { q: "Oiseau", o: ["[wazo]", "[uazo]", "[ozau]"], a: 0 },
+            { q: "Monsieur", o: ["[mɔnsiœʀ]", "[məsjø]", "[monz]"], a: 1 },
+            { q: "Femme", o: ["[fɛm]", "[fam]", "[fəm]"], a: 1 },
+            { q: "Chanteur", o: ["[ʃɑ̃tœʀ]", "[ʃantə]", "[ʃɑ̃tøʀ]"], a: 0 },
+            { q: "Pain", o: ["[pɛ̃]", "[pan]", "[pɑ̃]"], a: 0 },
+            { q: "Second", o: ["[səgɔ̃]", "[səkɔ̃]", "[segond]"], a: 0 },
+            { q: "Œil", o: ["[œj]", "[uj]", "[oj]"], a: 0 },
+            { q: "Montagne", o: ["[mɔ̃tan]", "[mɔ̃taɲ]", "[montaɲ]"], a: 1 },
+            { q: "Ville", o: ["[vil]", "[vij]", "[vile]"], a: 0 },
+            { q: "Fille", o: ["[fil]", "[fij]", "[fiye]"], a: 1 }
+        ],
+        bonus: [
+            { t: "Il part ___ France.", a: "en", h: "Pays féminin" },
+            { t: "Il va ___ Maroc.", a: "au", h: "Pays masculin" },
+            { t: "Je viens ___ États-Unis.", a: "des", h: "Pluriel" },
+            { t: "Il est né ___ 2005.", a: "en", h: "Année" },
+            { t: "Rendez-vous ___ 9 heures.", a: "à", h: "Heure" }
+        ]
+    };
+
+    // ================= GÉNÉRATION DU HTML =================
+
+    function createInputHTML(correctAnswer, index, type) {
+        // Special case for "ni... ni" logic if needed, but here simple mapping
+        return `<input type="text" id="${type}-${index}" placeholder="?"> <span id="res-${type}-${index}" class="correction-msg"></span>`;
+    }
+
+    function generateSection(id, list, type) {
+        const container = document.getElementById(id);
+        list.forEach((item, index) => {
+            let html = "";
+            
+            // Logique pour insérer l'input à la place de "___" ou à la fin
+            if (item.t.includes("___")) {
+                let parts = item.t.split("___");
+                html = parts[0] + createInputHTML(item.a, index, type) + parts[1];
+            } else {
+                html = item.t + " " + createInputHTML(item.a, index, type);
+            }
+
+            const div = document.createElement("div");
+            div.className = "question-row";
+            div.innerHTML = `
+                <div class="question-text">${index + 1}. ${html}</div>
+                <div style="font-size:0.8rem; opacity:0.7;">Indice: ${item.h}</div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function generateMCQ(id, list) {
+        const container = document.getElementById(id);
+        list.forEach((item, index) => {
+            let btns = "";
+            item.o.forEach((opt, i) => {
+                btns += `<div class="mcq-btn" onclick="selectMCQ(this, ${index}, ${item.a})">${opt}</div>`;
+            });
+
+            const div = document.createElement("div");
+            div.className = "question-row";
+            div.innerHTML = `
+                <div class="question-text">${index + 1}. ${item.q}</div>
+                <div class="mcq-container" id="mcq-${index}">${btns}</div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Appel des fonctions
+    generateSection("sec1", data.det, "det");
+    generateSection("sec2", data.accord, "accord");
+    generateSection("sec3", data.conj, "conj");
+    generateSection("sec4", data.syntax, "syntax");
+    generateMCQ("sec5", data.phono);
+    generateSection("sec6", data.bonus, "bonus");
+
+    // ================= LOGIQUE DE VÉRIFICATION =================
+
+    function selectMCQ(btn, qIndex, correctIndex) {
+        const parent = btn.parentElement;
+        Array.from(parent.children).forEach(c => c.classList.remove("selected"));
+        btn.classList.add("selected");
+        parent.dataset.userObj = JSON.stringify({ choice: Array.from(parent.children).indexOf(btn), correct: correctIndex });
+    }
+
+    function checkAll() {
+        let score = 0;
+        let total = 55;
+
+        // 1. Vérifier les inputs textes
+        const checkInput = (list, type) => {
+            list.forEach((item, index) => {
+                const input = document.getElementById(`${type}-${index}`);
+                const msg = document.getElementById(`res-${type}-${index}`);
+                const userVal = input.value.trim().toLowerCase();
+                const correctVal = item.a.toLowerCase();
+
+                if (userVal === correctVal) {
+                    input.classList.add("correct");
+                    input.classList.remove("wrong");
+                    msg.style.display = "none";
+                    score++;
+                } else {
+                    input.classList.add("wrong");
+                    input.classList.remove("correct");
+                    msg.innerText = `Correction : ${item.a}`;
+                    msg.style.display = "inline";
+                }
+            });
+        };
+
+        checkInput(data.det, "det");
+        checkInput(data.accord, "accord");
+        checkInput(data.conj, "conj");
+        checkInput(data.syntax, "syntax");
+        checkInput(data.bonus, "bonus");
+
+        // 2. Vérifier les QCM (Phonétique)
+        data.phono.forEach((item, index) => {
+            const container = document.getElementById(`mcq-${index}`);
+            const dataUser = container.dataset.userObj ? JSON.parse(container.dataset.userObj) : null;
+            const btns = container.children;
+
+            if (dataUser) {
+                if (dataUser.choice === dataUser.correct) {
+                    btns[dataUser.choice].classList.add("correct");
+                    score++;
+                } else {
+                    btns[dataUser.choice].classList.add("wrong");
+                    btns[dataUser.correct].classList.add("correct");
+                }
+            } else {
+                btns[item.a].classList.add("correct"); // Montrer la réponse si pas répondu
+            }
+        });
+
+        // Affichage Score
+        document.getElementById("current-score").innerText = score;
+        alert(`Quiz Terminé !\nVotre Score : ${score} / 55`);
+    }
+
+</script>
+
+</body>
+</html>

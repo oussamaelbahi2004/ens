@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Français - Suite Grammaire</title>
+    <style>
+        :root {
+            --primary-color: #1a237e; /* Royal Blue */
+            --secondary-color: #304ffe;
+            --accent-color: #d50000;  /* Rouge pour exceptions/erreurs */
+            --success-color: #2e7d32; /* Vert pour correct */
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #1a237e, #5c6bc0);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header h1 { margin: 0; font-size: 2.2em; }
+        header p { opacity: 0.9; margin-top: 10px; font-size: 1.1em; }
+
+        .hint {
+            background-color: #e8eaf6;
+            color: #1a237e;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #c5cae9;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #304ffe;
+            margin-top: 25px;
+            background: #e8eaf6;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        tr:nth-child(even) { background-color: #fcfcfc; }
+
+        /* Color Rules Specifics */
+        .color-box {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .rule-item {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .accord { background-color: #e8f5e9; border-color: #a5d6a7; } /* Vert */
+        .invariable { background-color: #ffebee; border-color: #ef9a9a; } /* Rouge */
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 5px; }
+
+        /* Composés Grid */
+        .compos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .compos-item {
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+        }
+        .compos-oui { background-color: #66bb6a; } /* Vert */
+        .compos-non { background-color: #ef5350; } /* Rouge */
+        .compos-mix { background-color: #42a5f5; } /* Bleu */
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Suite Grammaire & Orthographe</h1>
+        <p>Féminin, Adjectifs, Mots composés & Prépositions</p>
+    </header>
+
+    <div class="hint">
+        💡 Astuce : Les mots en rouge sont souvent des exceptions ou des invariables !
+    </div>
+
+    <div class="card">
+        <h2>Suite Part 02 : Le Féminin des Noms</h2>
+        <p>Règle générale : On ajoute un <strong>E</strong> au masculin (ex: un ami -> une amie).</p>
+        
+        <table>
+            <tr>
+                <th>Terminaison Masculin</th>
+                <th>Terminaison Féminin</th>
+                <th>Exemples</th>
+            </tr>
+            <tr>
+                <td><strong>-er</strong> (boucher)</td>
+                <td><strong>-ère</strong></td>
+                <td>bouchère, boulangère</td>
+            </tr>
+            <tr>
+                <td><strong>-f</strong> (neuf)</td>
+                <td><strong>-ve</strong></td>
+                <td>neuve, veuve, sportive</td>
+            </tr>
+            <tr>
+                <td><strong>-x</strong> (heureux)</td>
+                <td><strong>-se</strong></td>
+                <td>heureuse, jalouse (Exception: doux->douce, roux->rousse)</td>
+            </tr>
+            <tr>
+                <td><strong>-eur</strong> (chanteur)</td>
+                <td><strong>-euse</strong></td>
+                <td>chanteuse, danseuse</td>
+            </tr>
+            <tr>
+                <td><strong>-teur</strong> (directeur)</td>
+                <td><strong>-trice</strong></td>
+                <td>directrice, actrice</td>
+            </tr>
+            <tr>
+                <td><strong>-en / -on</strong> (lion)</td>
+                <td><strong>-enne / -onne</strong> (Double consonne)</td>
+                <td>lionne, chienne, ancienne</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Part 03 : L'Adjectif Qualificatif</h2>
+        
+        <h3>1. Les Types & Fonctions</h3>
+        <ul>
+            <li><strong>Épithète :</strong> Collé au nom (ex: le <u>beau</u> chien).</li>
+            <li><strong>Attribut :</strong> Séparé par un verbe d'état (être, paraitre...) (ex: il est <u>gentil</u>).</li>
+            <li><strong>Apposé :</strong> Séparé par une virgule (ex: <u>Malheureux</u>, le garçon pleura).</li>
+        </ul>
+
+        <h3>2. L'Accord des Adjectifs de Couleur (TRÈS IMPORTANT)</h3>
+        <div class="color-box">
+            <div class="rule-item accord">
+                <strong>✅ S'ACCORDENT (Variable)</strong>
+                <p>Les couleurs simples (un seul mot).</p>
+                <ul>
+                    <li>Des robes <strong>rouges</strong></li>
+                    <li>Des yeux <strong>verts</strong></li>
+                </ul>
+                <p><em>Exceptions (qui s'accordent quand même) :</em> Rose, Mauve, Fauve, Pourpre, Écarlate.</p>
+            </div>
+
+            <div class="rule-item invariable">
+                <strong>❌ INVARIABLES (Ne changent pas)</strong>
+                <p>1. Les noms utilisés comme couleurs (Marron, Orange, Cerise...).</p>
+                <ul>
+                    <li>Des chemises <strong>marron</strong></li>
+                    <li>Des jupes <strong>orange</strong></li>
+                </ul>
+                <p>2. Les couleurs composées (plusieurs mots).</p>
+                <ul>
+                    <li>Des yeux <strong>bleu clair</strong></li>
+                    <li>Des tissus <strong>vert foncé</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Part 04 : Mots Composés & Prépositions</h2>
+
+        <h3>1. Le Pluriel des Mots Composés</h3>
+        <p>Le pluriel dépend de la nature des mots qui composent le mot.</p>
+        
+        <div class="compos-grid">
+            <div class="compos-item compos-oui">
+                <strong>✅ S'accordent (Prennent un S)</strong>
+                <hr style="border-color: rgba(255,255,255,0.3);">
+                <ul>
+                    <li><strong>NOM</strong> (chou-fleur -> choux-fleurs)</li>
+                    <li><strong>ADJECTIF</strong> (coffre-fort -> coffres-forts)</li>
+                </ul>
+            </div>
+
+            <div class="compos-item compos-non">
+                <strong>❌ Ne s'accordent pas</strong>
+                <hr style="border-color: rgba(255,255,255,0.3);">
+                <ul>
+                    <li><strong>VERBE</strong> (tire-bouchons)</li>
+                    <li><strong>ADVERBE</strong> (arrière-boutiques)</li>
+                    <li><strong>PRÉPOSITION</strong> (sans-abri)</li>
+                </ul>
+            </div>
+
+            <div class="compos-item compos-mix">
+                <strong>⚠️ Cas Spécial (Nom + Prép + Nom)</strong>
+                <hr style="border-color: rgba(255,255,255,0.3);">
+                <p>Seul le <strong>premier nom</strong> s'accorde.</p>
+                <ul>
+                    <li>Des <strong>arcs</strong>-en-ciel</li>
+                    <li>Des <strong>pommes</strong> de terre</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top:15px; background:#fff3e0; padding:10px; border-left:4px solid #ff9800;">
+            <strong>Attention au sens :</strong> Des "timbres-poste" (timbres POUR la poste), Des "gratte-ciel" (qui grattent LE ciel).
+        </div>
+
+        <h3>2. Les Prépositions</h3>
+        <p>Mots invariables qui introduisent un complément.</p>
+        <p><strong>Liste mnémotechnique :</strong> <br>
+        <em>"Adam part pour Anvers avec deux cents sous"</em><br>
+        (à, dans, par, pour, en, vers, avec, de, sans, sous)</p>
+        
+        <p><strong>Autres prépositions fréquentes :</strong> chez, contre, depuis, derrière, devant, durant, entre, hormis, malgré, parmi, pendant, selon, sur.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
