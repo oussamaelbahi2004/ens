@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 004: Absorption des Minéraux</title>
+    <style>
+        :root {
+            --primary-color: #d35400; /* Earth/Mineral Color */
+            --accent-color: #e59866;
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #fdf2e9;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #fae5d3;
+            color: #af601a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #f0b27a;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #edbb99;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #e59866;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "⚡"; margin-right: 10px; color: var(--primary-color); }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+        .important-note {
+            border: 2px solid #e74c3c;
+            background-color: #fadbd8;
+            color: #c0392b;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Absorption des Substances Dissoutes</h1>
+        <p>Les Sels Minéraux et le Transport Actif</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Le Défi de la Concentration</h2>
+        
+        <p class="swap-block" 
+           data-fr="Les sels minéraux (Potassium K+, Nitrates NO3-, Phosphates PO4-...) sont dissous dans l'eau du sol. Mais il y a un problème :"
+           data-ar="الأملاح المعدنية (بوتاسيوم، نترات، فوسفات...) ذائبة في ماء التربة. لكن هناك مشكلة:">
+           Les sels minéraux (Potassium K+, Nitrates NO3-, Phosphates PO4-...) sont dissous dans l'eau du sol. Mais il y a un problème :
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://www.encyclopedie-environnement.org/app/uploads/2020/06/Plantes_fig8-schema-mineralisation-matiere-organique-sol.jpg" alt="Gradient de concentration">
+            <div class="caption">Figure 1 : La concentration en minéraux est plus élevée DANS la racine que dans le sol.</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="La concentration des ions minéraux est souvent beaucoup plus élevée à l'intérieur de la racine que dans le sol. Donc, la diffusion naturelle ne peut pas fonctionner (les ions voudraient sortir, pas entrer)."
+           data-ar="تركيز الأيونات المعدنية غالباً ما يكون أعلى بكثير داخل الجذر منه في التربة. إذن، الانتشار الطبيعي لا يمكن أن يعمل (الأيونات تود الخروج وليس الدخول).">
+           La concentration des ions minéraux est souvent beaucoup plus élevée à l'intérieur de la racine que dans le sol. Donc, la diffusion naturelle ne peut pas fonctionner (les ions voudraient sortir, pas entrer).
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. La Solution : Le Transport Actif</h2>
+        
+        <p class="swap-block" 
+           data-fr="Pour absorber ces minéraux 'contre le courant' (contre le gradient de concentration), la plante doit travailler."
+           data-ar="لأجل امتصاص هذه المعادن 'عكس التيار' (عكس تدرج التركيز)، يجب على النبتة أن تعمل.">
+           Pour absorber ces minéraux 'contre le courant' (contre le gradient de concentration), la plante doit travailler.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://ecampusontario.pressbooks.pub/app/uploads/sites/3004/2023/08/6.14-1024x762.png" alt="Transport Actif">
+            <div class="caption">Figure 2 : Utilisation de l'ATP pour pomper les ions</div>
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Transport Actif : C'est le mouvement des substances à travers la membrane cellulaire qui nécessite une dépense d'énergie."
+                data-ar="النقل النشيط: هو حركة المواد عبر الغشاء الخلوي التي تتطلب استهلاكاً للطاقة.">
+                Transport Actif : C'est le mouvement des substances à travers la membrane cellulaire qui nécessite une dépense d'énergie.
+            </li>
+            <li class="swap-block" 
+                data-fr="Source d'énergie : La plante utilise l'ATP (produit par la respiration cellulaire) pour faire fonctionner des 'pompes' membranaires."
+                data-ar="مصدر الطاقة: تستعمل النبتة الـ ATP (المنتج عبر التنفس الخلوي) لتشغيل 'مضخات' غشائية.">
+                Source d'énergie : La plante utilise l'ATP (produit par la respiration cellulaire) pour faire fonctionner des 'pompes' membranaires.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. La Sélectivité (Le Choix)</h2>
+        
+        <p class="swap-block" 
+           data-fr="La membrane des cellules racinaires contient des protéines de transport spécifiques. La plante ne laisse pas entrer n'importe quoi."
+           data-ar="غشاء الخلايا الجذرية يحتوي على بروتينات نقل نوعية/خاصة. النبتة لا تدع أي شيء يدخل.">
+           La membrane des cellules racinaires contient des protéines de transport spécifiques. La plante ne laisse pas entrer n'importe quoi.
+        </p>
+
+        <p class="swap-block" 
+           data-fr="Exemple : Il existe une pompe spécifique pour le K+ et une autre pour le NO3-. Cela permet à la plante de contrôler sa nutrition."
+           data-ar="مثال: توجد مضخة خاصة بـ K+ وأخرى بـ NO3-. هذا يسمح للنبتة بالتحكم في تغذيتها.">
+           Exemple : Il existe une pompe spécifique pour le K+ et une autre pour le NO3-. Cela permet à la plante de contrôler sa nutrition.
+        </p>
+
+        <div class="important-note swap-block"
+             data-fr="⚠️ Résumé : L'eau entre passivement (Osmose), mais les minéraux entrent activement (ATP)."
+             data-ar="⚠️ خلاصة: الماء يدخل سلبياً (أسموز)، لكن المعادن تدخل نشيطياً (ATP).">
+             ⚠️ Résumé : L'eau entre passivement (Osmose), mais les minéraux entrent activement (ATP).
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

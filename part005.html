@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 005: Devenir de l'eau & Circulation</title>
+    <style>
+        :root {
+            --primary-color: #27ae60; /* Plant Green */
+            --secondary-color: #e67e22; /* Sap/Sugar Color */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f4f6f7;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d5f5e3;
+            color: #1e8449;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #abebc6;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #fdebd0;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "🍃"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Devenir de l'Eau & Circulation</h1>
+        <p>Le destin des nutriments et le double système circulatoire</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Le Devenir de l'Eau (Où va-t-elle ?)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Une grande quantité d'eau traverse la plante, mais seulement une infime partie est utilisée :"
+           data-ar="كمية كبيرة من الماء تعبر النبتة، لكن جزءاً ضئيلاً جداً هو الذي يتم استخدامه:">
+           Une grande quantité d'eau traverse la plante, mais seulement une infime partie est utilisée :
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://placehold.co/700x300/27ae60/ffffff?text=98%25+Transpiration+(Perte)+vs+2%25+Photosynth%C3%A8se%2FCroissance" alt="Répartition de l'eau">
+            <div class="caption">Figure 1 : Répartition de l'utilisation de l'eau (98% Transpiration / 2% Utilisation)</div>
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="98% Transpiration : La majorité de l'eau est perdue sous forme de vapeur par les feuilles (Rôle : refroidissement et moteur d'aspiration)."
+                data-ar="98% النتح: غالبية الماء تضيع على شكل بخار عبر الأوراق (الدور: التبريد ومحرك الشفط).">
+                98% Transpiration : La majorité de l'eau est perdue sous forme de vapeur par les feuilles (Rôle : refroidissement et moteur d'aspiration).
+            </li>
+            <li class="swap-block" 
+                data-fr="1-2% Croissance et Photosynthèse : Une petite partie sert à l'allongement cellulaire (Turgescence) et comme source d'électrons (H+) pour la photosynthèse."
+                data-ar="1-2% النمو والتركيب الضوئي: جزء صغير يستخدم للتطاول الخلوي (الانتفاخ) وكمصدر للإلكترونات (H+) للتركيب الضوئي.">
+                1-2% Croissance et Photosynthèse : Une petite partie sert à l'allongement cellulaire (Turgescence) et comme source d'électrons (H+) pour la photosynthèse.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Le Devenir des Ions (À quoi servent-ils ?)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Les sels minéraux absorbés sont vitaux pour la synthèse de la matière organique :"
+           data-ar="الأملاح المعدنية الممتصة حيوية لتركيب المادة العضوية:">
+           Les sels minéraux absorbés sont vitaux pour la synthèse de la matière organique :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="L'Azote (N) : Sert à fabriquer les acides aminés (protéines) et l'ADN."
+                data-ar="الآزوت (N): يستخدم لصنع الأحماض الأمينية (البروتينات) والـ ADN.">
+                L'Azote (N) : Sert à fabriquer les acides aminés (protéines) et l'ADN.
+            </li>
+            <li class="swap-block" 
+                data-fr="Le Magnésium (Mg) : C'est l'atome central de la molécule de Chlorophylle."
+                data-ar="المغنيزيوم (Mg): هو الذرة المركزية في جزيئة اليخضور.">
+                Le Magnésium (Mg) : C'est l'atome central de la molécule de Chlorophylle.
+            </li>
+            <li class="swap-block" 
+                data-fr="Le Phosphore (P) : Essentiel pour l'ATP (énergie) et les membranes."
+                data-ar="الفوسفور (P): ضروري للـ ATP (الطاقة) والأغشية.">
+                Le Phosphore (P) : Essentiel pour l'ATP (énergie) et les membranes.
+            </li>
+        </ul>
+        
+        <div class="diagram-container">
+            <img src="https://thumbs.dreamstime.com/z/sch%C3%A9ma-de-la-chlorophylle-et-du-chloroplaste-plante-%C3%A0-formule-chimique-description-structure-des-feuilles-vertes-closeup-237712855.jpg" alt="Structure Chlorophylle">
+            <div class="caption">Figure 2 : Structure de la chlorophylle avec le Magnésium au centre</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. La Double Circulation (Xylème vs Phloème)</h2>
+        
+        <p class="swap-block" 
+           data-fr="La plante possède deux systèmes de transport distincts, comme nos artères et nos veines."
+           data-ar="تمتلك النبتة نظامي نقل متميزين، مثل الشرايين والأوردة عندنا.">
+           La plante possède deux systèmes de transport distincts, comme nos artères et nos veines.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://img.freepik.com/vecteurs-libre/schema-montrant-xyleme-phloeme_1308-90952.jpg?w=1380&t=st=1677251291~exp=1677251891~hmac=2b7a42b18ce67125e60af84d3f84a23f0b231f01fb9959171953e407a04c45fe" alt="Xylème vs Phloème">
+            <div class="caption">Figure 3 : Comparaison Xylème (gauche) et Phloème (droite)</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Caractéristique</th>
+                    <th>Sève Brute (Raw Sap)</th>
+                    <th>Sève Élaborée (Elaborated Sap)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Composition</strong></td>
+                    <td class="swap-block" data-fr="Eau + Sels minéraux" data-ar="ماء + أملاح معدنية">Eau + Sels minéraux</td>
+                    <td class="swap-block" data-fr="Eau + Sucres (Saccharose) + AA" data-ar="ماء + سكريات (سكروز) + أحماض أمينية">Eau + Sucres (Saccharose) + AA</td>
+                </tr>
+                <tr>
+                    <td><strong>Vaisseau</strong></td>
+                    <td class="swap-block" data-fr="Xylème (Cellules mortes)" data-ar="الخشب (خلايا ميتة)">Xylème</td>
+                    <td class="swap-block" data-fr="Phloème (Cellules vivantes)" data-ar="اللحاء (خلايا حية)">Phloème</td>
+                </tr>
+                <tr>
+                    <td><strong>Direction</strong></td>
+                    <td class="swap-block" data-fr="Ascendante (Racines ➔ Feuilles)" data-ar="تصاعدي (جذور ➔ أوراق)">Ascendante ⬆️</td>
+                    <td class="swap-block" data-fr="Multidirectionnelle (Source ➔ Puits)" data-ar="متعدد الاتجاهات (مصدر ➔ مستقبل)">Multidirectionnelle ↕️</td>
+                </tr>
+                <tr>
+                    <td><strong>Moteur</strong></td>
+                    <td class="swap-block" data-fr="Transpiration (Aspiration)" data-ar="النتح (الشفط)">Transpiration</td>
+                    <td class="swap-block" data-fr="Pression Osmotique (Poussée)" data-ar="الضغط الأسموزي (الدفع)">Pression active</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>4. Comment circule la sève élaborée ?</h2>
+        
+        <p class="swap-block" 
+           data-fr="Contrairement à la sève brute qui est 'aspirée', la sève élaborée est 'poussée' sous pression."
+           data-ar="عكس النسغ الخام الذي يتم 'شفطه'، النسغ الجاهز يتم 'دفعه' تحت الضغط.">
+           Contrairement à la sève brute qui est 'aspirée', la sève élaborée est 'poussée' sous pression.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://c8.alamy.com/compfr/2gwhw60/schema-montrant-le-xyleme-et-le-phloeme-de-la-plante-2gwhw60.jpg" alt="Mécanisme Phloème">
+            <div class="caption">Figure 4 : Mécanisme de chargement et déchargement du phloème</div>
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Chargement : Le sucre est chargé activement dans le phloème au niveau des feuilles (Source)."
+                data-ar="1. الشحن: يتم شحن السكر نشيطياً داخل اللحاء على مستوى الأوراق (المصدر).">
+                1. Chargement : Le sucre est chargé activement dans le phloème au niveau des feuilles (Source).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Appel d'eau : La forte concentration de sucre attire l'eau du xylème par osmose."
+                data-ar="2. نداء الماء: التركيز العالي للسكر يجذب الماء من الخشب عبر الأسموز.">
+                2. Appel d'eau : La forte concentration de sucre attire l'eau du xylème par osmose.
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Pression : L'entrée d'eau crée une forte pression qui pousse la sève vers les organes consommateurs (Puits : Racines, fruits...)."
+                data-ar="3. الضغط: دخول الماء يخلق ضغطاً قوياً يدفع النسغ نحو الأعضاء المستهلكة (المستقبل: جذور، ثمار...).">
+                3. Pression : L'entrée d'eau crée une forte pression qui pousse la sève vers les organes consommateurs (Puits : Racines, fruits...).
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

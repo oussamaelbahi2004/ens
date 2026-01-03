@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Nutrition & Photosynthèse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* صورة خلفية نباتية عالية الجودة */
+            background-image: url("https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            position: relative;
+            overflow-x: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* طبقة تعتيم */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            filter: blur(40px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb:nth-child(1) { width: 200px; height: 200px; top: 15%; left: 10%; animation-delay: 0s; }
+        .orb:nth-child(2) { width: 150px; height: 150px; top: 65%; right: 10%; animation-delay: 2s; }
+        .orb:nth-child(3) { width: 120px; height: 120px; top: 35%; left: 50%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 40px 20px;
+            max-width: 420px; /* عرض أكبر قليلاً لاستيعاب القائمة الطويلة */
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            background: rgba(46, 204, 113, 0.3); /* خلفية خضراء شفافة للعنوان الفرعي */
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .notifications-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* مسافة أقل قليلاً لأن القائمة طويلة */
+        }
+
+        a { text-decoration: none; }
+
+        .notification-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(100%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px; 
+            padding: 14px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-height: 70px;
+            display: flex;
+            align-items: center; 
+            gap: 12px;
+        }
+
+        .notification-card:hover {
+            transform: translateY(-3px) scale(1.01); 
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .notification-content h3 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .notification-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        /* زر العودة */
+        .notification-card.back {
+            background: rgba(0, 0, 0, 0.4);
+            margin-bottom: 10px;
+        }
+
+        /* زر الكويز */
+        .notification-card.quiz {
+            background: rgba(46, 204, 113, 0.25);
+            border-color: rgba(46, 204, 113, 0.5);
+            margin-top: 10px;
+        }
+        
+        /* تلوين أيقونات الأجزاء المختلفة */
+        .part-group-1 .app-icon { background: rgba(52, 152, 219, 0.3); } /* أزرق للماء */
+        .part-group-2 .app-icon { background: rgba(241, 196, 15, 0.3); } /* أصفر للشمس */
+        .part-group-3 .app-icon { background: rgba(39, 174, 96, 0.3); } /* أخضر لليخضور */
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <div class="container">
+        
+        <div class="header">
+            <h1>Nutrition & Photosynthèse</h1>
+            <p>Cours Complet (Part 1 - 9)</p>
+        </div>
+
+        <div class="notifications-stack">
+
+            <a href="index.html" class="notification-card back">
+                <div class="app-icon">🏠</div>
+                <div class="notification-content">
+                    <h3>Accueil</h3>
+                    <p>Retourner au menu principal</p>
+                </div>
+            </a>
+
+            <a href="part001.html" class="notification-card part-group-3">
+                <div class="app-icon">🌿</div>
+                <div class="notification-content">
+                    <h3>Part 01: Anatomie</h3>
+                    <p>Structure de la plante</p>
+                </div>
+            </a>
+
+            <a href="part002.html" class="notification-card part-group-1">
+                <div class="app-icon">💧</div>
+                <div class="notification-content">
+                    <h3>Part 02: Absorption</h3>
+                    <p>L'eau et l'osmose</p>
+                </div>
+            </a>
+
+            <a href="part003.html" class="notification-card part-group-1">
+                <div class="app-icon">⬆️</div>
+                <div class="notification-content">
+                    <h3>Part 03: Transport</h3>
+                    <p>Transpiration & Xylème</p>
+                </div>
+            </a>
+
+            <a href="part004.html" class="notification-card part-group-1">
+                <div class="app-icon">🧂</div>
+                <div class="notification-content">
+                    <h3>Part 04: Minéraux</h3>
+                    <p>Transport Actif</p>
+                </div>
+            </a>
+
+            <a href="part005.html" class="notification-card part-group-3">
+                <div class="app-icon">🔄</div>
+                <div class="notification-content">
+                    <h3>Part 05: Circulation</h3>
+                    <p>Devenir de l'eau & Sève</p>
+                </div>
+            </a>
+
+            <a href="part006.html" class="notification-card part-group-2">
+                <div class="app-icon">☀️</div>
+                <div class="notification-content">
+                    <h3>Part 06: Photosynthèse</h3>
+                    <p>Mise en évidence</p>
+                </div>
+            </a>
+
+            <a href="part007.html" class="notification-card part-group-3">
+                <div class="app-icon">🟢</div>
+                <div class="notification-content">
+                    <h3>Part 07: Chloroplaste</h3>
+                    <p>L'organite clé</p>
+                </div>
+            </a>
+
+            <a href="part008.html" class="notification-card part-group-2">
+                <div class="app-icon">⚙️</div>
+                <div class="notification-content">
+                    <h3>Part 08: Déroulement</h3>
+                    <p>Phases Claire & Sombre</p>
+                </div>
+            </a>
+
+            <a href="part009.html" class="notification-card part-group-3">
+                <div class="app-icon">📊</div>
+                <div class="notification-content">
+                    <h3>Part 09: Bilan Global</h3>
+                    <p>Résumé & Comparaison</p>
+                </div>
+            </a>
+
+            <a href="PHQUIZ.html" class="notification-card quiz">
+                <div class="app-icon">📝</div>
+                <div class="notification-content">
+                    <h3>TESTEZ-VOUS !</h3>
+                    <p>Quiz final du module</p>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

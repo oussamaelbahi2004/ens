@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respiration Cellulaire Aérobie</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22; /* Orange for Energy/ATP */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d4e6f1;
+            color: #154360;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a9cce3;
+            font-weight: bold;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #d35400;
+            margin-top: 20px;
+        }
+
+        /* Interaction */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #fce5cd; /* Light orange */
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Formulas & Diagrams */
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #2c3e50;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+            direction: ltr !important; /* Formulas always LTR */
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+        }
+
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background-color: #e8f8f5;
+            border: 1px solid #a2d9ce;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "🔹"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Partie 02 : La Respiration Cellulaire Aérobie</h1>
+        <p>Du Glucose à l'ATP : Le grand voyage</p>
+    </header>
+
+    <div class="hint">
+        💡 Rappel : Cliquez sur n'importe quel bloc de texte pour le traduire en Arabe (Darija/Fosha).
+    </div>
+
+    <div class="card">
+        <h2>1. Vue d'ensemble</h2>
+        
+        <p class="swap-block"
+           data-fr="La respiration cellulaire aérobie est la dégradation complète du glucose en présence d'oxygène (O₂) pour produire une grande quantité d'énergie (ATP)."
+           data-ar="التنفس الخلوي الهوائي هو الهدم الكلي للجليكوز بوجود الأكسجين (O₂) لإنتاج كمية كبيرة من الطاقة (ATP).">
+           La respiration cellulaire aérobie est la dégradation complète du glucose en présence d'oxygène (O₂) pour produire une grande quantité d'énergie (ATP).
+        </p>
+
+        <div class="formula">
+            C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Énergie (ATP + Chaleur)
+        </div>
+
+        <p class="swap-block"
+           data-fr="Ce processus se déroule en 3 étapes majeures : la Glycolyse, le Cycle de Krebs, et la Phosphorylation Oxydative."
+           data-ar="تتم هذه العملية عبر 3 مراحل رئيسية: انحلال الجليكوز (Glycolyse)، دورة كريبس (Cycle de Krebs)، والتفسفر المؤكسد (Phosphorylation Oxydative).">
+           Ce processus se déroule en 3 étapes majeures : la Glycolyse, le Cycle de Krebs, et la Phosphorylation Oxydative.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. Étape 1 : La Glycolyse (Cytosol)</h2>
+        
+        <div class="diagram-container">
+            <img src="https://c8.alamy.com/compfr/2ky5009/conception-scientifique-des-etapes-de-la-glycolyse-conversion-du-glucose-en-pyruvate-symboles-colores-illustration-vectorielle-2ky5009.jpg" alt="Glycolyse">
+            <div class="caption">Figure : Résumé de la Glycolyse</div>
+        </div>
+
+        <p class="swap-block"
+           data-fr="La glycolyse se déroule dans le cytosol (hyaloplasme). Elle ne nécessite pas d'oxygène (anaérobie). Son but est de diviser le glucose (6C) en deux molécules de pyruvate (3C)."
+           data-ar="يحدث انحلال الجليكوز في الجيلبة الشفافة (Cytosol). لا يحتاج للأكسجين (لاهوائي). هدفه هو تقسيم الجليكوز (6 كربونات) إلى جزيئتين من البيروفات (3 كربونات).">
+           La glycolyse se déroule dans le cytosol (hyaloplasme). Elle ne nécessite pas d'oxygène (anaérobie). Son but est de diviser le glucose (6C) en deux molécules de pyruvate (3C).
+        </p>
+
+        <h3>Les phases de la glycolyse :</h3>
+        <ul>
+            <li class="swap-block"
+                data-fr="Phase d'investissement : La cellule consomme 2 ATP pour activer et diviser le glucose."
+                data-ar="مرحلة الاستثمار: تستهلك الخلية 2 ATP لتنشيط وتقسيم الجليكوز.">
+                Phase d'investissement : La cellule consomme 2 ATP pour activer et diviser le glucose.
+            </li>
+            <li class="swap-block"
+                data-fr="Phase de libération d'énergie : La cellule produit 4 ATP et 2 NADH."
+                data-ar="مرحلة تحرير الطاقة: تنتج الخلية 4 ATP و 2 NADH.">
+                Phase de libération d'énergie : La cellule produit 4 ATP et 2 NADH.
+            </li>
+        </ul>
+
+        <div class="highlight-box swap-block"
+             data-fr="💰 Bilan Net de la Glycolyse : 2 ATP + 2 NADH + 2 Pyruvate"
+             data-ar="💰 الحصيلة الصافية لانحلال الجليكوز: 2 ATP + 2 NADH + 2 بيروفات">
+             💰 Bilan Net de la Glycolyse : 2 ATP + 2 NADH + 2 Pyruvate
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. L'Oxydation du Pyruvate (Lien)</h2>
+        
+        <p class="swap-block"
+           data-fr="Avant d'entrer dans le cycle de Krebs, le pyruvate doit entrer dans la mitochondrie (Matrice). Il subit une transformation pour devenir de l'Acétyl-CoA."
+           data-ar="قبل الدخول في دورة كريبس، يجب أن يدخل البيروفات إلى الميتوكوندري (الماتريس). يخضع لتحول ليصبح Acétyl-CoA.">
+           Avant d'entrer dans le cycle de Krebs, le pyruvate doit entrer dans la mitochondrie (Matrice). Il subit une transformation pour devenir de l'Acétyl-CoA.
+        </p>
+
+        <ul>
+            <li class="swap-block"
+                data-fr="Perte de carbone : Une molécule de CO₂ est libérée (perdue)."
+                data-ar="فقدان الكربون: يتم طرح جزيئة CO₂.">
+                Perte de carbone : Une molécule de CO₂ est libérée (perdue).
+            </li>
+            <li class="swap-block"
+                data-fr="Oxydation : Des électrons sont transférés au NAD+ pour former du NADH."
+                data-ar="الأكسدة: يتم نقل الإلكترونات إلى NAD+ لتكوين NADH.">
+                Oxydation : Des électrons sont transférés au NAD+ pour former du NADH.
+            </li>
+            <li class="swap-block"
+                data-fr="Formation : Le reste (Acétate) se lie au Coenzyme A pour former l'Acétyl-CoA."
+                data-ar="التكوين: يرتبط الباقي (Acétate) مع مساعد الإنزيم A لتشكيل Acétyl-CoA.">
+                Formation : Le reste (Acétate) se lie au Coenzyme A pour former l'Acétyl-CoA.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. Étape 2 : Le Cycle de Krebs (Matrice)</h2>
+        
+        <div class="diagram-container">
+            <img src="https://c8.alamy.com/compfr/2wjr25d/cycle-de-l-acide-citrique-illustration-2wjr25d.jpg" alt="Cycle de Krebs">
+            <div class="caption">Figure : Le cycle de la pyruvate</div>
+        </div>
+
+        <p class="swap-block"
+           data-fr="Le cycle se déroule dans la matrice mitochondriale. L'Acétyl-CoA (2C) se combine avec l'Oxaloacétate (4C) pour former du Citrate (6C)."
+           data-ar="تحدث الدورة في ماتريس الميتوكوندري. يرتبط Acétyl-CoA (2 كربونات) مع Oxaloacétate (4 كربونات) ليعطي Citrate (6 كربونات).">
+           Le cycle se déroule dans la matrice mitochondriale. L'Acétyl-CoA (2C) se combine avec l'Oxaloacétate (4C) pour former du Citrate (6C).
+        </p>
+
+        <p class="swap-block"
+           data-fr="C'est un cycle car l'Oxaloacétate est régénéré à la fin. Le but principal est de remplir les transporteurs d'électrons (NADH et FADH2)."
+           data-ar="هي دورة لأن الـ Oxaloacétate يعاد إنتاجه في النهاية. الهدف الرئيسي هو ملء نواقل الإلكترونات (NADH و FADH2).">
+           C'est un cycle car l'Oxaloacétate est régénéré à la fin. Le but principal est de remplir les transporteurs d'électrons (NADH et FADH2).
+        </p>
+
+        <div class="highlight-box swap-block"
+             data-fr="📊 Bilan du Cycle de Krebs (pour 1 glucose = 2 tours) : 6 NADH + 2 FADH₂ + 2 ATP + 4 CO₂"
+             data-ar="📊 حصيلة دورة كريبس (بالنسبة لجليكوز واحد = دورتين): 6 NADH + 2 FADH₂ + 2 ATP + 4 CO₂">
+             📊 Bilan du Cycle de Krebs (pour 1 glucose = 2 tours) : 6 NADH + 2 FADH₂ + 2 ATP + 4 CO₂
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>5. Étape 3 : Phosphorylation Oxydative (Crêtes)</h2>
+        
+        <p class="swap-block"
+           data-fr="C'est l'étape du 'Jackpot' énergétique qui se déroule sur la membrane interne (crêtes). Elle convertit l'énergie stockée dans NADH et FADH₂ en ATP."
+           data-ar="هي مرحلة 'الجائزة الكبرى' الطاقية وتحدث في الغشاء الداخلي (الأعراف). تحول الطاقة المخزنة في NADH و FADH₂ إلى ATP.">
+           C'est l'étape du 'Jackpot' énergétique qui se déroule sur la membrane interne (crêtes). Elle convertit l'énergie stockée dans NADH et FADH₂ en ATP.
+        </p>
+
+        <h3>A. La Chaîne de Transport des Électrons (CTE)</h3>
+        <p class="swap-block"
+           data-fr="Les électrons descendent une chaîne de protéines. Cette énergie est utilisée pour pomper les protons (H+) vers l'espace intermembranaire, créant un gradient (pression)."
+           data-ar="تمر الإلكترونات عبر سلسلة من البروتينات. تستعمل طاقتها لضخ البروتونات (H+) نحو الحيز البيغشائي، مما يخلق ممالاً (ضغط).">
+           Les électrons descendent une chaîne de protéines. Cette énergie est utilisée pour pomper les protons (H+) vers l'espace intermembranaire, créant un gradient (pression).
+        </p>
+
+        <p class="swap-block" style="border: 2px solid red; padding: 10px; border-radius: 5px;"
+           data-fr="⚠️ Rôle de l'Oxygène : C'est l'accepteur final des électrons. Il se combine avec H+ pour former de l'eau (H₂O). Sans oxygène, tout s'arrête !"
+           data-ar="⚠️ دور الأكسجين: هو المستقبل النهائي للإلكترونات. يرتبط مع H+ ليعطي الماء (H₂O). بدون أكسجين، تتوقف العملية!">
+           ⚠️ Rôle de l'Oxygène : C'est l'accepteur final des électrons. Il se combine avec H+ pour former de l'eau (H₂O). Sans oxygène, tout s'arrête !
+        </p>
+
+        <h3>B. La Chimiosmose (ATP Synthase)</h3>
+        <p class="swap-block"
+           data-fr="Les protons (H+) reviennent dans la matrice en passant par une turbine : l'ATP Synthase. Ce mouvement produit l'ATP."
+           data-ar="تعود البروتونات (H+) إلى الماتريس عبر توربين: ATP Synthase. هذه الحركة تنتج الـ ATP.">
+           Les protons (H+) reviennent dans la matrice en passant par une turbine : l'ATP Synthase. Ce mouvement produit l'ATP.
+        </p>
+    </div>
+
+    <div class="card" style="border-left-color: #27ae60;">
+        <h2>6. Bilan Énergétique Global</h2>
+        
+        <p class="swap-block"
+           data-fr="Combien d'ATP pour 1 molécule de Glucose ?"
+           data-ar="كم عدد الـ ATP بالنسبة لجزيئة جليكوز واحدة؟">
+           Combien d'ATP pour 1 molécule de Glucose ?
+        </p>
+
+        <ul style="font-weight: bold;">
+            <li class="swap-block" data-fr="Glycolyse : 2 ATP" data-ar="انحلال الجليكوز: 2 ATP">Glycolyse : 2 ATP</li>
+            <li class="swap-block" data-fr="Cycle de Krebs : 2 ATP" data-ar="دورة كريبس: 2 ATP">Cycle de Krebs : 2 ATP</li>
+            <li class="swap-block" data-fr="Phosphorylation Oxydative : 32 à 34 ATP" data-ar="التفسفر المؤكسد: 32 إلى 34 ATP">Phosphorylation Oxydative : 32 à 34 ATP</li>
+        </ul>
+
+        <div class="formula" style="background-color: #27ae60;">
+            TOTAL = 36 à 38 ATP
+        </div>
+        
+        <p class="swap-block"
+           data-fr="Note : 1 NADH donne environ 3 ATP, et 1 FADH₂ donne environ 2 ATP."
+           data-ar="ملاحظة: كل 1 NADH يعطي تقريباً 3 ATP، وكل 1 FADH₂ يعطي تقريباً 2 ATP.">
+           Note : 1 NADH donne environ 3 ATP, et 1 FADH₂ donne environ 2 ATP.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr'); // Use innerHTML to keep formatting like <b>
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

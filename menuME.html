@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Métabolisme & ATP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* صورة خلفية علمية (خلايا/طاقة) لتناسب الموضوع */
+            background-image: url("https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            position: relative;
+            overflow-x: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* طبقة داكنة لتوضيح النصوص */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .bg-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            filter: blur(40px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb:nth-child(1) { width: 200px; height: 200px; top: 10%; left: 10%; animation-delay: 0s; }
+        .orb:nth-child(2) { width: 150px; height: 150px; top: 70%; right: 10%; animation-delay: 2s; }
+        .orb:nth-child(3) { width: 120px; height: 120px; top: 40%; left: 80%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 40px 20px;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .notifications-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; 
+        }
+
+        a { text-decoration: none; }
+
+        .notification-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px) saturate(100%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px; 
+            padding: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-height: 80px;
+            display: flex;
+            align-items: center; 
+            gap: 15px;
+        }
+
+        .notification-card:hover {
+            transform: translateY(-5px) scale(1.02); 
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .notification-content h3 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .notification-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* زر العودة */
+        .notification-card.back {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .notification-card.back:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* زر الكويز */
+        .notification-card.quiz {
+            background: rgba(231, 76, 60, 0.2); /* أحمر شفاف للطاقة */
+            border-color: rgba(231, 76, 60, 0.4);
+        }
+        .notification-card.quiz:hover {
+            background: rgba(231, 76, 60, 0.4);
+        }
+
+        /* تأثير البطاقة الجديدة */
+        .notification-card.new {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .timestamp {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <div class="container">
+        
+        <div class="header">
+            <h1>Métabolisme</h1>
+            <p>Production de l'ATP</p>
+        </div>
+
+        <div class="notifications-stack">
+
+            <a href="index.html" class="notification-card back">
+                <div class="app-icon">🏠</div>
+                <div class="notification-content">
+                    <h3>Accueil</h3>
+                    <p>Retourner au menu principal</p>
+                </div>
+            </a>
+
+            <a href="part01.html" class="notification-card">
+                <div class="app-icon">⚡</div>
+                <div class="notification-content">
+                    <h3>Part 01: Introduction</h3>
+                    <p>Énergie & ATP</p>
+                </div>
+                <span class="timestamp">Bases</span>
+            </a>
+
+            <a href="part02.html" class="notification-card new">
+                <div class="app-icon">🌬️</div>
+                <div class="notification-content">
+                    <h3>Part 02: Respiration</h3>
+                    <p>Glycolyse & Krebs</p>
+                </div>
+                <span class="timestamp">Aérobie</span>
+            </a>
+
+            <a href="part03.html" class="notification-card">
+                <div class="app-icon">🍇</div>
+                <div class="notification-content">
+                    <h3>Part 03: Fermentation</h3>
+                    <p>Lactique & Alcoolique</p>
+                </div>
+                <span class="timestamp">Anaérobie</span>
+            </a>
+
+            <a href="MEQUIZ.html" class="notification-card quiz">
+                <div class="app-icon">🧠</div>
+                <div class="notification-content">
+                    <h3>TESTEZ-VOUS !</h3>
+                    <p>Quiz final sur le Métabolisme</p>
+                </div>
+                <span class="timestamp">Go!</span>
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

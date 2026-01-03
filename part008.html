@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déroulement de la Photosynthèse</title>
+    <style>
+        :root {
+            --primary-color: #16a085; /* Deep Green */
+            --accent-color: #f39c12;  /* Energy/Sun */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #e8f6f3;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d1f2eb;
+            color: #0e6251;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a2d9ce;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #d35400;
+            margin-top: 20px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #e8f8f5;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #16a085;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .formula {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "⚡"; margin-right: 10px; color: #f39c12; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+        .phase-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 008 : Le Déroulement de la Photosynthèse</h1>
+        <p>Phase Photochimique & Phase Chimique</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <span class="phase-badge" style="background-color: #f39c12;">Phase 1 : Claire (Lumière)</span>
+        <h2>1. La Phase Photochimique (Thylakoïdes)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Cette étape dépend directement de la lumière. Elle se déroule dans la membrane des thylakoïdes."
+           data-ar="تعتمد هذه المرحلة مباشرة على الضوء. وتحدث في غشاء التيلاكويدات.">
+           Cette étape dépend directement de la lumière. Elle se déroule dans la membrane des thylakoïdes.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://i.pinimg.com/originals/de/4c/d0/de4cd091874f1a67186499ab98ca4d51.gif" alt="Phase Photochimique">
+            <div class="caption">Figure 1 : Chaîne de transport des électrons et Photolyse de l'eau.</div>
+        </div>
+
+        <h3>Les événements clés :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="A. Photolyse de l'eau : La lumière casse la molécule d'eau (H₂O). Cela libère des électrons (e-), des protons (H+) et de l'Oxygène (O₂ est un déchet !)."
+                data-ar="أ. التحلل الضوئي للماء: يكسر الضوء جزيئة الماء (H₂O). هذا يحرر إلكترونات (e-)، بروتونات (H+) والأكسجين (O₂ يعتبر فضلات!).">
+                A. Photolyse de l'eau : La lumière casse la molécule d'eau (H₂O). Cela libère des électrons (e-), des protons (H+) et de l'Oxygène (O₂ est un déchet !).
+            </li>
+            <div class="formula">2H₂O + Lumière → 4H⁺ + 4e⁻ + O₂</div>
+
+            <li class="swap-block" 
+                data-fr="B. Production d'ATP : Les protons (H+) accumulés traversent l'ATP Synthase (une turbine), ce qui fabrique de l'ATP."
+                data-ar="ب. إنتاج ATP: البروتونات (H+) المتراكمة تعبر الـ ATP Synthase (توربين)، مما يصنع الـ ATP.">
+                B. Production d'ATP : Les protons (H+) accumulés traversent l'ATP Synthase (une turbine), ce qui fabrique de l'ATP.
+            </li>
+            <li class="swap-block" 
+                data-fr="C. Production de NADPH : Les électrons excités par la lumière finissent par réduire le NADP+ en NADPH."
+                data-ar="ج. إنتاج NADPH: الإلكترونات المهيجة بالضوء تنتهي باختزال NADP+ إلى NADPH.">
+                C. Production de NADPH : Les électrons excités par la lumière finissent par réduire le NADP+ en NADPH.
+            </li>
+        </ul>
+        
+        <p class="swap-block" style="background: #fcf3cf; padding: 10px; border-radius: 5px;"
+           data-fr="👉 Bilan de la Phase 1 : Production d'Énergie Chimique (ATP + NADPH) + Libération d'O₂."
+           data-ar="👉 حصيلة المرحلة 1: إنتاج طاقة كيميائية (ATP + NADPH) + طرح O₂.">
+           👉 Bilan de la Phase 1 : Production d'Énergie Chimique (ATP + NADPH) + Libération d'O₂.
+        </p>
+    </div>
+
+    <div class="card">
+        <span class="phase-badge" style="background-color: #2ecc71;">Phase 2 : Sombre (Stroma)</span>
+        <h2>2. La Phase Chimique / Cycle de Calvin</h2>
+        
+        <p class="swap-block" 
+           data-fr="Cette étape n'a pas besoin de lumière directe (mais elle a besoin de l'ATP et du NADPH produits juste avant). Elle se déroule dans le Stroma."
+           data-ar="هذه المرحلة لا تحتاج لضوء مباشر (لكنها تحتاج ATP و NADPH المنتجة قبل قليل). تحدث في الستروما.">
+           Cette étape n'a pas besoin de lumière directe (mais elle a besoin de l'ATP et du NADPH produits juste avant). Elle se déroule dans le Stroma.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://images.schoolmouv.fr/gssm-svt-img34w.png" alt="Cycle de Calvin">
+            <div class="caption">Figure 2 : Le Cycle de Calvin (Fixation du CO₂).</div>
+        </div>
+
+        <h3>Les 3 étapes du Cycle :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Fixation du Carbone : Le CO₂ est capté par une enzyme appelée RUBISCO et fixé sur un sucre à 5 carbones (RuBP)."
+                data-ar="1. تثبيت الكربون: يتم التقاط CO₂ بواسطة إنزيم يسمى 'روبيسكو' وتثبيته على سكر خماسي الكربون (RuBP).">
+                1. Fixation du Carbone : Le CO₂ est capté par une enzyme appelée RUBISCO et fixé sur un sucre à 5 carbones (RuBP).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Réduction : L'ATP et le NADPH sont utilisés pour convertir les molécules en G3P (sucre simple). C'est là que l'énergie est stockée !"
+                data-ar="2. الاختزال: يتم استهلاك ATP و NADPH لتحويل الجزيئات إلى G3P (سكر بسيط). هنا يتم تخزين الطاقة!">
+                2. Réduction : L'ATP et le NADPH sont utilisés pour convertir les molécules en G3P (sucre simple). C'est là que l'énergie est stockée !
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Régénération : Une partie du G3P sert à fabriquer du Glucose, le reste sert à régénérer le RuBP pour recommencer le cycle."
+                data-ar="3. التجديد: جزء من G3P يستخدم لصنع الجليكوز، والباقي يستخدم لتجديد RuBP لإعادة الدورة.">
+                3. Régénération : Une partie du G3P sert à fabriquer du Glucose, le reste sert à régénérer le RuBP pour recommencer le cycle.
+            </li>
+        </ul>
+
+        <div class="formula">CO₂ + ATP + NADPH → Sucre (C₆H₁₂O₆) + ADP + NADP⁺</div>
+    </div>
+
+    <div class="card" style="border-left-color: #8e44ad;">
+        <h2>3. Résumé : Lien entre les deux phases</h2>
+        
+        <div class="diagram-container">
+            <img src="https://invitrolab.fr/img/schemas/membranethylak.png" alt="Connexion Phases">
+            <div class="caption">Figure 3 : L'ATP et le NADPH font la navette entre les Thylakoïdes et le Stroma.</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Les deux phases sont couplées. La phase photochimique charge les batteries (ATP/NADPH) et la phase chimique les décharge pour fabriquer du sucre."
+           data-ar="المرحلتان مقترنتان. المرحلة الضوئية تشحن البطاريات (ATP/NADPH) والمرحلة الكيميائية تفرغها لصناعة السكر.">
+           Les deux phases sont couplées. La phase photochimique charge les batteries (ATP/NADPH) et la phase chimique les décharge pour fabriquer du sucre.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

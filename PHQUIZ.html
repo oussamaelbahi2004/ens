@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Nutrition & Photosynthèse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* ================= GENERAL STYLES ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* خلفية نباتية غنية */
+            background-image: url("https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        /* ================= MUSIC PLAYER STYLES ================= */
+        #player-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px;
+            height: 80px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            #player-container {
+                width: 300px;
+                right: 50%;
+                transform: translateX(50%);
+                bottom: 15px;
+            }
+            .glass-container { margin-bottom: 120px; }
+        }
+
+        #player { position: relative; height: 100%; z-index: 3; }
+
+        #player-track {
+            position: absolute;
+            top: 0; right: 15px; left: 15px;
+            padding: 10px 10px 10px 110px;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 15px 15px 0 0;
+            transition: 0.3s ease top;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-bottom: none;
+        }
+
+        #player-track.active { top: -75px; }
+
+        #track-name {
+            color: white; font-size: 14px; font-weight: bold;
+            margin: 2px 0 5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        #track-time { height: 12px; margin-bottom: 3px; overflow: hidden; display: flex; justify-content: space-between; }
+        #current-time, #track-length { color: rgba(255,255,255,0.7); font-size: 10px; }
+
+        #seek-bar-container {
+            position: relative; height: 4px; background-color: rgba(255,255,255,0.2);
+            cursor: pointer; border-radius: 4px; margin-top: 5px;
+        }
+
+        #seek-bar {
+            position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+            background-color: #27ae60; /* Green for Photosynthesis */
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+            transition: 0.2s ease width; border-radius: 4px; z-index: 1;
+        }
+
+        #player-content {
+            position: relative; height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2; display: flex; align-items: center;
+        }
+
+        #album-art {
+            position: absolute; top: -20px; left: 20px;
+            width: 80px; height: 80px;
+            transform: rotateZ(0); transition: 0.3s ease all;
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.1);
+            border-radius: 50%; overflow: hidden; background: #000;
+        }
+
+        #album-art.active {
+            top: -40px;
+            box-shadow: 0 0 0 5px rgba(39, 174, 96, 0.2), 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        #album-art img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        #album-art.active img { opacity: 1; animation: rotateAlbumArt 6s linear infinite; }
+
+        @keyframes rotateAlbumArt { 0% { transform: rotateZ(0); } 100% { transform: rotateZ(360deg); } }
+
+        #player-controls {
+            width: 200px; height: 100%; margin-left: 110px;
+            display: flex; justify-content: space-around; align-items: center;
+        }
+
+        .button {
+            width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center;
+            background-color: rgba(255,255,255,0.1); border-radius: 50%;
+            cursor: pointer; transition: 0.2s ease all; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .button i { color: white; font-size: 18px; }
+        .button:hover { background-color: #27ae60; transform: scale(1.1); border-color: #27ae60; }
+
+        /* ================= QUIZ STYLES ================= */
+        .glass-container {
+            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px; padding: 30px;
+            width: 100%; max-width: 600px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex; flex-direction: column; min-height: 500px;
+        }
+
+        .quiz-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-count {
+            font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);
+            background: rgba(0,0,0,0.2); padding: 5px 12px; border-radius: 15px;
+        }
+
+        .score-display { font-weight: bold; color: #2ecc71; }
+
+        #question-text {
+            font-size: 1.3rem; font-weight: 600; margin-bottom: 30px;
+            line-height: 1.5; min-height: 60px;
+        }
+
+        .options-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px; border-radius: 15px; color: rgba(255, 255, 255, 0.9);
+            text-align: left; cursor: pointer; transition: all 0.2s ease;
+            font-size: 1rem; display: flex; align-items: center; gap: 15px; position: relative;
+        }
+
+        .option-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .option-btn.selected {
+            background: rgba(39, 174, 96, 0.2); border-color: #27ae60;
+            box-shadow: 0 0 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .circle-check {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4); flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .option-btn.selected .circle-check { background: #27ae60; border-color: #27ae60; }
+        .option-btn.correct { background: rgba(46, 204, 113, 0.3) !important; border-color: #2ecc71 !important; }
+        .option-btn.wrong { background: rgba(231, 76, 60, 0.3) !important; border-color: #e74c3c !important; }
+
+        .controls { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
+
+        .btn-action {
+            padding: 12px 30px; border-radius: 20px; border: none;
+            font-size: 1rem; font-weight: bold; cursor: pointer; transition: transform 0.2s;
+        }
+
+        .btn-action:active { transform: scale(0.95); }
+        .btn-validate { background: #3498db; color: white; width: 100%; }
+        .btn-next { background: #27ae60; color: white; display: none; width: 100%; }
+
+        .exit-btn {
+            position: absolute; top: 20px; left: 20px; text-decoration: none; color: white;
+            background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 15px;
+            font-size: 0.8rem; backdrop-filter: blur(5px); z-index: 20;
+        }
+
+        .result-screen {
+            display: none; text-align: center; flex-direction: column;
+            align-items: center; justify-content: center; height: 100%;
+        }
+
+        .final-score {
+            font-size: 4rem; font-weight: 800;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="menu_photosynthese.html" class="exit-btn">← Quitter</a>
+
+    <div id="player-container">
+        <div id="player">
+            <div id="player-track">
+                <div id="track-name">Loading...</div>
+                <div id="track-time">
+                    <div id="current-time">00:00</div>
+                    <div id="track-length">00:00</div>
+                </div>
+                <div id="seek-bar-container">
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+                    <img src="https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&w=600" class="active" id="album-art-img">
+                </div>
+                <div id="player-controls">
+                    <div class="button" id="play-previous"><i class="fas fa-backward"></i></div>
+                    <div class="button" id="play-pause-button"><i class="fas fa-play"></i></div>
+                    <div class="button" id="play-next"><i class="fas fa-forward"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-container">
+        <div id="quiz-ui">
+            <div class="quiz-header">
+                <span class="question-count">Question <span id="current-q">1</span>/20</span>
+                <span class="score-display">Score: <span id="score">0</span></span>
+            </div>
+            <div id="question-text">Chargement de la question...</div>
+            <div class="options-grid" id="options-container"></div>
+            <div class="controls">
+                <button class="btn-action btn-validate" onclick="checkAnswer()">Valider</button>
+                <button class="btn-action btn-next" onclick="nextQuestion()">Suivant</button>
+            </div>
+            <p style="text-align: center; font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">
+                ⚠️ Sélectionnez TOUTES les bonnes réponses.
+            </p>
+        </div>
+
+        <div id="result-ui" class="result-screen">
+            <h2>Quiz Terminé !</h2>
+            <p>Votre maîtrise de la Photosynthèse :</p>
+            <div class="final-score" id="final-score-display">0/20</div>
+            <p id="feedback-text" style="margin-bottom: 30px; opacity: 0.8;"></p>
+            <button class="btn-action btn-validate" onclick="location.reload()">Recommencer</button>
+            <br>
+            <a href="menu_photosynthese.html" style="color:white; opacity: 0.7; margin-top: 15px; display:inline-block;">Retour au Menu</a>
+        </div>
+    </div>
+
+    <script>
+        /* ================= MUSIC PLAYER LOGIC ================= */
+        const tracks = [
+        { name: "Rilès - DAMNED?", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.59.04%20PM.mp4" },
+            { name: "Rilès - PESETAS", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.46.49%20PM.mp4" },
+            { name: "Rilès - LOST IN MY WORLD", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.44.56%20PM.mp4" }
+        ];
+
+        const audio = new Audio();
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        const playPauseBtn = document.getElementById('play-pause-button');
+        const playPauseIcon = playPauseBtn.querySelector('i');
+        const nextBtn = document.getElementById('play-next');
+        const prevBtn = document.getElementById('play-previous');
+        const trackNameEl = document.getElementById('track-name');
+        const albumArt = document.getElementById('album-art');
+        const playerTrack = document.getElementById('player-track');
+        const seekBar = document.getElementById('seek-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const trackLengthEl = document.getElementById('track-length');
+
+        function initPlayer() {
+            audio.src = tracks[currentTrackIndex].url;
+            trackNameEl.textContent = tracks[currentTrackIndex].name;
+            audio.loop = false;
+        }
+
+        function playTrack() {
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseIcon.className = 'fas fa-pause';
+                albumArt.classList.add('active');
+                playerTrack.classList.add('active');
+            }).catch(e => console.log("Autoplay blocked"));
+        }
+
+        function pauseTrack() {
+            audio.pause();
+            isPlaying = false;
+            playPauseIcon.className = 'fas fa-play';
+            albumArt.classList.remove('active');
+            playerTrack.classList.remove('active');
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function formatTime(s) {
+            let min = Math.floor(s / 60);
+            let sec = Math.floor(s % 60);
+            if (min < 10) min = "0" + min;
+            if (sec < 10) sec = "0" + sec;
+            return min + ":" + sec;
+        }
+
+        playPauseBtn.addEventListener('click', () => { if (isPlaying) pauseTrack(); else playTrack(); });
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+        audio.addEventListener('timeupdate', () => {
+            if(audio.duration) {
+                seekBar.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+                trackLengthEl.textContent = formatTime(audio.duration);
+            }
+        });
+        audio.addEventListener('ended', nextTrack);
+
+        initPlayer();
+        window.addEventListener('load', () => { playTrack(); });
+
+        /* ================= PHOTOSYNTHESIS QUIZ LOGIC ================= */
+        const fullQuestionPool = [
+            // PART 1: ANATOMIE
+            { q: "Les stomates sont responsables de :", o: ["L'absorption de l'eau", "L'échange de gaz (CO2/O2)", "La transpiration", "La photosynthèse directement"], a: [1, 2] },
+            { q: "Les poils absorbants se trouvent sur :", o: ["La coiffe", "La zone pilifère", "La zone subéreuse", "Les feuilles"], a: [1] },
+            { q: "La coiffe de la racine sert à :", o: ["Absorber l'eau", "Protéger le méristème", "Pénétrer dans le sol", "Stocker l'amidon"], a: [1, 2] },
+            
+            // PART 2: ABSORPTION EAU
+            { q: "L'osmose est le passage de l'eau :", o: ["Du milieu hypertonique vers hypotonique", "Du milieu hypotonique vers hypertonique", "Du milieu le moins concentré vers le plus concentré", "Qui consomme de l'ATP"], a: [1, 2] },
+            { q: "Une cellule placée dans un milieu hypertonique devient :", o: ["Turgescente", "Plasmolysée", "Éclatée", "Vide d'eau"], a: [1] },
+            { q: "La turgescence est nécessaire pour :", o: ["La croissance cellulaire (élongation)", "L'ouverture des stomates", "Le port dressé des plantes herbacées", "La plasmolyse"], a: [0, 1, 2] },
+
+            // PART 3: TRANSPORT EAU
+            { q: "Le moteur principal de la montée de la sève brute est :", o: ["La poussée racinaire", "La transpiration foliaire", "La gravité", "L'absorption active"], a: [1] },
+            { q: "La cohésion des molécules d'eau est due aux :", o: ["Liaisons covalentes", "Liaisons hydrogène", "Forces de Van der Waals", "Ponts disulfure"], a: [1] },
+            { q: "La guttation est la preuve de :", o: ["La transpiration intense", "La pression racinaire", "L'aspiration foliaire", "L'excès d'eau dans le sol"], a: [1] },
+
+            // PART 4: MINERAUX
+            { q: "L'absorption des ions minéraux (K+, NO3-) :", o: ["Se fait par diffusion simple", "Est un transport actif", "Consomme de l'ATP", "Suit le gradient de concentration"], a: [1, 2] },
+            { q: "Le Xylème transporte :", o: ["La sève élaborée", "La sève brute", "L'eau et les sels minéraux", "Les sucres"], a: [1, 2] },
+            
+            // PART 5: CIRCULATION
+            { q: "Le Phloème :", o: ["Est constitué de cellules mortes", "Transporte la sève élaborée", "Est constitué de cellules vivantes", "Transporte la sève brute"], a: [1, 2] },
+            { q: "Le mouvement de la sève élaborée se fait :", o: ["Des racines vers les feuilles uniquement", "Des organes sources vers les organes puits", "Par aspiration", "Par pression osmotique"], a: [1, 3] },
+            { q: "Le chargement du phloème nécessite :", o: ["De l'ATP", "Du transport actif", "De la lumière directe", "De l'osmose"], a: [0, 1] },
+
+            // PART 6: PHOTOSYNTHÈSE GÉNÉRALE
+            { q: "L'équation bilan de la photosynthèse est :", o: ["6CO2 + 6H2O -> C6H12O6 + 6O2", "C6H12O6 + 6O2 -> 6CO2 + 6H2O", "Nécessite de la lumière", "Produit de l'énergie thermique"], a: [0, 2] },
+            { q: "L'oxygène rejeté lors de la photosynthèse provient de :", o: ["La molécule de CO2", "La molécule d'H2O", "La molécule de Glucose", "La chlorophylle"], a: [1] },
+            { q: "Les facteurs limitants de la photosynthèse sont :", o: ["L'intensité lumineuse", "La concentration en CO2", "La température", "La concentration en O2"], a: [0, 1, 2] },
+
+            // PART 7: CHLOROPLASTE
+            { q: "Le chloroplaste :", o: ["Possède une double membrane", "Contient des thylakoïdes", "Est le siège de la respiration", "Contient de l'ADN propre"], a: [0, 1, 3] },
+            { q: "La chlorophylle :", o: ["Absorbe la lumière verte", "Absorbe le bleu et le rouge", "Est située dans le stroma", "Est située dans la membrane des thylakoïdes"], a: [1, 4] },
+            { q: "Le stroma est le lieu de :", o: ["La phase photochimique", "La phase chimique (Cycle de Calvin)", "La photolyse de l'eau", "La fixation du CO2"], a: [1, 3] },
+
+            // PART 8: DÉROULEMENT (PHASE CLAIRE)
+            { q: "La phase photochimique (claire) produit :", o: ["Du Glucose", "De l'ATP", "Du NADPH,H+", "Du CO2"], a: [1, 2] },
+            { q: "La photolyse de l'eau :", o: ["A lieu dans le stroma", "A lieu dans l'espace intrathylakoïdien (lumen)", "Libère des électrons et des protons", "Libère de l'O2"], a: [1, 2, 3] },
+            { q: "Les électrons arrachés à la chlorophylle sont remplacés par ceux de :", o: ["L'eau", "Le CO2", "Le NADPH", "L'ATP"], a: [0] },
+            { q: "L'ATP Synthase du chloroplaste utilise :", o: ["Un gradient de protons (H+)", "L'énergie lumineuse directe", "L'énergie du glucose", "La sortie des H+ vers le stroma"], a: [0, 3] },
+
+            // PART 8: DÉROULEMENT (CYCLE CALVIN)
+            { q: "Le Cycle de Calvin :", o: ["Se déroule la nuit uniquement", "Ne nécessite pas de lumière directe", "Utilise l'ATP et le NADPH produits avant", "Fixe le CO2 sur le RuBP"], a: [1, 2, 3] },
+            { q: "L'enzyme clé qui fixe le CO2 s'appelle :", o: ["ATP Synthase", "Rubisco", "Amylase", "Hexokinase"], a: [1] },
+            { q: "Pour produire une molécule de Glucose, il faut :", o: ["1 tour de cycle", "2 tours de cycle", "6 tours de cycle", "18 ATP et 12 NADPH"], a: [2, 3] },
+            { q: "Le premier produit stable du cycle de Calvin est :", o: ["Le Glucose", "Le RuBP", "L'APG (Acide Phosphoglycérique)", "Le G3P"], a: [2] },
+
+            // PART 9: BILAN & DEVENIR
+            { q: "Le glucose produit par photosynthèse peut devenir :", o: ["De l'amidon (réserve)", "De la cellulose (paroi)", "Du saccharose (transport)", "Des protéines (avec ajout d'Azote)"], a: [0, 1, 2, 3] },
+            { q: "Comparée à la respiration, la photosynthèse est un phénomène :", o: ["Catabolique", "Anabolique (construction)", "Endergonique (stocke l'énergie)", "Exergonique"], a: [1, 2] },
+            { q: "La nuit, une plante verte :", o: ["Ne respire pas", "Respire (consomme O2, rejette CO2)", "Fait la photosynthèse", "Fait le cycle de Calvin si ATP disponible"], a: [1] },
+            { q: "Les plantes sont des êtres :", o: ["Hétérotrophes", "Autotrophes", "Procaryotes", "Eucaryotes"], a: [1, 3] },
+
+            // PIÈGES & DIFFICULTÉS
+            { q: "La phase sombre (chimique) :", o: ["Se déroule obligatoirement dans l'obscurité", "S'arrête rapidement en l'absence de lumière", "A besoin des produits de la phase claire", "Produit de l'O2"], a: [1, 2] },
+            { q: "Le carbone du glucose provient :", o: ["Du sol", "De l'eau", "De l'air (CO2)", "De la lumière"], a: [2] },
+            { q: "Lequel n'est PAS un pigment photosynthétique ?", o: ["Chlorophylle a", "Chlorophylle b", "Caroténoïdes", "Hémoglobine"], a: [3] },
+            { q: "L'eau monte dans la plante grâce à :", o: ["La gravité", "La transpiration (aspiration)", "La cohésion des molécules d'eau", "La pression atmosphérique"], a: [1, 2] },
+            { q: "Dans un milieu isotonique :", o: ["Il n'y a pas d'échange d'eau", "Les échanges d'eau sont équilibrés", "La cellule éclate", "La cellule plasmolyse"], a: [1] },
+            { q: "L'entrée active des ions nécessite :", o: ["Une pompe membranaire", "De l'ATP", "Un canal ionique simple", "Une différence de concentration favorable"], a: [0, 1] },
+            { q: "Le spectre d'action de la photosynthèse :", o: ["Est identique au spectre d'absorption", "Est très similaire au spectre d'absorption", "Montre que la lumière verte est la plus efficace", "Montre que le rouge et le bleu sont les plus efficaces"], a: [1, 3] },
+            { q: "La photophosphorylation (production d'ATP) :", o: ["Est cyclique ou non cyclique", "Se passe dans la mitochondrie", "Se passe dans le chloroplaste", "Nécessite de l'O2"], a: [0, 2] },
+            { q: "Le saccharose est la forme de transport des sucres car :", o: ["Il est très réactif", "Il est chimiquement stable (non réducteur)", "Il est insoluble", "Il est gazeux"], a: [1] },
+            { q: "La plante absorbe le CO2 par :", o: ["Les racines", "Les poils absorbants", "Les stomates", "La cuticule"], a: [2] },
+            { q: "Une plante C3 :", o: ["Fixe le CO2 directement par la Rubisco", "Est adaptée aux climats très chauds", "Est le type le plus courant (ex: blé, riz)", "Ouvre ses stomates la nuit"], a: [0, 2] }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userSelection = [];
+
+        function initQuiz() {
+            currentQuestions = fullQuestionPool.sort(() => 0.5 - Math.random()).slice(0, 20);
+            currentQuestionIndex = 0;
+            score = 0;
+            updateUI();
+            showQuestion();
+        }
+
+        function updateUI() {
+            document.getElementById('current-q').innerText = currentQuestionIndex + 1;
+            document.getElementById('score').innerText = score;
+        }
+
+        function showQuestion() {
+            const qData = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = qData.q;
+            
+            let tempOptions = qData.o.map((opt, index) => ({ text: opt, originalIndex: index }));
+            tempOptions.sort(() => 0.5 - Math.random());
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            userSelection = []; 
+
+            tempOptions.forEach((optObj) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<div class="circle-check"></div><span>${optObj.text}</span>`;
+                btn.dataset.originalIndex = optObj.originalIndex;
+                btn.onclick = () => toggleSelection(btn, optObj.originalIndex);
+                container.appendChild(btn);
+            });
+
+            document.querySelector('.btn-validate').style.display = 'block';
+            document.querySelector('.btn-next').style.display = 'none';
+        }
+
+        function toggleSelection(btnElement, originalIndex) {
+            if(document.querySelector('.btn-next').style.display === 'block') return;
+            if (userSelection.includes(originalIndex)) {
+                userSelection = userSelection.filter(i => i !== originalIndex);
+                btnElement.classList.remove('selected');
+            } else {
+                userSelection.push(originalIndex);
+                btnElement.classList.add('selected');
+            }
+        }
+
+        function checkAnswer() {
+            if (userSelection.length === 0) return; 
+
+            const qData = currentQuestions[currentQuestionIndex];
+            const correctIndices = qData.a.sort();
+            const userIndices = userSelection.sort();
+            const isCorrect = JSON.stringify(correctIndices) === JSON.stringify(userIndices);
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                const idx = parseInt(btn.dataset.originalIndex);
+                btn.classList.remove('selected');
+                if (correctIndices.includes(idx)) {
+                    btn.classList.add('correct');
+                    btn.querySelector('.circle-check').innerText = '✓';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                } else if (userIndices.includes(idx) && !correctIndices.includes(idx)) {
+                    btn.classList.add('wrong');
+                    btn.querySelector('.circle-check').innerText = '✕';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                updateUI();
+            }
+            document.querySelector('.btn-validate').style.display = 'none';
+            document.querySelector('.btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 20) {
+                showQuestion();
+                updateUI();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'flex';
+            document.getElementById('final-score-display').innerText = score + "/20";
+            let feedback = score === 20 ? "PARFAIT ! 🌿" : score >= 15 ? "Excellent ! ☀️" : "Révisez encore ! 💧";
+            document.getElementById('feedback-text').innerText = feedback;
+        }
+
+        initQuiz();
+    </script>
+</body>
+</html>

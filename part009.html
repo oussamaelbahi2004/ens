@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan Global & Comparaison</title>
+    <style>
+        :root {
+            --primary-color: #27ae60; /* Final Green */
+            --accent-color: #8e44ad;  /* Purple for Contrast/Respiration */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #fdfefe;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d5f5e3;
+            color: #1e8449;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #abebc6;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #e8f8f5;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #bdc3c7;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .formula {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "✅"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Bilan Global et Comparaison</h1>
+        <p>Le destin des produits & Photosynthèse vs Respiration</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Bilan de la Production (Coût et Gain)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Le cycle de Calvin doit tourner 6 fois pour produire une seule molécule de Glucose (C6H12O6)."
+           data-ar="يجب أن تدور دورة كالفن 6 مرات لإنتاج جزيئة واحدة من الجليكوز (C6H12O6).">
+           Le cycle de Calvin doit tourner 6 fois pour produire une seule molécule de Glucose (C6H12O6).
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://i.pinimg.com/736x/95/47/05/95470522342f8d3c79d739f515c5a0fc.jpg" alt="Bilan Photosynthèse">
+            <div class="caption">Figure 1 : Coût énergétique pour fabriquer un glucose.</div>
+        </div>
+
+        <div class="formula">
+            Global : 6 CO₂ + 6 H₂O + Énergie → C₆H₁₂O₆ + 6 O₂
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Pour faire cela, la plante consomme 18 ATP et 12 NADPH (produits par la phase claire)."
+           data-ar="للقيام بذلك، تستهلك النبتة 18 ATP و 12 NADPH (المنتجة في المرحلة الضوئية).">
+           Pour faire cela, la plante consomme 18 ATP et 12 NADPH (produits par la phase claire).
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. Utilisation du Glucose (Que devient-il ?)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Une fois le sucre (G3P / Glucose) fabriqué, la cellule végétale l'utilise de 4 manières principales :"
+           data-ar="بمجرد صنع السكر (G3P / جليكوز)، تستخدمه الخلية النباتية بـ 4 طرق رئيسية:">
+           Une fois le sucre (G3P / Glucose) fabriqué, la cellule végétale l'utilise de 4 manières principales :
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://i.pinimg.com/1200x/bc/cf/b1/bccfb1bfb0072537a64b7a45a9b5fda6.jpg" alt="Devenir du Glucose">
+            <div class="caption">Figure 2 : Les différentes voies métaboliques du glucose.</div>
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Respiration Cellulaire : Brûlé dans les mitochondries pour produire de l'énergie immédiate (ATP)."
+                data-ar="1. التنفس الخلوي: يحرق في الميتوكوندريات لإنتاج طاقة فورية (ATP).">
+                1. Respiration Cellulaire : Brûlé dans les mitochondries pour produire de l'énergie immédiate (ATP).
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Stockage (Amidon) : Mis en réserve dans les racines ou les graines (ex: Pomme de terre, Blé)."
+                data-ar="2. التخزين (النشا): يخزن في الجذور أو البذور (مثال: البطاطس، القمح).">
+                2. Stockage (Amidon) : Mis en réserve dans les racines ou les graines (ex: Pomme de terre, Blé).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Structure (Cellulose) : Utilisé pour construire la paroi cellulaire (le bois, les fibres)."
+                data-ar="3. البنية (السليلوز): يستخدم لبناء الجدار الخلوي (الخشب، الألياف).">
+                3. Structure (Cellulose) : Utilisé pour construire la paroi cellulaire (le bois, les fibres).
+            </li>
+            <li class="swap-block" 
+                data-fr="4. Transport (Saccharose) : Transformé en saccharose pour circuler dans la sève élaborée."
+                data-ar="4. النقل (السكروز): يحول إلى سكروز ليدور في النسغ الجاهز.">
+                4. Transport (Saccharose) : Transformé en saccharose pour circuler dans la sève élaborée.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" style="border-left-color: #8e44ad;">
+        <h2>3. Photosynthèse vs Respiration Cellulaire</h2>
+        
+        <p class="swap-block" 
+           data-fr="Ces deux processus sont opposés mais complémentaires (Cycle de la vie)."
+           data-ar="هاتان العمليتان متعاكسة لكنها متكاملة (دورة الحياة).">
+           Ces deux processus sont opposés mais complémentaires (Cycle de la vie).
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://i.pinimg.com/736x/d9/2b/8b/d92b8b6338e105ceadfc73976688e703.jpg" alt="Comparaison">
+            <div class="caption">Figure 3 : Comparaison entre Chloroplaste et Mitochondrie.</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Critère</th>
+                    <th style="background-color: #27ae60; color: white;">Photosynthèse</th>
+                    <th style="background-color: #8e44ad; color: white;">Respiration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Organite</strong></td>
+                    <td class="swap-block" data-fr="Chloroplaste" data-ar="البلاستيدة الخضراء">Chloroplaste</td>
+                    <td class="swap-block" data-fr="Mitochondrie" data-ar="الميتوكوندري">Mitochondrie</td>
+                </tr>
+                <tr>
+                    <td><strong>Qui ?</strong></td>
+                    <td class="swap-block" data-fr="Plantes seulement (Autotrophes)" data-ar="النباتات فقط">Plantes</td>
+                    <td class="swap-block" data-fr="Plantes & Animaux" data-ar="النباتات والحيوانات">Plantes & Animaux</td>
+                </tr>
+                <tr>
+                    <td><strong>Type</strong></td>
+                    <td class="swap-block" data-fr="Anabolisme (Construction)" data-ar="بناء (تركيب)">Anabolisme</td>
+                    <td class="swap-block" data-fr="Catabolisme (Dégradation)" data-ar="هدم (تفكيك)">Catabolisme</td>
+                </tr>
+                <tr>
+                    <td><strong>Gaz (O₂)</strong></td>
+                    <td class="swap-block" data-fr="Libère O₂" data-ar="يطرح O₂">Libère O₂ ↗️</td>
+                    <td class="swap-block" data-fr="Consomme O₂" data-ar="يستهلك O₂">Consomme O₂ ↘️</td>
+                </tr>
+                <tr>
+                    <td><strong>Eau (H₂O)</strong></td>
+                    <td class="swap-block" data-fr="H₂O est oxydée (Donne e-)" data-ar="H₂O يتأكسد">Oxydée (Perd e-)</td>
+                    <td class="swap-block" data-fr="O₂ est réduit en H₂O" data-ar="O₂ يختزل إلى ماء">Produite</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

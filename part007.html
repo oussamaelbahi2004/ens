@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 007: Le Chloroplaste</title>
+    <style>
+        :root {
+            --primary-color: #229954; /* Chloroplast Green */
+            --accent-color: #52be80;
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #e9f7ef;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: #1e8449;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d4efdf;
+            color: #145a32;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a9dfbf;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1e8449;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #abebc6;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #2ecc71;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "🟢"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Le Chloroplaste</h1>
+        <p>Structure et Fonction de l'organite clé</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Structure du Chloroplaste</h2>
+        
+        <p class="swap-block" 
+           data-fr="La photosynthèse se déroule dans un organite spécialisé appelé Chloroplaste. C'est une usine chimique très organisée."
+           data-ar="يحدث التركيب الضوئي في عضي متخصص يسمى البلاستيدة الخضراء (Chloroplaste). إنه مصنع كيميائي منظم للغاية.">
+           La photosynthèse se déroule dans un organite spécialisé appelé Chloroplaste. C'est une usine chimique très organisée.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://cdn0.projetecolo.com/fr/posts/4/3/4/chloroplaste_definition_schema_et_fonction_1434_orig.jpg" alt="Structure du chloroplaste">
+            <div class="caption">Figure 1 : Coupe d'un chloroplaste montrant sa structure interne.</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Le chloroplaste est entouré d'une double membrane et contient deux parties essentielles :"
+           data-ar="تحاط البلاستيدة الخضراء بغشاء مزدوج وتحتوي على جزأين أساسيين:">
+           Le chloroplaste est entouré d'une double membrane et contient deux parties essentielles :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Les Thylakoïdes : Des sacs aplatis empilés les uns sur les autres (l'empilement s'appelle Granum). Ils contiennent la chlorophylle."
+                data-ar="التيلاكويدات (Thylakoïdes): أكياس مسطحة مكدسة فوق بعضها (التكدس يسمى غرانوم Granum). تحتوي على اليخضور.">
+                Les Thylakoïdes : Des sacs aplatis empilés les uns sur les autres (l'empilement s'appelle Granum). Ils contiennent la chlorophylle.
+            </li>
+            <li class="swap-block" 
+                data-fr="Le Stroma : Un fluide gélatineux qui remplit l'espace autour des thylakoïdes. C'est le lieu de la synthèse du sucre."
+                data-ar="الستروما (Stroma): سائل هلامي يملأ الفراغ حول التيلاكويدات. هو مكان تركيب السكر.">
+                Le Stroma : Un fluide gélatineux qui remplit l'espace autour des thylakoïdes. C'est le lieu de la synthèse du sucre.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Les Pigments (Capteurs solaires)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Les pigments sont des molécules capables d'absorber l'énergie lumineuse. Ils sont situés dans la membrane des thylakoïdes."
+           data-ar="الصبغات هي جزيئات قادرة على امتصاص الطاقة الضوئية. توجد في غشاء التيلاكويدات.">
+           Les pigments sont des molécules capables d'absorber l'énergie lumineuse. Ils sont situés dans la membrane des thylakoïdes.
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://tse2.mm.bing.net/th/id/OIP.-e1caOEMRAdGaycIvA4TBgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Spectre d'absorption">
+            <div class="caption">Figure 2 : Spectre d'absorption de la chlorophylle (Pics dans le Bleu et le Rouge).</div>
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Chlorophylle a et b : Ce sont les pigments principaux. Ils absorbent la lumière rouge et bleue."
+                data-ar="اليخضور 'أ' و 'ب': هي الصبغات الرئيسية. تمتص الضوء الأحمر والأزرق.">
+                Chlorophylle a et b : Ce sont les pigments principaux. Ils absorbent la lumière rouge et bleue.
+            </li>
+            <li class="swap-block" 
+                data-fr="Caroténoïdes : Pigments accessoires (jaune/orange) qui protègent la chlorophylle."
+                data-ar="الكاروتينات: صبغات ثانوية (أصفر/برتقالي) تحمي اليخضور.">
+                Caroténoïdes : Pigments accessoires (jaune/orange) qui protègent la chlorophylle.
+            </li>
+        </ul>
+
+        <p class="swap-block" style="border: 2px solid #27ae60; padding: 10px; border-radius: 5px; text-align: center;"
+           data-fr="❓ Pourquoi les plantes sont vertes ? Parce que la chlorophylle n'absorbe PAS la lumière verte, elle la reflète vers nos yeux !"
+           data-ar="❓ لماذا النباتات خضراء؟ لأن اليخضور لا يمتص الضوء الأخضر، بل يعكسه نحو أعيننا!">
+           ❓ Pourquoi les plantes sont vertes ? Parce que la chlorophylle n'absorbe PAS la lumière verte, elle la reflète vers nos yeux !
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>3. Localisation des deux phases</h2>
+        
+        <p class="swap-block" 
+           data-fr="La photosynthèse se divise en deux phases qui se déroulent dans deux endroits différents du chloroplaste :"
+           data-ar="ينقسم التركيب الضوئي إلى مرحلتين تحدثان في مكانين مختلفين داخل البلاستيدة الخضراء:">
+           La photosynthèse se divise en deux phases qui se déroulent dans deux endroits différents du chloroplaste :
+        </p>
+
+        <div class="diagram-container">
+            <img src="https://images.schoolmouv.fr/spe-svt-tle-s-c01-crs1-img7-fiche-01.png" alt="Localisation phases">
+            <div class="caption">Figure 3 : Phase Photochimique (Thylakoïde) vs Phase Chimique (Stroma).</div>
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Phase Photochimique (Dépendante de la lumière) : Se déroule dans les Thylakoïdes. Elle produit de l'ATP et du NADPH."
+                data-ar="1. المرحلة الكيميائية الضوئية (المرتبطة بالضوء): تحدث في التيلاكويدات. تنتج الـ ATP و NADPH.">
+                1. Phase Photochimique (Dépendante de la lumière) : Se déroule dans les Thylakoïdes. Elle produit de l'ATP et du NADPH.
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Phase Chimique / Cycle de Calvin (Indépendante de la lumière) : Se déroule dans le Stroma. Elle utilise l'ATP/NADPH pour fixer le CO₂ et produire du sucre."
+                data-ar="2. المرحلة الكيميائية / دورة كالفن (المستقلة عن الضوء): تحدث في الستروما. تستعمل ATP/NADPH لتثبيت CO₂ وإنتاج السكر.">
+                2. Phase Chimique / Cycle de Calvin (Indépendante de la lumière) : Se déroule dans le Stroma. Elle utilise l'ATP/NADPH pour fixer le CO₂ et produire du sucre.
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

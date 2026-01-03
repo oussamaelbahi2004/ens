@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révision & Introduction - Métabolisme</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Dark Blue */
+            --accent-color: #3498db;  /* Blue */
+            --highlight-bg: #f9e79f;  /* Yellow for Arabic */
+            --text-color: #333;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Style */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        /* Hint Box */
+        .hint {
+            background-color: #d4e6f1;
+            color: #154360;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a9cce3;
+            font-weight: bold;
+        }
+
+        /* Card Design (First Design Style) */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic Styling */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+        }
+
+        .swap-block:hover {
+            background-color: #eaf2f8; /* Light blue on hover */
+        }
+
+        .swap-block::after {
+            content: "👆"; /* Icon to indicate clickability */
+            font-size: 12px;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .swap-block:hover::after {
+            opacity: 1;
+        }
+
+        /* Arabic State */
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 500;
+        }
+
+        .swap-block.arabic:hover {
+            background-color: #f7dc6f;
+        }
+
+        .swap-block.arabic::after {
+            left: 10px;
+            right: auto;
+        }
+
+        /* Images */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        ul {
+            list-style-type: none; /* Remove default bullets to custom style them */
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Partie 01 : Introduction & Révision</h1>
+    </header>
+
+    <div class="hint">
+        💡 Instructions : Cliquez sur n'importe quel paragraphe ou phrase pour le traduire instantanément !
+        <br>
+        💡 تعليمات: اضغط على أي فقرة أو جملة لترجمتها فوراً إلى العربية!
+    </div>
+
+    <div class="card">
+        <h2>1. L'Énergie et le Travail</h2>
+        
+        <p class="swap-block" 
+           data-fr="L'énergie est la capacité d'effectuer un travail, c'est-à-dire déplacer de la matière contre des forces opposées comme la gravité ou la friction."
+           data-ar="الطاقة هي القدرة على إنجاز شغل، أي تحريك المادة ضد قوى معاكسة مثل الجاذبية أو الاحتكاك.">
+           L'énergie est la capacité d'effectuer un travail, c'est-à-dire déplacer de la matière contre des forces opposées comme la gravité ou la friction.
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="🔹 Énergie Cinétique : C'est l'énergie du mouvement (Exemples : chaleur, lumière)."
+                data-ar="🔹 الطاقة الحركية (Cinétique): هي طاقة الحركة (أمثلة: الحرارة، الضوء).">
+                🔹 Énergie Cinétique : C'est l'énergie du mouvement (Exemples : chaleur, lumière).
+            </li>
+            <li class="swap-block" 
+                data-fr="🔹 Énergie Potentielle : C'est l'énergie stockée due à la position ou à la structure. L'énergie chimique est une forme d'énergie potentielle."
+                data-ar="🔹 الطاقة الكامنة (Potentielle): هي الطاقة المخزنة بسبب الموقع أو البنية. الطاقة الكيميائية هي شكل من أشكال الطاقة الكامنة.">
+                🔹 Énergie Potentielle : C'est l'énergie stockée due à la position ou à la structure. L'énergie chimique est une forme d'énergie potentielle.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>2. Les Lois de la Thermodynamique</h2>
+        
+        <p class="swap-block" 
+           data-fr="Première loi (Conservation) : L'énergie ne peut être ni créée ni détruite, elle est seulement transformée ou transférée."
+           data-ar="القانون الأول (الانحفاظ): لا يمكن خلق الطاقة ولا تدميرها، بل يتم تحويلها أو نقلها فقط.">
+           Première loi (Conservation) : L'énergie ne peut être ni créée ni détruite, elle est seulement transformée ou transférée.
+        </p>
+
+        <p class="swap-block" 
+           data-fr="Deuxième loi (Entropie) : Chaque transfert d'énergie augmente le désordre (Entropie) de l'univers. Une partie de l'énergie est toujours perdue sous forme de chaleur."
+           data-ar="القانون الثاني (الإنتروبيا): كل نقل للطاقة يزيد من فوضى (إنتروبيا) الكون. جزء من الطاقة يضيع دائماً على شكل حرارة.">
+           Deuxième loi (Entropie) : Chaque transfert d'énergie augmente le désordre (Entropie) de l'univers. Une partie de l'énergie est toujours perdue sous forme de chaleur.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>3. Le Métabolisme</h2>
+        
+        <p class="swap-block" 
+           data-fr="Le métabolisme est l'ensemble des réactions chimiques d'un organisme. Il se divise en deux types :"
+           data-ar="الاستقلاب (الميتابوليزم) هو مجموع التفاعلات الكيميائية للكائن الحي. وينقسم إلى نوعين:">
+           Le métabolisme est l'ensemble des réactions chimiques d'un organisme. Il se divise en deux types :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="🏗️ Anabolisme : Réactions de synthèse (construction). Elles consomment de l'énergie (Endergonique)."
+                data-ar="🏗️ البناء (Anabolisme): تفاعلات التركيب. تستهلك الطاقة (ماصة للطاقة).">
+                🏗️ Anabolisme : Réactions de synthèse (construction). Elles consomment de l'énergie (Endergonique).
+            </li>
+            <li class="swap-block" 
+                data-fr="🔥 Catabolisme : Réactions de dégradation (décomposition). Elles libèrent de l'énergie (Exergonique)."
+                data-ar="🔥 الهدم (Catabolisme): تفاعلات التفكيك. تحرر الطاقة (ناشرة للطاقة).">
+                🔥 Catabolisme : Réactions de dégradation (décomposition). Elles libèrent de l'énergie (Exergonique).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. L'ATP : La monnaie énergétique</h2>
+        
+        
+
+        <p class="swap-block" 
+           data-fr="L'ATP (Adénosine Triphosphate) est la source immédiate d'énergie pour le travail cellulaire. Elle est composée d'Adénine, de Ribose et de 3 groupements Phosphates."
+           data-ar="الـ ATP (أدينوزين ثلاثي الفوسفات) هو المصدر الفوري للطاقة للعمل الخلوي. يتكون من أدينين، ريبوز، و 3 مجموعات فوسفات.">
+           L'ATP (Adénosine Triphosphate) est la source immédiate d'énergie pour le travail cellulaire. Elle est composée d'Adénine, de Ribose et de 3 groupements Phosphates.
+        </p>
+
+        <p class="swap-block" 
+           data-fr="Lorsque la liaison du phosphate terminal est rompue (Hydrolyse), de l'énergie est libérée pour la cellule."
+           data-ar="عندما تكسر رابطة الفوسفات الأخيرة (حلمأة)، يتم تحرير الطاقة لتستعملها الخلية.">
+           Lorsque la liaison du phosphate terminal est rompue (Hydrolyse), de l'énergie est libérée pour la cellule.
+        </p>
+        
+        <div class="formula">ATP + H₂O → ADP + Pi + Énergie</div>
+    </div>
+
+    <div class="card">
+        <h2>5. Le Cycle du Carbone</h2>
+        
+        <div class="diagram-container">
+            <img src="https://i.pinimg.com/1200x/36/2b/be/362bbeb836ef4d9b54e1227213cc40af.jpg" alt="Cycle Carbone">
+            <div class="caption">Figure 2: Relation entre Photosynthèse et Respiration</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Le flux d'énergie et de matière relie les chloroplastes et les mitochondries :"
+           data-ar="تدفق الطاقة والمادة يربط بين البلاستيدات والميتوكوندريات:">
+           Le flux d'énergie et de matière relie les chloroplastes et les mitochondries :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="🌿 Photosynthèse : Les plantes utilisent l'énergie solaire et le CO₂ pour produire du glucose et de l'O₂. (Réaction Endothermique)."
+                data-ar="🌿 التركيب الضوئي: تستعمل النباتات الطاقة الشمسية و CO₂ لإنتاج الجليكوز و O₂. (تفاعل ماص للطاقة).">
+                🌿 Photosynthèse : Les plantes utilisent l'énergie solaire et le CO₂ pour produire du glucose et de l'O₂. (Réaction Endothermique).
+            </li>
+            <li class="swap-block" 
+                data-fr="⚡ Respiration Cellulaire : Les organismes dégradent le glucose en présence d'O₂ pour produire du CO₂, de l'H₂O et de l'ATP. (Réaction Exothermique)."
+                data-ar="⚡ التنفس الخلوي: تقوم الكائنات بهدم الجليكوز بوجود O₂ لإنتاج CO₂ و H₂O و ATP. (تفاعل ناشر للطاقة).">
+                ⚡ Respiration Cellulaire : Les organismes dégradent le glucose en présence d'O₂ pour produire du CO₂, de l'H₂O et de l'ATP. (Réaction Exothermique).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" style="border-left-color: #e74c3c;">
+        <h2>6. Objectifs du cours</h2>
+        <p>À la fin de ce chapitre, vous devez être capable de :</p>
+        <ul>
+            <li class="swap-block" 
+                data-fr="✅ Comprendre le processus de la respiration cellulaire."
+                data-ar="✅ فهم سيرورة التنفس الخلوي.">
+                ✅ Comprendre le processus de la respiration cellulaire.
+            </li>
+            <li class="swap-block" 
+                data-fr="✅ Calculer le bilan énergétique (ATP) de chaque étape."
+                data-ar="✅ حساب الحصيلة الطاقية (ATP) لكل مرحلة.">
+                ✅ Calculer le bilan énergétique (ATP) de chaque étape.
+            </li>
+            <li class="swap-block" 
+                data-fr="✅ Distinguer la respiration aérobie (avec O₂) de la fermentation (sans O₂)."
+                data-ar="✅ التمييز بين التنفس الهوائي (بوجود O₂) والتخمر (بدون O₂).">
+                ✅ Distinguer la respiration aérobie (avec O₂) de la fermentation (sans O₂).
+            </li>
+            <li class="swap-block" 
+                data-fr="✅ Connaître les lieux : Glycolyse (Cytosol), Krebs (Matrice), Chaîne respiratoire (Membrane interne)."
+                data-ar="✅ معرفة الأماكن: انحلال الجليكوز (الجيلبة الشفافة)، كريبس (الماتريس)، السلسلة التنفسية (الغشاء الداخلي).">
+                ✅ Connaître les lieux : Glycolyse (Cytosol), Krebs (Matrice), Chaîne respiratoire (Membrane interne).
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // Logic: Click on any element with class 'swap-block' to toggle content
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                // Return to French
+                this.textContent = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                // Switch to Arabic
+                this.textContent = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

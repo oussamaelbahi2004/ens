@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anatomie Végétale</title>
+    <style>
+        :root {
+            --primary-color: #27ae60; /* Plant Green */
+            --accent-color: #2ecc71;
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f0f7f4;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d5f5e3;
+            color: #1e8449;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #abebc6;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #16a085;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #e8f8f5;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 2px dashed #a3e4d7;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "🌿"; margin-right: 10px; color: var(--primary-color); }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 001 : Structures et Fonctions de la Plante</h1>
+        <p>Anatomie Végétale & Organisation</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Organisation Générale de la Plante</h2>
+        
+        <div class="diagram-container">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.A3_nzK1-qy33R7PQWoWg7gHaKN?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Organisation Plante">
+            <div class="caption">Figure 1 : Les organes végétatifs</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="La plante est organisée en deux systèmes principaux : le système racinaire (sous-sol) et le système caulinaire (aérien)."
+           data-ar="تنتظم النبتة في جهازين رئيسيين: الجهاز الجذري (تحت الأرض) والجهاز الهوائي/الساقي (فوق الأرض).">
+           La plante est organisée en deux systèmes principaux : le système racinaire (sous-sol) et le système caulinaire (aérien).
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. Les Racines (Le Système d'Absorption)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Les racines ont deux fonctions principales : ancrer la plante dans le sol et absorber l'eau et les sels minéraux."
+           data-ar="للجذور وظيفتان رئيسيتان: تثبيت النبتة في التربة وامتصاص الماء والأملاح المعدنية.">
+           Les racines ont deux fonctions principales : ancrer la plante dans le sol et absorber l'eau et les sels minéraux.
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Zone pilifère : C'est la zone la plus importante. Elle contient des milliers de poils absorbants qui augmentent la surface d'absorption."
+                data-ar="المنطقة الوبرية: هي المنطقة الأهم. تحتوي على آلاف الشعيرات الجذرية التي تزيد من مساحة الامتصاص.">
+                Zone pilifère : C'est la zone la plus importante. Elle contient des milliers de poils absorbants qui augmentent la surface d'absorption.
+            </li>
+            <li class="swap-block" 
+                data-fr="Coiffe : Protège l'extrémité de la racine lors de sa pénétration dans le sol."
+                data-ar="القلنسوة: تحمي نهاية الجذر أثناء اختراقه للتربة.">
+                Coiffe : Protège l'extrémité de la racine lors de sa pénétration dans le sol.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. La Tige (Le Système de Transport)</h2>
+        
+        <p class="swap-block" 
+           data-fr="La tige sert de support aux feuilles et aux fleurs. Elle est l'autoroute de transport grâce aux tissus conducteurs :"
+           data-ar="الساق تعمل كدعامة للأوراق والزهور. وهي طريق النقل السريع بفضل الأنسجة الناقلة:">
+           La tige sert de support aux feuilles et aux fleurs. Elle est l'autoroute de transport grâce aux tissus conducteurs :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Le Xylème (Bois) : Transporte la sève brute (Eau + Sels minéraux) des racines vers les feuilles (Sens ascendant ⬆️)."
+                data-ar="الخشب (Xylème): ينقل النسغ الخام (ماء + أملاح) من الجذور إلى الأوراق (اتجاه تصاعدي ⬆️).">
+                Le Xylème (Bois) : Transporte la sève brute (Eau + Sels minéraux) des racines vers les feuilles (Sens ascendant ⬆️).
+            </li>
+            <li class="swap-block" 
+                data-fr="Le Phloème (Liber) : Transporte la sève élaborée (Sucres/Matière organique) des feuilles vers toute la plante (Sens descendant/multidirectionnel ⬇️)."
+                data-ar="اللحاء (Phloème): ينقل النسغ الجاهز (سكريات/مادة عضوية) من الأوراق إلى باقي النبتة (اتجاه تنازلي/متعدد الاتجاهات ⬇️).">
+                Le Phloème (Liber) : Transporte la sève élaborée (Sucres/Matière organique) des feuilles vers toute la plante (Sens descendant/multidirectionnel ⬇️).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. La Feuille (L'Usine Photosynthétique)</h2>
+        
+        <div class="diagram-container">
+            <img src="https://www.aquaportail.com/pictures1906/feuille-schema-photosynthese.jpg" alt="Coupe Feuille">
+            <div class="caption">Figure 2 : Anatomie d'une feuille (Coupe transversale)</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="La feuille est l'organe spécialisé pour la photosynthèse. Sa structure est adaptée pour capter la lumière et échanger les gaz."
+           data-ar="الورقة هي العضو المتخصص في التركيب الضوئي. بنيتها مكيفة لالتقاط الضوء وتبادل الغازات.">
+           La feuille est l'organe spécialisé pour la photosynthèse. Sa structure est adaptée pour capter la lumière et échanger les gaz.
+        </p>
+
+        <h3>Structure interne (De haut en bas) :</h3>
+        <ul>
+            <li class="swap-block" 
+                data-fr="Épiderme & Cuticule : Couche protectrice externe (souvent cireuse) pour limiter la perte d'eau."
+                data-ar="البشرة والأدمة (كيوتيكل): طبقة حماية خارجية (غالباً شمعية) للحد من ضياع الماء.">
+                Épiderme & Cuticule : Couche protectrice externe (souvent cireuse) pour limiter la perte d'eau.
+            </li>
+            <li class="swap-block" 
+                data-fr="Parenchyme Palissadique : Cellules allongées et serrées, riches en chloroplastes. C'est le lieu principal de la photosynthèse."
+                data-ar="البارانشيم العمادي: خلايا متطاولة ومتراصة، غنية بالبلاستيدات الخضراء. هو المكان الرئيسي للتركيب الضوئي.">
+                Parenchyme Palissadique : Cellules allongées et serrées, riches en chloroplastes. C'est le lieu principal de la photosynthèse.
+            </li>
+            <li class="swap-block" 
+                data-fr="Parenchyme Lacuneux : Cellules espacées avec des vides (lacunes) pour permettre la circulation des gaz (CO₂, O₂)."
+                data-ar="البارانشيم المفرّق (الأسفنجي): خلايا متباعدة بها فراغات للسماح بدوران الغازات (CO₂ و O₂).">
+                Parenchyme Lacuneux : Cellules espacées avec des vides (lacunes) pour permettre la circulation des gaz (CO₂, O₂).
+            </li>
+            <li class="swap-block" 
+                data-fr="Stomates : Ouvertures (généralement sur la face inférieure) qui contrôlent l'entrée du CO₂ et la sortie de l'O₂ et de l'eau."
+                data-ar="الثغور (Stomates): فتحات (غالباً في الوجه السفلي) تتحكم في دخول CO₂ وخروج O₂ والماء.">
+                Stomates : Ouvertures (généralement sur la face inférieure) qui contrôlent l'entrée du CO₂ et la sortie de l'O₂ et de l'eau.
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

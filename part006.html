@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 006: Mise en évidence et Conditions</title>
+    <style>
+        :root {
+            --primary-color: #2ecc71; /* Photosynthesis Green */
+            --accent-color: #f1c40f;  /* Sun Yellow */
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f0f7f4;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: #27ae60;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d5f5e3;
+            color: #1e8449;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #abebc6;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #27ae60;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #e8f8f5;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #2ecc71;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .formula {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "☀️"; margin-right: 10px; }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Mise en évidence et Conditions</h1>
+        <p>Introduction à la Photosynthèse</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Qu'est-ce que la Photosynthèse ?</h2>
+        
+        <p class="swap-block" 
+           data-fr="La photosynthèse est le processus par lequel les plantes vertes (Autotrophes) convertissent l'énergie lumineuse en énergie chimique stockée dans des molécules organiques (sucres)."
+           data-ar="التركيب الضوئي هو العملية التي تقوم من خلالها النباتات الخضراء (ذاتية التغذية) بتحويل الطاقة الضوئية إلى طاقة كيميائية مخزنة في جزيئات عضوية (سكريات).">
+           La photosynthèse est le processus par lequel les plantes vertes (Autotrophes) convertissent l'énergie lumineuse en énergie chimique stockée dans des molécules organiques (sucres).
+        </p>
+
+        
+
+        <p class="swap-block" 
+           data-fr="C'est l'inverse de la respiration cellulaire : au lieu de consommer du sucre et de l'O₂, la plante produit du sucre et libère de l'O₂."
+           data-ar="إنها عكس التنفس الخلوي: بدل استهلاك السكر و O₂، تقوم النبتة بإنتاج السكر وطرح O₂.">
+           C'est l'inverse de la respiration cellulaire : au lieu de consommer du sucre et de l'O₂, la plante produit du sucre et libère de l'O₂.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. L'Équation Globale (Bilan)</h2>
+        
+        <p class="swap-block" 
+           data-fr="La réaction nécessite de la lumière et de la chlorophylle pour se produire :"
+           data-ar="يتطلب التفاعل وجود الضوء واليخضور لكي يحدث:">
+           La réaction nécessite de la lumière et de la chlorophylle pour se produire :
+        </p>
+
+        <div class="formula">
+            6CO₂ + 12H₂O + Lumière → C₆H₁₂O₆ + 6O₂ + 6H₂O
+        </div>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Réactifs (Ce qui entre) : Dioxyde de carbone (CO₂) + Eau (H₂O)."
+                data-ar="المتفاعلات (ما يدخل): ثنائي أكسيد الكربون (CO₂) + الماء (H₂O).">
+                Réactifs (Ce qui entre) : Dioxyde de carbone (CO₂) + Eau (H₂O).
+            </li>
+            <li class="swap-block" 
+                data-fr="Produits (Ce qui sort) : Glucose (C₆H₁₂O₆) + Oxygène (O₂) + Eau."
+                data-ar="النواتج (ما يخرج): جليكوز (C₆H₁₂O₆) + أكسجين (O₂) + ماء.">
+                Produits (Ce qui sort) : Glucose (C₆H₁₂O₆) + Oxygène (O₂) + Eau.
+            </li>
+        </ul>
+        <p style="font-size: 0.8em; color: gray; text-align: center;">(Note: L'eau apparaît des deux côtés car elle est consommée puis régénérée).</p>
+    </div>
+
+    <div class="card">
+        <h2>3. Mise en évidence (Comment le sait-on ?)</h2>
+        
+        <p class="swap-block" 
+           data-fr="On peut prouver la photosynthèse par deux expériences classiques :"
+           data-ar="يمكن إثبات التركيب الضوئي عبر تجربتين كلاسيكيتين:">
+           On peut prouver la photosynthèse par deux expériences classiques :
+        </p>
+
+        
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Production de matière organique : Test à l'eau iodée sur une feuille. La feuille devient bleue/noire, signe qu'elle a fabriqué de l'amidon."
+                data-ar="1. إنتاج المادة العضوية: اختبار الماء اليودي على ورقة. تصبح الورقة زرقاء/سوداء، دليل على أنها صنعت النشا (Amidon).">
+                1. Production de matière organique : Test à l'eau iodée sur une feuille. La feuille devient bleue/noire, signe qu'elle a fabriqué de l'amidon.
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Dégagement de gaz : Une plante aquatique (Elodée) sous la lumière libère des bulles. Ce gaz est de l'Oxygène (O₂)."
+                data-ar="2. طرح الغاز: نبتة مائية (الإيلوديا) تحت الضوء تطرح فقاعات. هذا الغاز هو الأكسجين (O₂).">
+                2. Dégagement de gaz : Une plante aquatique (Elodée) sous la lumière libère des bulles. Ce gaz est de l'Oxygène (O₂).
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>4. Les Facteurs Limitants (Conditions)</h2>
+        
+        <p class="swap-block" 
+           data-fr="Pour que la photosynthèse soit efficace, 4 conditions doivent être réunies simultanément :"
+           data-ar="لكي يكون التركيب الضوئي فعالاً، يجب أن تجتمع 4 شروط في آن واحد:">
+           Pour que la photosynthèse soit efficace, 4 conditions doivent être réunies simultanément :
+        </p>
+
+        
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="1. Énergie Lumineuse : Sans lumière, pas d'énergie pour démarrer."
+                data-ar="1. الطاقة الضوئية: بدون ضوء، لا توجد طاقة للانطلاق.">
+                1. Énergie Lumineuse : Sans lumière, pas d'énergie pour démarrer.
+            </li>
+            <li class="swap-block" 
+                data-fr="2. Chlorophylle : Le pigment qui capte cette lumière (Absence = Plante blanche = Pas de photosynthèse)."
+                data-ar="2. اليخضور: الصبغة التي تلتقط هذا الضوء (غيابها = نبتة بيضاء = لا تركيب ضوئي).">
+                2. Chlorophylle : Le pigment qui capte cette lumière (Absence = Plante blanche = Pas de photosynthèse).
+            </li>
+            <li class="swap-block" 
+                data-fr="3. Dioxyde de Carbone (CO₂) : La source de Carbone (C) pour fabriquer le sucre."
+                data-ar="3. ثنائي أكسيد الكربون (CO₂): مصدر الكربون (C) لصناعة السكر.">
+                3. Dioxyde de Carbone (CO₂) : La source de Carbone (C) pour fabriquer le sucre.
+            </li>
+            <li class="swap-block" 
+                data-fr="4. Température : Elle influence l'activité des enzymes (optimale vers 25-30°C)."
+                data-ar="4. درجة الحرارة: تؤثر على نشاط الأنزيمات (المثلى حوالي 25-30 درجة مئوية).">
+                4. Température : Elle influence l'activité des enzymes (optimale vers 25-30°C).
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

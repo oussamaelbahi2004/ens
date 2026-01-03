@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Métabolisme & ATP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* ================= GENERAL STYLES ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            /* صورة خلفية هادئة */
+            background-image: url("https://images.pexels.com/photos/9574577/pexels-photo-9574577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* تعتيم متوسط */
+            z-index: 0;
+        }
+
+        /* ================= MUSIC PLAYER STYLES (RE-DESIGNED) ================= */
+        
+        #player-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 350px; /* حجم أصغر ومناسب */
+            height: 80px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* تنسيق الجوال */
+        @media (max-width: 768px) {
+            #player-container {
+                width: 300px;
+                right: 50%;
+                transform: translateX(50%);
+                bottom: 15px;
+            }
+            .glass-container {
+                margin-bottom: 120px; /* مسافة لكي لا يغطي المشغل على الكويز */
+            }
+        }
+
+        #player {
+            position: relative;
+            height: 100%;
+            z-index: 3;
+        }
+
+        /* الجزء العلوي (معلومات الأغنية) */
+        #player-track {
+            position: absolute;
+            top: 0;
+            right: 15px;
+            left: 15px;
+            padding: 10px 10px 10px 110px; /* مسافة للصورة */
+            /* خلفية زجاجية داكنة */
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 15px 15px 0 0;
+            transition: 0.3s ease top;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-bottom: none;
+        }
+
+        #player-track.active {
+            top: -75px; /* يرتفع للأعلى عند التشغيل */
+        }
+
+        #track-name {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 2px 0 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #track-time {
+            height: 12px;
+            margin-bottom: 3px;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #current-time, #track-length {
+            color: rgba(255,255,255,0.7);
+            font-size: 10px;
+            background-color: transparent;
+        }
+
+        /* شريط التقدم */
+        #seek-bar-container {
+            position: relative;
+            height: 4px;
+            background-color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        #seek-bar {
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 0;
+            /* لون أخضر متناسق مع الكويز */
+            background-color: #2ecc71;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+            transition: 0.2s ease width;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        /* الجزء السفلي (أزرار التحكم) */
+        #player-content {
+            position: relative;
+            height: 100%;
+            /* خلفية زجاجية فاتحة */
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+        }
+
+        /* صورة الألبوم */
+        #album-art {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            transform: rotateZ(0);
+            transition: 0.3s ease all;
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.1);
+            border-radius: 50%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #album-art.active {
+            top: -40px; /* ترتفع للأعلى عند التشغيل */
+            box-shadow: 0 0 0 5px rgba(46, 204, 113, 0.2), 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        #album-art img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        #album-art.active img {
+            opacity: 1;
+            animation: rotateAlbumArt 6s linear infinite;
+        }
+
+        @keyframes rotateAlbumArt {
+            0% { transform: rotateZ(0); }
+            100% { transform: rotateZ(360deg); }
+        }
+
+        /* أزرار التحكم */
+        #player-controls {
+            width: 200px;
+            height: 100%;
+            margin-left: 110px; /* مسافة بعد الصورة */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s ease all;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .button i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .button:hover {
+            background-color: #2ecc71; /* تحول للأخضر عند التحويم */
+            transform: scale(1.1);
+            border-color: #2ecc71;
+        }
+
+        /* ================= QUIZ STYLES (UNCHANGED) ================= */
+        .glass-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-count {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0,0,0,0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+        }
+
+        .score-display { font-weight: bold; color: #2ecc71; }
+
+        #question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .option-btn:hover { background: rgba(255, 255, 255, 0.15); }
+        .option-btn.selected {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .circle-check {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .option-btn.selected .circle-check { background: #3498db; border-color: #3498db; }
+        .option-btn.correct { background: rgba(46, 204, 113, 0.3) !important; border-color: #2ecc71 !important; }
+        .option-btn.wrong { background: rgba(231, 76, 60, 0.3) !important; border-color: #e74c3c !important; }
+
+        .controls {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-action {
+            padding: 12px 30px;
+            border-radius: 20px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-action:active { transform: scale(0.95); }
+        .btn-validate { background: #3498db; color: white; width: 100%; }
+        .btn-next { background: #2ecc71; color: white; display: none; width: 100%; }
+
+        .exit-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            text-decoration: none;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(5px);
+            z-index: 20;
+        }
+
+        .result-screen {
+            display: none;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .final-score {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="menu_metabolisme.html" class="exit-btn">← Quitter</a>
+
+    <div id="player-container">
+        <div id="player">
+            <div id="player-track">
+                <div id="track-name">Loading...</div>
+                <div id="track-time">
+                    <div id="current-time">00:00</div>
+                    <div id="track-length">00:00</div>
+                </div>
+                <div id="seek-bar-container">
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+                    <img src="https://images.pexels.com/photos/1762578/pexels-photo-1762578.jpeg?auto=compress&cs=tinysrgb&w=600" class="active" id="album-art-img">
+                </div>
+                <div id="player-controls">
+                    <div class="button" id="play-previous">
+                        <i class="fas fa-backward"></i>
+                    </div>
+                    <div class="button" id="play-pause-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="button" id="play-next">
+                        <i class="fas fa-forward"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-container">
+        <div id="quiz-ui">
+            <div class="quiz-header">
+                <span class="question-count">Question <span id="current-q">1</span>/20</span>
+                <span class="score-display">Score: <span id="score">0</span></span>
+            </div>
+            <div id="question-text">Chargement de la question...</div>
+            <div class="options-grid" id="options-container"></div>
+            <div class="controls">
+                <button class="btn-action btn-validate" onclick="checkAnswer()">Valider</button>
+                <button class="btn-action btn-next" onclick="nextQuestion()">Suivant</button>
+            </div>
+            <p style="text-align: center; font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">
+                ⚠️ Sélectionnez TOUTES les bonnes réponses.
+            </p>
+        </div>
+
+        <div id="result-ui" class="result-screen">
+            <h2>Quiz Terminé !</h2>
+            <p>Votre maîtrise du métabolisme :</p>
+            <div class="final-score" id="final-score-display">0/20</div>
+            <p id="feedback-text" style="margin-bottom: 30px; opacity: 0.8;"></p>
+            <button class="btn-action btn-validate" onclick="location.reload()">Recommencer</button>
+            <br>
+            <a href="menu_metabolisme.html" style="color:white; opacity: 0.7; margin-top: 15px; display:inline-block;">Retour au Menu</a>
+        </div>
+    </div>
+
+    <script>
+        /* ================= MUSIC PLAYER LOGIC ================= */
+        const tracks = [
+        { name: "Rilès - DAMNED?", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.59.04%20PM.mp4" },
+            { name: "Rilès - PESETAS", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.46.49%20PM.mp4" },
+            { name: "Rilès - LOST IN MY WORLD", url: "https://github.com/oussamaelbahi2004/sher/raw/main/WhatsApp%20Video%202026-01-03%20at%201.44.56%20PM.mp4" }
+        ];
+
+        const audio = new Audio();
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        // UI Elements
+        const playPauseBtn = document.getElementById('play-pause-button');
+        const playPauseIcon = playPauseBtn.querySelector('i');
+        const nextBtn = document.getElementById('play-next');
+        const prevBtn = document.getElementById('play-previous');
+        const trackNameEl = document.getElementById('track-name');
+        const albumArt = document.getElementById('album-art');
+        const playerTrack = document.getElementById('player-track');
+        const seekBar = document.getElementById('seek-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const trackLengthEl = document.getElementById('track-length');
+
+        function initPlayer() {
+            audio.src = tracks[currentTrackIndex].url;
+            trackNameEl.textContent = tracks[currentTrackIndex].name;
+            audio.loop = false;
+        }
+
+        function playTrack() {
+            audio.play().then(() => {
+                isPlaying = true;
+                playPauseIcon.className = 'fas fa-pause';
+                albumArt.classList.add('active');
+                playerTrack.classList.add('active');
+            }).catch(e => console.log("Autoplay blocked"));
+        }
+
+        function pauseTrack() {
+            audio.pause();
+            isPlaying = false;
+            playPauseIcon.className = 'fas fa-play';
+            albumArt.classList.remove('active');
+            playerTrack.classList.remove('active');
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            initPlayer();
+            if(isPlaying) playTrack();
+        }
+
+        function formatTime(s) {
+            let min = Math.floor(s / 60);
+            let sec = Math.floor(s % 60);
+            if (min < 10) min = "0" + min;
+            if (sec < 10) sec = "0" + sec;
+            return min + ":" + sec;
+        }
+
+        // Listeners
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) pauseTrack();
+            else playTrack();
+        });
+
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+
+        audio.addEventListener('timeupdate', () => {
+            if(audio.duration) {
+                const position = audio.currentTime / audio.duration;
+                seekBar.style.width = (position * 100) + '%';
+                currentTimeEl.textContent = formatTime(audio.currentTime);
+                trackLengthEl.textContent = formatTime(audio.duration);
+            }
+        });
+
+        audio.addEventListener('ended', nextTrack);
+
+        // Init
+        initPlayer();
+        window.addEventListener('load', () => {
+            playTrack(); // Attempt autoplay
+        });
+
+        /* ================= QUIZ LOGIC (Standard) ================= */
+        const fullQuestionPool = [
+            { q: "L'hydrolyse de l'ATP est une réaction :", o: ["Exergonique (Libère de l'énergie)", "Endergonique (Consomme de l'énergie)", "Qui produit de l'ADP et du Pi", "Qui nécessite de l'ATP synthase"], a: [0, 2] },
+            { q: "Concernant la Glycolyse :", o: ["Elle se déroule dans la matrice mitochondriale", "C'est une étape aérobie stricte", "Elle produit 2 ATP nets", "Elle réduit 2 NAD+ en NADH,H+"], a: [2, 3] },
+            { q: "Quels sont les produits finaux de la glycolyse pour une molécule de glucose ?", o: ["2 Pyruvates", "2 Acetyl-CoA", "2 ATP", "2 NADH,H+"], a: [0, 2, 3] },
+            { q: "La structure de la mitochondrie comprend :", o: ["Une membrane externe perméable", "Des thylakoïdes", "Une matrice riche en enzymes", "Des crêtes mitochondriales"], a: [0, 2, 3] },
+            { q: "L'étape de formation de l'Acetyl-CoA :", o: ["Se déroule dans le hyaloplasme", "Se déroule dans la matrice", "Produit du CO2", "Produit de l'ATP directement"], a: [1, 2] },
+            { q: "Le Cycle de Krebs :", o: ["Se déroule dans l'espace intermembranaire", "Libère 2 CO2 par tour de cycle", "Produit 3 NADH,H+ par tour", "Produit 1 FADH2 par tour"], a: [1, 2, 3] },
+            { q: "Le bilan énergétique d'un tour de cycle de Krebs est de :", o: ["1 ATP", "12 ATP (après phosphorylation oxydative)", "3 ATP", "15 ATP"], a: [0, 1] },
+            { q: "La chaîne respiratoire :", o: ["Est située dans la membrane externe", "Est située dans la membrane interne (crêtes)", "Permet l'oxydation de NADH,H+ et FADH2", "Accepte les électrons de l'O2"], a: [1, 2] },
+            { q: "Lors de la phosphorylation oxydative, les protons H+ :", o: ["Sont pompés vers la matrice", "Sont pompés vers l'espace intermembranaire", "Retournent vers la matrice via l'ATP Synthase", "Traversent la membrane externe"], a: [1, 2] },
+            { q: "L'accepteur final des électrons dans la chaîne respiratoire est :", o: ["Le NAD+", "L'ATP Synthase", "Le Dioxygène (O2)", "Le Cytochrome C"], a: [2] },
+            { q: "L'oxydation complète d'une molécule de Glucose produit théoriquement :", o: ["2 ATP", "32 ATP", "36 à 38 ATP", "12 ATP"], a: [2] },
+            { q: "La fermentation lactique :", o: ["Produit du CO2", "Ne produit pas de CO2", "Transforme le pyruvate en lactate", "A lieu dans la mitochondrie"], a: [1, 2] },
+            { q: "La fermentation alcoolique :", o: ["Produit de l'éthanol", "Libère du CO2", "Se déroule dans le hyaloplasme", "Produit 36 ATP"], a: [0, 1, 2] },
+            { q: "Le rendement énergétique :", o: ["De la respiration est supérieur à celui de la fermentation", "De la fermentation est d'environ 2%", "De la respiration est d'environ 40%", "Est identique pour les deux voies"], a: [0, 1, 2] },
+            { q: "L'ATP Synthase (Sphère pédonculée) :", o: ["Est une enzyme de la glycolyse", "Utilise le gradient de protons pour produire de l'ATP", "Est située dans la membrane interne mitochondriale", "Pompe les H+ vers l'espace intermembranaire"], a: [1, 2] },
+            { q: "La réduction de l'oxygène en eau nécessite :", o: ["2 électrons", "4 électrons pour une molécule O2", "Des protons H+", "De l'ATP"], a: [1, 2] },
+            { q: "Les transporteurs d'électrons réduits sont :", o: ["NAD+", "FAD", "NADH,H+", "FADH2"], a: [3, 2] },
+            { q: "Le gradient de protons (H+) :", o: ["Signifie que le pH est plus acide dans la matrice", "Signifie que le pH est plus acide dans l'espace intermembranaire", "Est une forme d'énergie potentielle", "Est créé par les complexes I, III et IV"], a: [1, 2, 3] },
+            { q: "Une cellule musculaire en manque d'oxygène va faire :", o: ["La fermentation alcoolique", "La fermentation lactique", "Le cycle de Krebs", "La glycolyse uniquement"], a: [1, 4] },
+            { q: "Le pyruvate :", o: ["Est un C3 (3 carbones)", "Est un C2 (2 carbones)", "Doit entrer dans la mitochondrie pour être respiré", "Est le produit final du cycle de Krebs"], a: [0, 2] },
+            { q: "Concernant les sphères pédonculées :", o: ["Elles regardent vers la matrice", "Elles regardent vers l'espace intermembranaire", "Elles synthétisent l'ATP", "Elles hydrolysent l'ATP"], a: [0, 2] },
+            { q: "L'oxydation du NADH,H+ au niveau de la chaîne respiratoire permet de produire :", o: ["2 ATP", "3 ATP", "1 ATP", "Aucun ATP"], a: [1] },
+            { q: "L'oxydation du FADH2 permet de produire :", o: ["2 ATP", "3 ATP", "1.5 ATP", "Aucun ATP"], a: [0] },
+            { q: "La première étape de la glycolyse (activation du glucose) :", o: ["Produit de l'ATP", "Consomme de l'ATP", "Est une phosphorylation", "Est une décarboxylation"], a: [1, 2] },
+            { q: "Le bilan chimique global de la respiration est :", o: ["C6H12O6 + 6O2 → 6CO2 + 6H2O + E", "C6H12O6 → 2 Ethanol + 2CO2", "C6H12O6 → 2 Lactate", "6CO2 + 6H2O → C6H12O6 + 6O2"], a: [0] },
+            { q: "Les réactions de décarboxylation (perte de CO2) ont lieu pendant :", o: ["La glycolyse", "La formation de l'Acetyl-CoA", "Le cycle de Krebs", "La phosphorylation oxydative"], a: [1, 2] },
+            { q: "Le cyanure bloque la chaîne respiratoire. La conséquence immédiate est :", o: ["Arrêt de la consommation d'O2", "Arrêt de la production d'ATP mitochondrial", "Arrêt du cycle de Krebs par manque de NAD+", "Augmentation de la fermentation"], a: [0, 1, 2, 3] },
+            { q: "Le hyaloplasme contient :", o: ["Les enzymes de la glycolyse", "Les enzymes du cycle de Krebs", "Des nutriments (glucose)", "Des ribosomes"], a: [0, 2, 3] },
+            { q: "La membrane interne de la mitochondrie est :", o: ["Perméable aux H+", "Imperméable aux H+ (sauf via ATP Synthase)", "Riche en protéines", "Lisse"], a: [1, 2] },
+            { q: "Lors de la fermentation alcoolique, l'accepteur final d'électrons est :", o: ["L'oxygène", "L'acétaldéhyde (Ethanol)", "Le pyruvate", "Le NAD+"], a: [1] },
+            { q: "La glycolyse est une voie métabolique :", o: ["Commune à la respiration et à la fermentation", "Spécifique à la respiration", "Qui se déroule sans oxygène", "Qui libère toute l'énergie du glucose"], a: [0, 2] },
+            { q: "Pour régénérer le NAD+ nécessaire à la glycolyse en anaérobiose, la cellule utilise :", o: ["La chaîne respiratoire", "La fermentation", "Le cycle de Krebs", "L'ATP synthase"], a: [1] },
+            { q: "Un acide gras peut-il entrer dans la respiration cellulaire ?", o: ["Non, seul le glucose est utilisé", "Oui, sous forme d'Acetyl-CoA", "Oui, il entre directement dans la glycolyse", "Oui, mais le rendement est faible"], a: [1] },
+            { q: "Combien de CO2 sont libérés pour une molécule de Glucose lors de la respiration complète ?", o: ["2", "4", "6", "38"], a: [2] },
+            { q: "Le complexe enzymatique responsable de la synthèse d'ATP s'appelle :", o: ["ATP Hydrolyse", "ATP Synthase", "ATP Polymérase", "ATP Transférase"], a: [1] },
+            { q: "Le rôle de l'oxygène dans la respiration est :", o: ["De fournir de l'énergie", "De récupérer les électrons et les protons en fin de chaîne", "D'oxyder le glucose directement", "De transporter l'ATP"], a: [1] },
+            { q: "La chaleur dégagée lors de l'activité musculaire provient :", o: ["Du rendement énergétique non total (perte)", "De la friction des muscles", "De l'hydrolyse de l'ATP", "De la fermentation uniquement"], a: [0, 2] },
+            { q: "Les navettes (Shuttles) servent à :", o: ["Transporter l'ATP hors de la mitochondrie", "Transporter les électrons du NADH hyaloplasmique vers la mitochondrie", "Transporter le glucose", "Transporter l'Acetyl-CoA"], a: [1] },
+            { q: "Si on injecte du Glucose directement dans une mitochondrie isolée :", o: ["Il y a production d'ATP", "Il ne se passe rien (pas d'enzymes de glycolyse)", "Il y a consommation d'O2", "Le glucose est transformé en pyruvate"], a: [1] },
+            { q: "Si on injecte du Pyruvate dans une mitochondrie isolée en présence d'O2 :", o: ["Il y a production d'ATP", "Il ne se passe rien", "Il y a consommation d'O2", "Il y a dégagement de CO2"], a: [0, 2, 3] },
+            { q: "La différence de pH de part et d'autre de la membrane interne mitochondriale est due :", o: ["Au cycle de Krebs", "Au pompage des protons par la chaîne respiratoire", "A l'ATP synthase", "A la glycolyse"], a: [1] },
+            { q: "Une molécule de FADH2 cède ses électrons au niveau du :", o: ["Complexe I", "Complexe II", "Complexe III", "Coenzyme Q"], a: [1] },
+            { q: "Le cyanure se fixe sur :", o: ["L'ATP synthase", "Le complexe IV (Cytochrome oxydase)", "Le transporteur T", "L'ubiquinone"], a: [1] },
+            { q: "En absence d'O2, la chaîne respiratoire :", o: ["S'accélère", "S'arrête", "Fonctionne au ralenti", "Inverse son sens"], a: [1] },
+            { q: "La chaleur retardée après une secousse musculaire est due à :", o: ["La reconstitution des réserves énergétiques", "La glycolyse", "La contraction elle-même", "Le relâchement"], a: [0] },
+            { q: "Le rendement énergétique se calcule par :", o: ["(Energie stockée dans ATP / Energie du Glucose) x 100", "(Energie Glucose / Energie ATP) x 100", "Nombre d'ATP x 30.5 kJ", "Energie perdue en chaleur"], a: [0] },
+            { q: "Le bilan en ATP de la fermentation alcoolique pour 1 glucose est de :", o: ["2 ATP", "4 ATP", "36 ATP", "0 ATP"], a: [0] },
+            { q: "Lequel n'est PAS une étape de la respiration ?", o: ["Glycolyse", "Cycle de Calvin", "Cycle de Krebs", "Phosphorylation oxydative"], a: [1] },
+            { q: "Les réactions d'oxydoréduction impliquent :", o: ["Un transfert de protons uniquement", "Un transfert d'électrons", "Un gain d'électrons pour l'oxydant", "Une perte d'électrons pour le réducteur"], a: [1, 2, 3] },
+            { q: "Le NAD+ est la forme :", o: ["Oxydée", "Réduite", "Riche en énergie", "Pauvre en énergie (relativement)"], a: [0, 3] }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userSelection = [];
+
+        function initQuiz() {
+            currentQuestions = fullQuestionPool.sort(() => 0.5 - Math.random()).slice(0, 20);
+            currentQuestionIndex = 0;
+            score = 0;
+            updateUI();
+            showQuestion();
+        }
+
+        function updateUI() {
+            document.getElementById('current-q').innerText = currentQuestionIndex + 1;
+            document.getElementById('score').innerText = score;
+        }
+
+        function showQuestion() {
+            const qData = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = qData.q;
+            
+            let tempOptions = qData.o.map((opt, index) => ({ text: opt, originalIndex: index }));
+            tempOptions.sort(() => 0.5 - Math.random());
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            userSelection = []; 
+
+            tempOptions.forEach((optObj) => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<div class="circle-check"></div><span>${optObj.text}</span>`;
+                btn.dataset.originalIndex = optObj.originalIndex;
+                btn.onclick = () => toggleSelection(btn, optObj.originalIndex);
+                container.appendChild(btn);
+            });
+
+            document.querySelector('.btn-validate').style.display = 'block';
+            document.querySelector('.btn-next').style.display = 'none';
+        }
+
+        function toggleSelection(btnElement, originalIndex) {
+            if(document.querySelector('.btn-next').style.display === 'block') return;
+            if (userSelection.includes(originalIndex)) {
+                userSelection = userSelection.filter(i => i !== originalIndex);
+                btnElement.classList.remove('selected');
+            } else {
+                userSelection.push(originalIndex);
+                btnElement.classList.add('selected');
+            }
+        }
+
+        function checkAnswer() {
+            if (userSelection.length === 0) return; 
+
+            const qData = currentQuestions[currentQuestionIndex];
+            const correctIndices = qData.a.sort();
+            const userIndices = userSelection.sort();
+            const isCorrect = JSON.stringify(correctIndices) === JSON.stringify(userIndices);
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                const idx = parseInt(btn.dataset.originalIndex);
+                btn.classList.remove('selected');
+                if (correctIndices.includes(idx)) {
+                    btn.classList.add('correct');
+                    btn.querySelector('.circle-check').innerText = '✓';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                } else if (userIndices.includes(idx) && !correctIndices.includes(idx)) {
+                    btn.classList.add('wrong');
+                    btn.querySelector('.circle-check').innerText = '✕';
+                    btn.querySelector('.circle-check').style.borderColor = 'transparent';
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                updateUI();
+            }
+            document.querySelector('.btn-validate').style.display = 'none';
+            document.querySelector('.btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 20) {
+                showQuestion();
+                updateUI();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'flex';
+            document.getElementById('final-score-display').innerText = score + "/20";
+            let feedback = score === 20 ? "INCROYABLE ! 🧬" : score >= 15 ? "Excellent ! 🔥" : "Courage ! 💪";
+            document.getElementById('feedback-text').innerText = feedback;
+        }
+
+        initQuiz();
+    </script>
+</body>
+</html>

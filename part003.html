@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport de l'Eau</title>
+    <style>
+        :root {
+            --primary-color: #2980b9; /* Darker Blue */
+            --accent-color: #5dade2;
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #ebf5fb;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #d6eaf8;
+            color: #154360;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #a9cce3;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #eaf2f8;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Visuals */
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #aed6f1;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        ul { padding-left: 20px; list-style: none; }
+        li::before { content: "⬆️"; margin-right: 10px; color: var(--primary-color); }
+        .swap-block.arabic li::before { margin-left: 10px; margin-right: 0; }
+
+        .key-concept {
+            background: #d4e6f1;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            color: #1a5276;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Part 003 : Le Transport de l'Eau</h1>
+        <p>L'Ascension de la Sève Brute</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Le Moteur : La Transpiration (Aspiration)</h2>
+        
+        <div class="diagram-container">
+            <img src="https://c8.alamy.com/compfr/2m95bep/schema-illustrant-la-transpiration-vegetale-2m95bep.jpg" alt="Mécanisme de transpiration">
+            <div class="caption">Figure 1 : La transpiration crée une tension qui "tire" l'eau vers le haut</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Comment l'eau monte-t-elle contre la gravité ? Le moteur principal est la transpiration au niveau des feuilles."
+           data-ar="كيف يصعد الماء عكس الجاذبية؟ المحرك الرئيسي هو النتح (Transpiration) على مستوى الأوراق.">
+           Comment l'eau monte-t-elle contre la gravité ? Le moteur principal est la transpiration au niveau des feuilles.
+        </p>
+
+        <p class="swap-block" 
+           data-fr="L'évaporation de l'eau par les stomates crée un vide (tension). Cette tension agit comme une paille qui aspire l'eau depuis les racines."
+           data-ar="تبخر الماء عبر الثغور يخلق فراغاً (توتر). هذا التوتر يعمل مثل 'الماصة' (Paille) التي تشفط الماء من الجذور.">
+           L'évaporation de l'eau par les stomates crée un vide (tension). Cette tension agit comme une paille qui aspire l'eau depuis les racines.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. La Cohésion et l'Adhésion</h2>
+        
+        <div class="diagram-container">
+            <img src="https://trustmyscience.com/wp-content/uploads/2018/06/eau-molecules-type.jpeg" alt="Cohésion et Adhésion">
+            <div class="caption">Figure 2 : Chaîne ininterrompue de molécules d'eau</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Pour que l'aspiration fonctionne, la colonne d'eau ne doit pas se briser. Deux forces physiques assurent cela :"
+           data-ar="لكي يعمل الشفط، يجب ألا ينقطع عمود الماء. هناك قوتان فيزيائيتان تضمنان ذلك:">
+           Pour que l'aspiration fonctionne, la colonne d'eau ne doit pas se briser. Deux forces physiques assurent cela :
+        </p>
+
+        <ul>
+            <li class="swap-block" 
+                data-fr="Cohésion : Les molécules d'eau s'attirent entre elles (Liaisons hydrogène), formant une chaîne solide."
+                data-ar="التماسك (Cohésion): جزيئات الماء تتجاذب فيما بينها (روابط هيدروجينية)، مشكلة سلسلة صلبة.">
+                Cohésion : Les molécules d'eau s'attirent entre elles (Liaisons hydrogène), formant une chaîne solide.
+            </li>
+            <li class="swap-block" 
+                data-fr="Adhésion : L'eau colle aux parois des vaisseaux du xylème, ce qui aide à lutter contre la gravité."
+                data-ar="الالتصاق (Adhésion): الماء يلتصق بجدران أوعية الخشب، مما يساعد على مقاومة الجاذبية.">
+                Adhésion : L'eau colle aux parois des vaisseaux du xylème, ce qui aide à lutter contre la gravité.
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. La Poussée Racinaire (Mécanisme Secondaire)</h2>
+        
+        <div class="diagram-container">
+            <img src="https://www.aquaportail.com/pictures1909/guttation-fraisier.jpg" alt="Guttation">
+            <div class="caption">Figure 3 : La Guttation, phénomène visible de la pression racinaire.</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="La nuit, quand la transpiration s'arrête, les racines continuent d'absorber des ions. L'eau entre par osmose et crée une pression positive qui pousse l'eau vers le haut."
+           data-ar="في الليل، عندما يتوقف النتح، تستمر الجذور في امتصاص الأيونات. يدخل الماء عن طريق الأسموز ويخلق ضغطاً موجباً يدفع الماء نحو الأعلى.">
+           La nuit, quand la transpiration s'arrête, les racines continuent d'absorber des ions. L'eau entre par osmose et crée une pression positive qui pousse l'eau vers le haut.
+        </p>
+
+        <div class="key-concept swap-block"
+             data-fr="Phénomène visible : La Guttation (gouttelettes d'eau sur les feuilles le matin)."
+             data-ar="ظاهرة مرئية: الإدماع (Guttation) (قطرات ماء على الأوراق في الصباح).">
+             Phénomène visible : La Guttation (gouttelettes d'eau sur les feuilles le matin).
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>4. Le Xylème (L'Autoroute)</h2>
+        
+        <p class="swap-block" 
+           data-fr="L'eau circule dans le Xylème. Ce sont des cellules mortes, allongées, dont les parois sont renforcées par de la Lignine (bois)."
+           data-ar="يدور الماء في الخشب (Xylème). وهي خلايا ميتة، متطاولة، جدرانها مقواة بمادة الخشبين (Lignine).">
+           L'eau circule dans le Xylème. Ce sont des cellules mortes, allongées, dont les parois sont renforcées par de la Lignine (bois).
+        </p>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

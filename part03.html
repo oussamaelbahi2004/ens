@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Fermentation (Anaérobie)</title>
+    <style>
+        :root {
+            --primary-color: #8e44ad; /* Purple for Fermentation */
+            --accent-color: #9b59b6;
+            --highlight-bg: #f9e79f;
+            --text-color: #333;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .hint {
+            background-color: #e8daef; /* Light purple */
+            color: #5b2c6f;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #d2b4de;
+            font-weight: bold;
+        }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* Swap Logic */
+        .swap-block {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .swap-block:hover {
+            background-color: #f5eef8;
+        }
+
+        .swap-block.arabic {
+            background-color: var(--highlight-bg);
+            direction: rtl;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+        }
+
+        /* Formulas & Visuals */
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #2c3e50;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff;
+            border: 2px dashed #bbb;
+            border-radius: 8px;
+        }
+        
+        .diagram-container img {
+            max-width: 100%;
+            border-radius: 5px;
+            height: auto;
+        }
+
+        .caption {
+            font-size: 0.9em;
+            color: #777;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        tr:nth-child(even) {background-color: #f2f2f2;}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Partie 03 : Voie Anaérobique (Fermentation)</h1>
+        <p>Survivre sans oxygène</p>
+    </header>
+
+    <div class="hint">
+        💡 Cliquez sur le texte pour traduire / اضغط على النص للترجمة
+    </div>
+
+    <div class="card">
+        <h2>1. Définition et Contexte</h2>
+        
+        <p class="swap-block" 
+           data-fr="La fermentation est une voie métabolique qui se déroule en absence d'oxygène (Anaérobie). Elle se produit uniquement dans le cytosol (cytoplasme)."
+           data-ar="التخمر هو مسلك استقلابي يحدث في غياب الأكسجين (لاهوائي). يتم فقط في الجيلبة الشفافة (السيتوبلازم).">
+           La fermentation est une voie métabolique qui se déroule en absence d'oxygène (Anaérobie). Elle se produit uniquement dans le cytosol (cytoplasme).
+        </p>
+
+        <p class="swap-block" 
+           data-fr="⚠️ Le but principal de la fermentation n'est pas de produire plus d'ATP, mais de régénérer le NAD+ pour que la glycolyse puisse continuer à produire ses 2 ATP."
+           data-ar="⚠️ الهدف الرئيسي للتخمر ليس إنتاج المزيد من ATP، بل تجديد NAD+ لكي يستمر انحلال الجليكوز في إنتاج 2 ATP الخاصة به.">
+           ⚠️ Le but principal de la fermentation n'est pas de produire plus d'ATP, mais de régénérer le NAD+ pour que la glycolyse puisse continuer à produire ses 2 ATP.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>2. La Fermentation Lactique</h2>
+
+        <div class="diagram-container">
+            <img src="https://www.aquaportail.com/pictures2111/fermentation-lactique.jpg" alt="Fermentation Lactique">
+            <div class="caption">Figure 1 : Schéma de la Fermentation Lactique</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Ce type se produit chez certaines bactéries (ex : fabrication de yaourt) et dans les cellules musculaires humaines lors d'un effort intense (sprint)."
+           data-ar="يحدث هذا النوع عند بعض البكتيريا (مثال: صناعة الياغورت) وفي الخلايا العضلية البشرية خلال مجهود مكثف (سباق السرعة).">
+           Ce type se produit chez certaines bactéries (ex : fabrication de yaourt) et dans les cellules musculaires humaines lors d'un effort intense (sprint).
+        </p>
+
+        <p class="swap-block" 
+           data-fr="Le pyruvate est directement réduit par le NADH pour former du Lactate (acide lactique). Il n'y a pas de libération de CO₂."
+           data-ar="يتم اختزال البيروفات مباشرة بواسطة NADH ليعطي اللبنات (حمض لبني). لا يوجد طرح لـ CO₂.">
+           Le pyruvate est directement réduit par le NADH pour former du Lactate (acide lactique). Il n'y a pas de libération de CO₂.
+        </p>
+
+        <div class="formula">
+            Glucose → 2 Pyruvate → 2 Lactate<br>
+            Bilan : 2 ATP
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. La Fermentation Alcoolique</h2>
+        
+        <div class="diagram-container">
+            <img src="https://www.aquaportail.com/pictures2406/fermentation-alcoolique.webp" alt="Fermentation Alcoolique">
+            <div class="caption">Figure 2 : Schéma de la Fermentation Alcoolique (Levures)</div>
+        </div>
+
+        <p class="swap-block" 
+           data-fr="Elle est réalisée par les levures (champignons unicellulaires). Utilisée pour faire du pain (le CO₂ fait lever la pâte) et des boissons alcoolisées."
+           data-ar="تقوم بها الخمائر (فطريات وحيدة الخلية). تستعمل لصناعة الخبز (CO₂ ينفخ العجين) والمشروبات الكحولية.">
+           Elle est réalisée par les levures (champignons unicellulaires). Utilisée pour faire du pain (le CO₂ fait lever la pâte) et des boissons alcoolisées.
+        </p>
+
+        <h3>Les Étapes (Détail Important) :</h3>
+        <p class="swap-block" 
+           data-fr="1. Le pyruvate perd un CO₂ et devient de l'Acétaldéhyde."
+           data-ar="1. يفقد البيروفات CO₂ ويتحول إلى أسيتالديهيد (Acétaldéhyde).">
+           1. Le pyruvate perd un CO₂ et devient de l'Acétaldéhyde.
+        </p>
+        <p class="swap-block" 
+           data-fr="2. L'Acétaldéhyde est réduit par le NADH pour devenir de l'Éthanol."
+           data-ar="2. يتم اختزال الأسيتالديهيد بواسطة NADH ليصبح إيثانول (Éthanol).">
+           2. L'Acétaldéhyde est réduit par le NADH pour devenir de l'Éthanol.
+        </p>
+
+        <div class="formula">
+            Glucose → 2 Pyruvate → 2 Acétaldéhyde → 2 Éthanol + 2 CO₂<br>
+            Bilan : 2 ATP
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>4. Comparaison : Respiration vs Fermentation</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Critère</th>
+                    <th>Respiration Aérobie</th>
+                    <th>Fermentation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Besoin d'O₂</strong></td>
+                    <td>Oui</td>
+                    <td>Non</td>
+                </tr>
+                <tr>
+                    <td><strong>Lieu</strong></td>
+                    <td>Cytosol + Mitochondrie</td>
+                    <td>Cytosol seulement</td>
+                </tr>
+                <tr>
+                    <td><strong>Dégradation</strong></td>
+                    <td>Complète (en CO₂ + H₂O)</td>
+                    <td>Incomplète (déchet organique)</td>
+                </tr>
+                <tr>
+                    <td><strong>Rendement (ATP)</strong></td>
+                    <td style="color: green; font-weight: bold;">36 - 38 ATP</td>
+                    <td style="color: red; font-weight: bold;">2 ATP</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Logic for swapping languages
+    document.querySelectorAll('.swap-block').forEach(block => {
+        block.addEventListener('click', function() {
+            if (this.classList.contains('arabic')) {
+                this.innerHTML = this.getAttribute('data-fr');
+                this.classList.remove('arabic');
+            } else {
+                this.innerHTML = this.getAttribute('data-ar');
+                this.classList.add('arabic');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
